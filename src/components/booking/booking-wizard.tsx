@@ -37,6 +37,7 @@ const steps: readonly BookingStep[] = [
   "review",
   "confirmation",
 ];
+const availabilityTimeoutMs = 10_000;
 
 type ChoiceProps = {
   checked: boolean;
@@ -124,6 +125,11 @@ export function BookingWizard({
     availabilityRequest.current?.abort();
     const controller = new AbortController();
     availabilityRequest.current = controller;
+    let requestTimedOut = false;
+    const timeoutId = window.setTimeout(() => {
+      requestTimedOut = true;
+      controller.abort();
+    }, availabilityTimeoutMs);
     setAvailabilityState("loading");
     setAvailableTimes([]);
     try {
@@ -139,8 +145,10 @@ export function BookingWizard({
       setAvailableTimes(result.slots.map((slot) => slot.time));
       setAvailabilityState("loaded");
     } catch {
-      if (controller.signal.aborted) return;
+      if (controller.signal.aborted && !requestTimedOut) return;
       setAvailabilityState("error");
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   }
 
