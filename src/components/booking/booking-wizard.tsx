@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   demoDentists,
   demoServices,
@@ -106,18 +106,64 @@ export function BookingWizard({
     }),
   );
   const [errors, setErrors] = useState<BookingErrors>({});
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [availabilityState, setAvailabilityState] = useState<
+    "idle" | "loading" | "loaded" | "error"
+  >("idle");
+  const [bookingReference, setBookingReference] = useState("");
+  const [submissionError, setSubmissionError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const availabilityRequest = useRef<AbortController | null>(null);
   const currentStep = steps[stepIndex]!;
 
-  const dateOptions = [
-    { id: "demo-tuesday", label: translations("dateOne") },
-    { id: "demo-wednesday", label: translations("dateTwo") },
-    { id: "demo-thursday", label: translations("dateThree") },
-  ];
-  const timeOptions = [
-    { id: "10:00", label: translations("timeOne") },
-    { id: "12:30", label: translations("timeTwo") },
-    { id: "16:00", label: translations("timeThree") },
-  ];
+  useEffect(() => {
+    return () => availabilityRequest.current?.abort();
+  }, []);
+
+  async function loadAvailability(dentistId: string, date: string) {
+    availabilityRequest.current?.abort();
+    const controller = new AbortController();
+    availabilityRequest.current = controller;
+    setAvailabilityState("loading");
+    setAvailableTimes([]);
+    try {
+      const response = await fetch(
+        `/api/v1/availability?dentistId=${encodeURIComponent(dentistId)}&dateKey=${encodeURIComponent(date)}`,
+        { signal: controller.signal },
+      );
+      if (!response.ok) throw new Error("availability-unavailable");
+      const result = (await response.json()) as {
+        slots: Array<{ time: string }>;
+      };
+      if (availabilityRequest.current !== controller) return;
+      setAvailableTimes(result.slots.map((slot) => slot.time));
+      setAvailabilityState("loaded");
+    } catch {
+      if (controller.signal.aborted) return;
+      setAvailabilityState("error");
+    }
+  }
+
+  function handleDentistChange(dentistId: string) {
+    availabilityRequest.current?.abort();
+    setField("dentistId", dentistId);
+    setField("date", "");
+    setField("time", "");
+    setAvailableTimes([]);
+    setAvailabilityState("idle");
+  }
+
+  function handleDateChange(date: string) {
+    setField("date", date);
+    setField("time", "");
+    setAvailableTimes([]);
+    if (!date || !draft.dentistId) {
+      availabilityRequest.current?.abort();
+      setAvailabilityState("idle");
+      return;
+    }
+    void loadAvailability(draft.dentistId, date);
+  }
   const validationMessages: BookingValidationMessages = {
     requiredService: translations("requiredService"),
     requiredDentist: translations("requiredDentist"),
@@ -138,7 +184,7 @@ export function BookingWizard({
     });
   }
 
-  function handleNext() {
+  async function handleNext() {
     const nextErrors = validateBookingStep(
       currentStep,
       draft,
@@ -147,6 +193,37 @@ export function BookingWizard({
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
+    }
+
+    if (currentStep === "review") {
+      setSubmitting(true);
+      setSubmissionError("");
+      const response = await fetch("/api/v1/appointments", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          serviceId: draft.serviceId,
+          dentistId: draft.dentistId,
+          dateKey: draft.date,
+          time: draft.time,
+          patientName: draft.fullName,
+          mobile: draft.mobile,
+          email: draft.email,
+          locale,
+          consent: draft.consent,
+        }),
+      }).catch(() => null);
+      setSubmitting(false);
+      if (!response?.ok) {
+        setSubmissionError(
+          response?.status === 409
+            ? translations("slotUnavailable")
+            : translations("bookingFailed"),
+        );
+        return;
+      }
+      const result = (await response.json()) as { publicReference: string };
+      setBookingReference(result.publicReference);
     }
 
     setErrors({});
@@ -160,14 +237,27 @@ export function BookingWizard({
 
   function handleRestart() {
     setDraft(createBookingDraft());
+    setBookingReference("");
+    setSubmissionError("");
     setErrors({});
     setStepIndex(0);
   }
 
   const selectedService = findDemoService(draft.serviceId);
   const selectedDentist = findDemoDentist(draft.dentistId);
-  const selectedDate = dateOptions.find((option) => option.id === draft.date);
-  const selectedTime = timeOptions.find((option) => option.id === draft.time);
+  const selectedDate = draft.date
+    ? new Intl.DateTimeFormat(locale === "ur" ? "ur-PK" : "en-PK", {
+        dateStyle: "medium",
+        timeZone: "Asia/Karachi",
+      }).format(new Date(`${draft.date}T00:00:00+05:00`))
+    : "";
+  const selectedTime = draft.time
+    ? new Intl.DateTimeFormat(locale === "ur" ? "ur-PK" : "en-PK", {
+        hour: "numeric",
+        minute: "2-digit",
+        timeZone: "Asia/Karachi",
+      }).format(new Date(`2026-01-01T${draft.time}:00+05:00`))
+    : "";
   const stepTitle = translations(`${currentStep}Step`);
   const firstError = Object.values(errors)[0];
 
@@ -198,10 +288,10 @@ export function BookingWizard({
           </p>
           <div className="mx-auto mt-7 max-w-sm rounded-2xl bg-[var(--aqua-soft)] p-5">
             <p className="text-xs font-extrabold tracking-[0.12em] text-[var(--teal-dark)] uppercase">
-              {translations("sampleReference")}
+              {translations("appointmentReference")}
             </p>
             <p className="mt-2 text-xl font-extrabold">
-              <bdi>{translations("sampleReferenceValue")}</bdi>
+              <bdi>{bookingReference}</bdi>
             </p>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -299,7 +389,7 @@ export function BookingWizard({
                 description={translations("noPreferenceDescription")}
                 label={translations("noPreference")}
                 name="dentist"
-                onChange={() => setField("dentistId", "no-preference")}
+                onChange={() => handleDentistChange("no-preference")}
                 value="no-preference"
               />
               {demoDentists.map((dentist) => (
@@ -309,7 +399,7 @@ export function BookingWizard({
                   key={dentist.id}
                   label={getLocalizedText(dentist.name, locale)}
                   name="dentist"
-                  onChange={() => setField("dentistId", dentist.id)}
+                  onChange={() => handleDentistChange(dentist.id)}
                   value={dentist.id}
                 />
               ))}
@@ -323,37 +413,55 @@ export function BookingWizard({
             <p className="text-sm leading-6 text-[var(--muted-text)]">
               {translations("timeHelp")}
             </p>
-            <fieldset className="mt-6">
-              <legend className="font-extrabold">
-                {translations("requiredDate").replace(/\.$/, "")}
-              </legend>
-              <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                {dateOptions.map((option) => (
-                  <Choice
-                    checked={draft.date === option.id}
-                    key={option.id}
-                    label={option.label}
-                    name="date"
-                    onChange={() => setField("date", option.id)}
-                    value={option.id}
-                  />
-                ))}
-              </div>
+            <div className="mt-6">
+              <label className="font-extrabold" htmlFor="booking-date">
+                {translations("dateLabel")}
+              </label>
+              <input
+                className="mt-2 min-h-12 w-full rounded-2xl border border-[var(--line-strong)] bg-white px-4 sm:max-w-sm"
+                id="booking-date"
+                min={new Date().toISOString().slice(0, 10)}
+                onChange={(event) => handleDateChange(event.target.value)}
+                type="date"
+                value={draft.date}
+              />
               <FieldError id="date-error" message={errors.date} />
-            </fieldset>
+            </div>
             <fieldset className="mt-7">
               <legend className="font-extrabold">
-                {translations("requiredTime").replace(/\.$/, "")}
+                {translations("timeLabel")}
               </legend>
+              {availabilityState === "loading" ? (
+                <p className="mt-3 text-[var(--muted-text)]" role="status">
+                  {translations("loadingSlots")}
+                </p>
+              ) : null}
+              {availabilityState === "loaded" && availableTimes.length === 0 ? (
+                <p className="mt-3 rounded-2xl bg-[var(--aqua-soft)] p-4 font-bold">
+                  {translations("noSlots")}
+                </p>
+              ) : null}
+              {availabilityState === "error" ? (
+                <p className="mt-3 text-[var(--danger)]" role="alert">
+                  {translations("availabilityFailed")}
+                </p>
+              ) : null}
               <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                {timeOptions.map((option) => (
+                {availableTimes.map((time) => (
                   <Choice
-                    checked={draft.time === option.id}
-                    key={option.id}
-                    label={option.label}
+                    checked={draft.time === time}
+                    key={time}
+                    label={new Intl.DateTimeFormat(
+                      locale === "ur" ? "ur-PK" : "en-PK",
+                      {
+                        hour: "numeric",
+                        minute: "2-digit",
+                        timeZone: "Asia/Karachi",
+                      },
+                    ).format(new Date(`2026-01-01T${time}:00+05:00`))}
                     name="time"
-                    onChange={() => setField("time", option.id)}
-                    value={option.id}
+                    onChange={() => setField("time", time)}
+                    value={time}
                   />
                 ))}
               </div>
@@ -449,7 +557,7 @@ export function BookingWizard({
                 ],
                 [
                   translations("selectedTime"),
-                  `${selectedDate?.label ?? "—"} · ${selectedTime?.label ?? "—"}`,
+                  `${selectedDate || "—"} · ${selectedTime || "—"}`,
                 ],
                 [translations("selectedPatient"), draft.fullName],
               ].map(([term, description]) => (
@@ -475,6 +583,11 @@ export function BookingWizard({
               </span>
             </label>
             <FieldError id="consent-error" message={errors.consent} />
+            {submissionError ? (
+              <p className="mt-4 font-bold text-[var(--danger)]" role="alert">
+                {submissionError}
+              </p>
+            ) : null}
           </div>
         ) : null}
 
@@ -492,11 +605,14 @@ export function BookingWizard({
           )}
           <button
             className="min-h-11 cursor-pointer rounded-full bg-[var(--teal)] px-6 py-3 text-sm font-extrabold text-white transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-[var(--teal-dark)]"
+            disabled={submitting}
             type="submit"
           >
-            {currentStep === "review"
-              ? translations("complete")
-              : translations("continue")}
+            {submitting
+              ? translations("submitting")
+              : currentStep === "review"
+                ? translations("complete")
+                : translations("continue")}
           </button>
         </div>
       </form>

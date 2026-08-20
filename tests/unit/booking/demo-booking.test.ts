@@ -5,14 +5,14 @@ import {
   validateBookingStep,
 } from "@/modules/booking/demo-booking";
 
-describe("demonstration booking rules", () => {
+describe("booking rules", () => {
   it("accepts only allow-listed service and dentist preselection", () => {
     expect(
       resolveBookingPrefill({
-        dentist: "demo-sana",
+        dentist: "sobia-ahmad",
         service: "consultation",
       }),
-    ).toEqual({ dentistId: "demo-sana", serviceId: "consultation" });
+    ).toEqual({ dentistId: "sobia-ahmad", serviceId: "consultation" });
     expect(
       resolveBookingPrefill({
         dentist: "unknown",
@@ -40,15 +40,15 @@ describe("demonstration booking rules", () => {
     });
   });
 
-  it("validates time, minimum contact details, and demonstration consent", () => {
+  it("validates time, minimum contact details, and booking consent", () => {
     const draft = createBookingDraft({
       dentistId: "no-preference",
       serviceId: "consultation",
     });
 
     expect(validateBookingStep("time", draft)).toEqual({
-      date: "Choose a demonstration date.",
-      time: "Choose a demonstration time.",
+      date: "Choose an appointment date.",
+      time: "Choose an available time.",
     });
     expect(
       validateBookingStep("details", {
@@ -58,12 +58,12 @@ describe("demonstration booking rules", () => {
         mobile: "123",
       }),
     ).toEqual({
-      email: "Enter a valid sample email address or leave it blank.",
-      fullName: "Enter a sample full name.",
-      mobile: "Enter a sample Pakistani mobile number.",
+      email: "Enter a valid email address or leave it blank.",
+      fullName: "Enter your full name.",
+      mobile: "Enter a valid Pakistani mobile number.",
     });
     expect(validateBookingStep("review", draft)).toEqual({
-      consent: "Confirm that you understand this is only a demonstration.",
+      consent: "Confirm your consent to create this appointment.",
     });
   });
 });

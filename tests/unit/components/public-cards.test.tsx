@@ -4,13 +4,13 @@ import { DentistCard } from "@/components/content/dentist-card";
 import { ServiceCard } from "@/components/content/service-card";
 import { demoDentists, demoServices } from "@/content/demo-content";
 
-describe("public demonstration cards", () => {
+describe("public clinic cards", () => {
   it("links a service directly to an allow-listed booking preselection", () => {
     render(
       <ServiceCard
         labels={{
           book: "Book this service",
-          duration: "Illustrative duration",
+          duration: "Appointment duration",
           minutes: "minutes",
         }}
         locale="en"
@@ -23,7 +23,7 @@ describe("public demonstration cards", () => {
       screen.getByText(
         (_, element) =>
           element?.tagName === "P" &&
-          element.textContent === "Illustrative duration: 30 minutes",
+          element.textContent === "Appointment duration: 30 minutes",
       ),
     ).toBeVisible();
     expect(
@@ -31,24 +31,24 @@ describe("public demonstration cards", () => {
     ).toHaveAttribute("href", "/en/book?service=consultation");
   });
 
-  it("discloses a sample dentist and safely preselects that record", () => {
+  it("presents a clinic dentist and safely preselects that record", () => {
     render(
       <DentistCard
         dentist={demoDentists[0]!}
         labels={{
           book: "Book with this dentist",
-          demoBadge: "Demonstration profile",
-          languages: "Sample languages",
-          workingDays: "Illustrative availability",
+          demoBadge: "Clinic dentist",
+          languages: "Languages",
+          workingDays: "Working days",
         }}
         locale="en"
       />,
     );
 
-    expect(screen.getByText("Demonstration profile")).toBeVisible();
-    expect(screen.getByText("Dr. Sana Ahmed")).toBeVisible();
+    expect(screen.getByText("Clinic dentist")).toBeVisible();
+    expect(screen.getByText("Dr. Sobia Ahmad")).toBeVisible();
     expect(
       screen.getByRole("link", { name: "Book with this dentist" }),
-    ).toHaveAttribute("href", "/en/book?dentist=demo-sana");
+    ).toHaveAttribute("href", "/en/book?dentist=sobia-ahmad");
   });
 });

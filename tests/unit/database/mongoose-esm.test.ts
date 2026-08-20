@@ -13,7 +13,7 @@ describe("Mongoose ESM boundary", () => {
         "--import",
         "tsx",
         "--eval",
-        "await import('./src/modules/clinic/branch.model.ts'); await import('./src/modules/clinic/clinic.model.ts');",
+        "await import('./src/modules/clinic/branch.model.ts'); await import('./src/modules/clinic/clinic.model.ts'); await import('./src/modules/auth/admin-user.model.ts'); await import('./src/modules/auth/admin-session.model.ts'); await import('./src/modules/appointments/appointment.model.ts'); await import('./src/modules/scheduling/dentist-schedule.model.ts');",
       ],
       { cwd: process.cwd(), encoding: "utf8" },
     );

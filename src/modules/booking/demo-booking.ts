@@ -31,12 +31,12 @@ export type BookingValidationMessages = {
 const defaultValidationMessages: BookingValidationMessages = {
   requiredService: "Choose a service to continue.",
   requiredDentist: "Choose a dentist or No preference to continue.",
-  requiredDate: "Choose a demonstration date.",
-  requiredTime: "Choose a demonstration time.",
-  requiredName: "Enter a sample full name.",
-  requiredMobile: "Enter a sample Pakistani mobile number.",
-  invalidEmail: "Enter a valid sample email address or leave it blank.",
-  requiredConsent: "Confirm that you understand this is only a demonstration.",
+  requiredDate: "Choose an appointment date.",
+  requiredTime: "Choose an available time.",
+  requiredName: "Enter your full name.",
+  requiredMobile: "Enter a valid Pakistani mobile number.",
+  invalidEmail: "Enter a valid email address or leave it blank.",
+  requiredConsent: "Confirm your consent to create this appointment.",
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

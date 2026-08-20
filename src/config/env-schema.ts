@@ -30,6 +30,11 @@ const mongoEnvironmentSchema = z.object({
   MONGODB_DATABASE: z.string().regex(/^[a-zA-Z0-9_-]+$/),
 });
 
+const adminSeedEnvironmentSchema = z.object({
+  ADMIN_EMAIL: z.email(),
+  ADMIN_PASSWORD: z.string().min(8).max(200),
+});
+
 const serverEnvironmentSchema = z
   .object({
     NODE_ENV: z
@@ -88,11 +93,18 @@ const serverEnvironmentSchema = z
 
 export type ServerEnvironment = z.infer<typeof serverEnvironmentSchema>;
 export type MongoEnvironment = z.infer<typeof mongoEnvironmentSchema>;
+export type AdminSeedEnvironment = z.infer<typeof adminSeedEnvironmentSchema>;
 
 export function parseMongoEnvironment(
   source: Record<string, string | undefined>,
 ): MongoEnvironment {
   return mongoEnvironmentSchema.parse(source);
+}
+
+export function parseAdminSeedEnvironment(
+  source: Record<string, string | undefined>,
+): AdminSeedEnvironment {
+  return adminSeedEnvironmentSchema.parse(source);
 }
 
 export function parseServerEnvironment(

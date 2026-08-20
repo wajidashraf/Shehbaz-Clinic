@@ -1,12 +1,29 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NextIntlClientProvider } from "next-intl";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { BookingWizard } from "@/components/booking/booking-wizard";
 import englishMessages from "@/messages/en.json";
 
 describe("BookingWizard", () => {
-  it("completes six demonstration steps without claiming a real booking", async () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("loads live availability and confirms a guest appointment", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ slots: [{ time: "10:00" }] }), {
+          status: 200,
+          headers: { "content-type": "application/json" },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ publicReference: "SDC-2026-ABC123" }), {
+          status: 201,
+          headers: { "content-type": "application/json" },
+        }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
     const user = userEvent.setup();
     render(
       <NextIntlClientProvider locale="en" messages={englishMessages}>
@@ -25,8 +42,8 @@ describe("BookingWizard", () => {
     await user.click(screen.getByLabelText("No preference"));
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
-    await user.click(screen.getByLabelText("Tuesday · Demo date"));
-    await user.click(screen.getByLabelText("10:00 AM"));
+    await user.type(screen.getByLabelText("Appointment date"), "2026-09-01");
+    await user.click(await screen.findByRole("radio", { name: /10:00/i }));
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
     await user.type(screen.getByLabelText("Full name"), "Ali Khan");
@@ -35,19 +52,17 @@ describe("BookingWizard", () => {
 
     await user.click(
       screen.getByRole("checkbox", {
-        name: /I understand this is a demonstration/,
+        name: /I consent to Shahbaz Dental Clinic storing these details/,
       }),
     );
     await user.click(
-      screen.getByRole("button", { name: "Complete demo booking" }),
+      screen.getByRole("button", { name: "Confirm appointment" }),
     );
 
-    expect(screen.getByText("The demonstration is complete")).toBeVisible();
     expect(
-      screen.getByText(
-        "No appointment was created, no time was reserved, and no message was sent. The final booking system will show a real reference here after verification.",
-      ),
+      await screen.findByText("Your appointment is confirmed"),
     ).toBeVisible();
-    expect(screen.getByText("DEMO-SDC-001")).toBeVisible();
+    expect(screen.getByText("SDC-2026-ABC123")).toBeVisible();
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
   });
 });

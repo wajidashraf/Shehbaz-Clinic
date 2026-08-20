@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { getServerEnv, isCloudinaryConfigured } from "@/config/env";
-import { parseMongoEnvironment } from "@/config/env-schema";
+import {
+  parseAdminSeedEnvironment,
+  parseMongoEnvironment,
+} from "@/config/env-schema";
 
 const baseEnvironment = {
   NODE_ENV: "test",
@@ -142,5 +145,23 @@ describe("server environment", () => {
       MONGODB_URI: baseEnvironment.MONGODB_URI,
       MONGODB_DATABASE: "shahbaz_clinic_test",
     });
+  });
+
+  it("requires valid one-time administrator seed credentials", () => {
+    expect(
+      parseAdminSeedEnvironment({
+        ADMIN_EMAIL: "admin@example.com",
+        ADMIN_PASSWORD: "secure-password",
+      }),
+    ).toEqual({
+      ADMIN_EMAIL: "admin@example.com",
+      ADMIN_PASSWORD: "secure-password",
+    });
+    expect(() =>
+      parseAdminSeedEnvironment({
+        ADMIN_EMAIL: "not-an-email",
+        ADMIN_PASSWORD: "short",
+      }),
+    ).toThrow();
   });
 });

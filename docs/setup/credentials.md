@@ -31,6 +31,17 @@ Copy the generated value into:
 SESSION_SECRET=
 ```
 
+## Administrator seed account
+
+Choose a private administrator email and a unique password of at least 16 characters. These values are read only by `npm run seed`; the application stores an Argon2id hash rather than the password.
+
+```env
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+```
+
+Run `npm run seed` after adding or rotating these values. Never commit the completed `.env.local` file.
+
 ## Cloudinary
 
 1. Open the Cloudinary console.

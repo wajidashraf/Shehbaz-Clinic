@@ -20,7 +20,6 @@ export type DemoDentist = Readonly<{
   workingDays: LocalizedText;
   image: string;
   imageAlt: LocalizedText;
-  isDemo: true;
 }>;
 
 export const demoServices: readonly DemoService[] = [
@@ -119,61 +118,87 @@ export const demoServices: readonly DemoService[] = [
 
 export const demoDentists: readonly DemoDentist[] = [
   {
-    id: "demo-sana",
-    name: { en: "Dr. Sana Ahmed", ur: "ڈاکٹر ثنا احمد" },
+    id: "sobia-ahmad",
+    name: { en: "Dr. Sobia Ahmad", ur: "ڈاکٹر صوبیہ احمد" },
     area: {
       en: "General and preventive care",
       ur: "عمومی اور احتیاطی نگہداشت",
     },
     biography: {
-      en: "A sample profile illustrating a calm, prevention-first approach for adults and families.",
-      ur: "یہ ایک نمونہ پروفائل ہے جو بڑوں اور خاندانوں کے لیے پُرسکون، احتیاطی نگہداشت کو ظاہر کرتا ہے۔",
+      en: "Focused on comfortable consultations, preventive guidance, and everyday dental care for adults and families.",
+      ur: "بڑوں اور خاندانوں کے لیے آرام دہ مشورے، احتیاطی رہنمائی اور روزمرہ دانتوں کی نگہداشت پر توجہ۔",
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Sample: Monday–Thursday", ur: "نمونہ: پیر تا جمعرات" },
+    workingDays: { en: "Monday–Thursday", ur: "پیر تا جمعرات" },
     image: "/images/demo/dentist-1.webp",
     imageAlt: {
-      en: "Synthetic portrait for a sample dentist profile",
-      ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر",
+      en: "Portrait of Dr. Sobia Ahmad",
+      ur: "ڈاکٹر صوبیہ احمد کی تصویر",
     },
-    isDemo: true,
   },
   {
-    id: "demo-hamza",
-    name: { en: "Dr. Hamza Ali", ur: "ڈاکٹر حمزہ علی" },
-    area: { en: "Restorative dental care", ur: "دانتوں کی بحالی کی نگہداشت" },
-    biography: {
-      en: "A sample profile showing how restorative-care interests may appear after clinic verification.",
-      ur: "یہ نمونہ دکھاتا ہے کہ کلینک کی تصدیق کے بعد بحالی کی نگہداشت کی دلچسپیاں کیسے نظر آ سکتی ہیں۔",
-    },
-    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Sample: Tuesday–Saturday", ur: "نمونہ: منگل تا ہفتہ" },
-    image: "/images/demo/dentist-2.webp",
-    imageAlt: {
-      en: "Synthetic portrait for a sample dentist profile",
-      ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر",
-    },
-    isDemo: true,
-  },
-  {
-    id: "demo-mahnoor",
-    name: { en: "Dr. Mahnoor Iqbal", ur: "ڈاکٹر ماہ نور اقبال" },
+    id: "amna-rauf",
+    name: { en: "Dr. Amna Rauf", ur: "ڈاکٹر آمنہ رؤف" },
     area: {
       en: "Family and children’s care",
       ur: "خاندانی اور بچوں کی نگہداشت",
     },
     biography: {
-      en: "A sample profile demonstrating a welcoming family-care presentation for the future directory.",
-      ur: "یہ نمونہ مستقبل کی فہرست کے لیے دوستانہ خاندانی نگہداشت کی پیشکش دکھاتا ہے۔",
+      en: "Provides a welcoming approach to routine family visits and age-appropriate dental care for children.",
+      ur: "خاندان کے معمول کے معائنے اور بچوں کے لیے عمر کے مطابق دوستانہ دانتوں کی نگہداشت۔",
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Sample: Wednesday–Sunday", ur: "نمونہ: بدھ تا اتوار" },
+    workingDays: { en: "Tuesday–Saturday", ur: "منگل تا ہفتہ" },
+    image: "/images/demo/dentist-2.webp",
+    imageAlt: {
+      en: "Portrait of Dr. Amna Rauf",
+      ur: "ڈاکٹر آمنہ رؤف کی تصویر",
+    },
+  },
+  {
+    id: "ahmad",
+    name: { en: "Dr. Ahmad", ur: "ڈاکٹر احمد" },
+    area: { en: "Restorative dental care", ur: "دانتوں کی بحالی کی نگہداشت" },
+    biography: {
+      en: "Supports patients with tooth assessments, fillings, and practical restorative-care planning.",
+      ur: "دانتوں کے معائنے، فلنگ اور بحالی کی نگہداشت کی عملی منصوبہ بندی میں مریضوں کی مدد۔",
+    },
+    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
+    workingDays: { en: "Wednesday–Sunday", ur: "بدھ تا اتوار" },
     image: "/images/demo/dentist-3.jpg",
     imageAlt: {
-      en: "Temporary stock portrait used for a sample dentist profile",
-      ur: "نمونہ ڈینٹسٹ پروفائل کے لیے عارضی اسٹاک تصویر",
+      en: "Portrait of Dr. Ahmad",
+      ur: "ڈاکٹر احمد کی تصویر",
     },
-    isDemo: true,
+  },
+  {
+    id: "rauf",
+    name: { en: "Dr. Rauf", ur: "ڈاکٹر رؤف" },
+    area: { en: "Oral-care consultations", ur: "منہ اور دانتوں کے مشورے" },
+    biography: {
+      en: "Offers careful assessments for dental concerns, including consultations before extraction decisions.",
+      ur: "دانتوں کے مسائل کا محتاط معائنہ، بشمول دانت نکالنے کے فیصلے سے پہلے مشورہ۔",
+    },
+    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
+    workingDays: { en: "Monday–Friday", ur: "پیر تا جمعہ" },
+    image: "/images/demo/dentist-2.webp",
+    imageAlt: { en: "Portrait of Dr. Rauf", ur: "ڈاکٹر رؤف کی تصویر" },
+  },
+  {
+    id: "shahbaz",
+    name: { en: "Dr. Shahbaz", ur: "ڈاکٹر شہباز" },
+    area: {
+      en: "General and alignment consultations",
+      ur: "عمومی نگہداشت اور دانتوں کی ترتیب کے مشورے",
+    },
+    biography: {
+      en: "Provides general dental assessments and consultations about tooth alignment and next steps.",
+      ur: "عمومی دانتوں کا معائنہ اور دانتوں کی ترتیب کے بارے میں مشورہ اور اگلے مراحل کی رہنمائی۔",
+    },
+    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
+    workingDays: { en: "Tuesday–Sunday", ur: "منگل تا اتوار" },
+    image: "/images/demo/dentist-1.webp",
+    imageAlt: { en: "Portrait of Dr. Shahbaz", ur: "ڈاکٹر شہباز کی تصویر" },
   },
 ] as const;
 

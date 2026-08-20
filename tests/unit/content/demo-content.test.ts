@@ -7,7 +7,7 @@ import {
   getLocalizedText,
 } from "@/content/demo-content";
 
-describe("demonstration content", () => {
+describe("public clinic content", () => {
   it("provides stable bilingual service records for booking links", () => {
     expect(demoServices).toHaveLength(8);
     expect(demoServices[0]?.id).toBe("consultation");
@@ -21,10 +21,16 @@ describe("demonstration content", () => {
     expect(findDemoService("unknown")).toBeUndefined();
   });
 
-  it("provides explicitly demonstrative dentist records", () => {
-    expect(demoDentists).toHaveLength(3);
-    expect(demoDentists.every((dentist) => dentist.isDemo)).toBe(true);
-    expect(findDemoDentist("demo-sana")?.id).toBe("demo-sana");
+  it("provides the five named clinic dentist records", () => {
+    expect(demoDentists).toHaveLength(5);
+    expect(demoDentists.map((dentist) => dentist.name.en)).toEqual([
+      "Dr. Sobia Ahmad",
+      "Dr. Amna Rauf",
+      "Dr. Ahmad",
+      "Dr. Rauf",
+      "Dr. Shahbaz",
+    ]);
+    expect(findDemoDentist("sobia-ahmad")?.id).toBe("sobia-ahmad");
     expect(findDemoDentist("unknown")).toBeUndefined();
   });
 });
