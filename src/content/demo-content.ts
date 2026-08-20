@@ -156,8 +156,12 @@ export const demoDentists: readonly DemoDentist[] = [
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Sample: Wednesday–Sunday", ur: "نمونہ: بدھ تا اتوار" },
-    image: "/images/demo/dentist-3.webp",
-    imageAlt: { en: "Synthetic portrait for a sample dentist profile", ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر" },
+    image:
+      "https://images.pexels.com/photos/37458045/pexels-photo-37458045/free-photo-of-professional-dentist-in-modern-dental-office.jpeg?auto=compress&dpr=1&h=900&w=900",
+    imageAlt: {
+      en: "Temporary stock portrait used for a sample dentist profile",
+      ur: "نمونہ ڈینٹسٹ پروفائل کے لیے عارضی اسٹاک تصویر",
+    },
     isDemo: true,
   },
 ] as const;
