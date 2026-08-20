@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { loadProjectEnvironment } from "./load-project-environment";
 import {
+  adminSeedEmails,
   parseAdminSeedEnvironment,
   parseMongoEnvironment,
 } from "../src/config/env-schema";
@@ -37,17 +38,22 @@ async function seed() {
   seedStage = "administrator password hash";
   const passwordHash = await hashAdminPassword(adminEnvironment.ADMIN_PASSWORD);
   seedStage = "administrator record";
-  await AdminUserModel.findOneAndUpdate(
-    { email: adminEnvironment.ADMIN_EMAIL.toLowerCase() },
-    {
-      $set: {
-        email: adminEnvironment.ADMIN_EMAIL.toLowerCase(),
-        passwordHash,
-        role: "admin",
-        isActive: true,
-      },
-    },
-    { upsert: true },
+  const administratorEmails = adminSeedEmails(adminEnvironment);
+  await Promise.all(
+    administratorEmails.map((email) =>
+      AdminUserModel.findOneAndUpdate(
+        { email },
+        {
+          $set: {
+            email,
+            passwordHash,
+            role: "admin",
+            isActive: true,
+          },
+        },
+        { upsert: true },
+      ),
+    ),
   );
   seedStage = "doctor records";
   await DoctorModel.updateMany(
@@ -84,7 +90,7 @@ async function seed() {
   ]);
 
   console.info(
-    `Seed complete: ${clinicCount} clinic, ${activeBranchCount} active branch, and administrator access configured.`,
+    `Seed complete: ${clinicCount} clinic, ${activeBranchCount} active branch, and ${administratorEmails.length} administrator account(s) configured.`,
   );
 }
 

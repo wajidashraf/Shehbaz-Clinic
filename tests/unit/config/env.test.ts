@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getServerEnv, isCloudinaryConfigured } from "@/config/env";
 import {
+  adminSeedEmails,
   parseAdminSeedEnvironment,
   parseMongoEnvironment,
 } from "@/config/env-schema";
@@ -163,5 +164,18 @@ describe("server environment", () => {
         ADMIN_PASSWORD: "short",
       }),
     ).toThrow();
+  });
+
+  it("accepts two administrator emails sharing one seed password", () => {
+    const environment = parseAdminSeedEnvironment({
+      ADMIN_EMAIL: "first@example.com",
+      ADMIN_SECONDARY_EMAIL: "second@example.com",
+      ADMIN_PASSWORD: "secure-password",
+    });
+
+    expect(adminSeedEmails(environment)).toEqual([
+      "first@example.com",
+      "second@example.com",
+    ]);
   });
 });

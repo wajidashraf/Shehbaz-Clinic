@@ -32,6 +32,7 @@ const mongoEnvironmentSchema = z.object({
 
 const adminSeedEnvironmentSchema = z.object({
   ADMIN_EMAIL: z.email(),
+  ADMIN_SECONDARY_EMAIL: optionalEmailAddress,
   ADMIN_PASSWORD: z.string().min(8).max(200),
 });
 
@@ -105,6 +106,16 @@ export function parseAdminSeedEnvironment(
   source: Record<string, string | undefined>,
 ): AdminSeedEnvironment {
   return adminSeedEnvironmentSchema.parse(source);
+}
+
+export function adminSeedEmails(environment: AdminSeedEnvironment): string[] {
+  return Array.from(
+    new Set(
+      [environment.ADMIN_EMAIL, environment.ADMIN_SECONDARY_EMAIL]
+        .filter((email): email is string => Boolean(email))
+        .map((email) => email.toLowerCase()),
+    ),
+  );
 }
 
 export function parseServerEnvironment(
