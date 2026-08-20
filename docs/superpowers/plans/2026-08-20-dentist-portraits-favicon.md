@@ -24,6 +24,7 @@
 ### Task 1: Distinct Local Dentist Portraits
 
 **Files:**
+
 - Create: `public/images/dentists/sobia-ahmad.webp`
 - Create: `public/images/dentists/amna-rauf.webp`
 - Create: `public/images/dentists/ahmad.webp`
@@ -34,6 +35,7 @@
 - Modify: `tests/unit/content/demo-content.test.ts`
 
 **Interfaces:**
+
 - Consumes: `DemoDentist.image: string` and the existing `DentistCard` use of `next/image`.
 - Produces: five unique local paths under `/images/dentists/*.webp`, each resolving to a 1200 × 900 WebP asset.
 
@@ -132,6 +134,7 @@ git commit -m "feat: add distinct dentist portraits"
 ### Task 2: Reproducible Favicon and Hidden Development Indicator
 
 **Files:**
+
 - Create: `scripts/generate-favicon.mjs`
 - Create: `src/app/favicon.ico`
 - Create: `tests/unit/assets/favicon.test.ts`
@@ -139,6 +142,7 @@ git commit -m "feat: add distinct dentist portraits"
 - Modify: `next.config.ts`
 
 **Interfaces:**
+
 - Consumes: Sharp's `sharp(input).resize().png().toBuffer()` and Next.js `NextConfig.devIndicators`.
 - Produces: `src/app/favicon.ico`, a three-image ICO containing 16 × 16, 32 × 32, and 48 × 48 PNG frames; `nextConfig.devIndicators === false`.
 
@@ -250,10 +254,12 @@ git commit -m "feat: add clinic favicon and hide dev indicator"
 ### Task 3: Responsive and Production Verification
 
 **Files:**
+
 - Modify only if an assertion exposes a requirement gap: `tests/e2e/public-website.spec.ts`
 - Preserve: `next-env.d.ts`
 
 **Interfaces:**
+
 - Consumes: the five content records, local WebP files, favicon route, and existing English/Urdu dentist pages.
 - Produces: verification evidence for desktop, mobile, bilingual rendering, favicon delivery, and production compilation.
 

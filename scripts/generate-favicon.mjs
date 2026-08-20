@@ -16,10 +16,7 @@ const source = Buffer.from(`
 
 const pngs = await Promise.all(
   sizes.map((size) =>
-    sharp(source)
-      .resize(size, size)
-      .png({ compressionLevel: 9 })
-      .toBuffer(),
+    sharp(source).resize(size, size).png({ compressionLevel: 9 }).toBuffer(),
   ),
 );
 
