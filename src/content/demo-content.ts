@@ -130,7 +130,7 @@ export const demoDentists: readonly DemoDentist[] = [
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Monday–Thursday", ur: "پیر تا جمعرات" },
-    image: "/images/demo/dentist-1.webp",
+    image: "/images/dentists/sobia-ahmad.webp",
     imageAlt: {
       en: "Portrait of Dr. Sobia Ahmad",
       ur: "ڈاکٹر صوبیہ احمد کی تصویر",
@@ -149,7 +149,7 @@ export const demoDentists: readonly DemoDentist[] = [
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Tuesday–Saturday", ur: "منگل تا ہفتہ" },
-    image: "/images/demo/dentist-2.webp",
+    image: "/images/dentists/amna-rauf.webp",
     imageAlt: {
       en: "Portrait of Dr. Amna Rauf",
       ur: "ڈاکٹر آمنہ رؤف کی تصویر",
@@ -165,7 +165,7 @@ export const demoDentists: readonly DemoDentist[] = [
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Wednesday–Sunday", ur: "بدھ تا اتوار" },
-    image: "/images/demo/dentist-3.jpg",
+    image: "/images/dentists/ahmad.webp",
     imageAlt: {
       en: "Portrait of Dr. Ahmad",
       ur: "ڈاکٹر احمد کی تصویر",
@@ -181,7 +181,7 @@ export const demoDentists: readonly DemoDentist[] = [
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Monday–Friday", ur: "پیر تا جمعہ" },
-    image: "/images/demo/dentist-2.webp",
+    image: "/images/dentists/rauf.webp",
     imageAlt: { en: "Portrait of Dr. Rauf", ur: "ڈاکٹر رؤف کی تصویر" },
   },
   {
@@ -197,7 +197,7 @@ export const demoDentists: readonly DemoDentist[] = [
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Tuesday–Sunday", ur: "منگل تا اتوار" },
-    image: "/images/demo/dentist-1.webp",
+    image: "/images/dentists/shahbaz.webp",
     imageAlt: { en: "Portrait of Dr. Shahbaz", ur: "ڈاکٹر شہباز کی تصویر" },
   },
 ] as const;

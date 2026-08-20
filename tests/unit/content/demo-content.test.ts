@@ -33,4 +33,17 @@ describe("public clinic content", () => {
     expect(findDemoDentist("sobia-ahmad")?.id).toBe("sobia-ahmad");
     expect(findDemoDentist("unknown")).toBeUndefined();
   });
+
+  it("assigns every dentist a distinct local portrait", () => {
+    const portraits = demoDentists.map((dentist) => dentist.image);
+
+    expect(portraits).toEqual([
+      "/images/dentists/sobia-ahmad.webp",
+      "/images/dentists/amna-rauf.webp",
+      "/images/dentists/ahmad.webp",
+      "/images/dentists/rauf.webp",
+      "/images/dentists/shahbaz.webp",
+    ]);
+    expect(new Set(portraits)).toHaveLength(5);
+  });
 });
