@@ -3,14 +3,15 @@
 :root {
   color-scheme: light;
   --ink: #123035;
-  --teal: #096b61;
-  --teal-dark: #07534c;
-  --aqua: #dcece8;
-  --aqua-soft: #edf7f4;
-  --mineral: #f7fbfa;
+  --primary-ink: #073047;
+  --teal: #20a7e0;
+  --teal-dark: #00678f;
+  --aqua: #d9f3fd;
+  --aqua-soft: #eefaff;
+  --mineral: #f7fcff;
   --saffron: #a96812;
-  --line: #d4e3df;
-  --line-strong: #a9c7c1;
+  --line: #cee6f0;
+  --line-strong: #91c7dc;
   --muted-text: #496469;
   --danger: #a42121;
 }

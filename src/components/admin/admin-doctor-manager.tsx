@@ -335,7 +335,7 @@ export function AdminDoctorManager({
           Feature this doctor on the home page
         </label>
         <button
-          className="mt-6 min-h-12 rounded-full bg-[var(--teal)] px-6 font-extrabold text-white disabled:opacity-60"
+          className="mt-6 min-h-12 rounded-full bg-[var(--teal)] px-6 font-extrabold text-[var(--primary-ink)] hover:bg-[var(--teal-dark)] hover:text-white disabled:opacity-60"
           disabled={busy}
           type="submit"
         >

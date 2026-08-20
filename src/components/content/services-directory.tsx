@@ -41,7 +41,7 @@ export function ServicesDirectory({
             aria-pressed={category === "all"}
             className={`min-h-10 shrink-0 rounded-full border px-4 text-sm font-extrabold transition-colors ${
               category === "all"
-                ? "border-[var(--teal)] bg-[var(--teal)] text-white"
+                ? "border-[var(--teal)] bg-[var(--teal)] text-[var(--primary-ink)]"
                 : "border-[var(--line-strong)] bg-white hover:border-[var(--teal)]"
             }`}
             onClick={() => setCategory("all")}
@@ -54,7 +54,7 @@ export function ServicesDirectory({
               aria-pressed={category === item.en}
               className={`min-h-10 shrink-0 rounded-full border px-4 text-sm font-extrabold transition-colors ${
                 category === item.en
-                  ? "border-[var(--teal)] bg-[var(--teal)] text-white"
+                  ? "border-[var(--teal)] bg-[var(--teal)] text-[var(--primary-ink)]"
                   : "border-[var(--line-strong)] bg-white hover:border-[var(--teal)]"
               }`}
               key={item.en}

@@ -103,7 +103,7 @@ export function ServicesCarousel({
           </button>
           <button
             aria-label={labels.next}
-            className="grid size-11 place-items-center rounded-full bg-[var(--teal)] text-xl font-bold text-white transition-colors hover:bg-[var(--teal-dark)]"
+            className="grid size-11 place-items-center rounded-full bg-[var(--teal)] text-xl font-bold text-[var(--primary-ink)] transition-colors hover:bg-[var(--teal-dark)] hover:text-white"
             onClick={() => move(1)}
             type="button"
           >

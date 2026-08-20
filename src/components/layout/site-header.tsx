@@ -46,8 +46,11 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
             }
             width={52}
           />
-          <span className="hidden max-w-48 leading-tight sm:block">
-            {clinicConfig.name}
+          <span className="hidden max-w-48 leading-tight sm:flex sm:flex-col">
+            <span>{clinicConfig.name}</span>
+            <span className="mt-1 text-[0.65rem] font-bold tracking-[0.08em] text-[var(--teal-dark)]">
+              {clinicConfig.registration}
+            </span>
           </span>
         </Link>
 

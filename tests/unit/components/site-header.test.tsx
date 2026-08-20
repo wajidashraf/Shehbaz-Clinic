@@ -32,6 +32,7 @@ describe("SiteHeader", () => {
     expect(
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toBeInTheDocument();
+    expect(screen.getByText("PHC REG # 24988")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Dentists" })).toHaveAttribute(
       "href",
       "/en/dentists",

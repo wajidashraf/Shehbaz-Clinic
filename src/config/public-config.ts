@@ -1,5 +1,6 @@
 export const clinicConfig = {
   name: "Shahbaz Dental Clinic",
+  registration: "PHC REG # 24988",
   location: {
     city: "Samundri",
     district: "Faisalabad",

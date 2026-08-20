@@ -307,7 +307,7 @@ export function BookingWizard({
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <button
-              className="min-h-11 cursor-pointer rounded-full bg-[var(--teal)] px-5 py-3 text-sm font-extrabold text-white transition-colors hover:bg-[var(--teal-dark)]"
+              className="min-h-11 cursor-pointer rounded-full bg-[var(--teal)] px-5 py-3 text-sm font-extrabold text-[var(--primary-ink)] transition-colors hover:bg-[var(--teal-dark)] hover:text-white"
               onClick={handleRestart}
               type="button"
             >
@@ -615,7 +615,7 @@ export function BookingWizard({
             <span />
           )}
           <button
-            className="min-h-11 cursor-pointer rounded-full bg-[var(--teal)] px-6 py-3 text-sm font-extrabold text-white transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-[var(--teal-dark)]"
+            className="min-h-11 cursor-pointer rounded-full bg-[var(--teal)] px-6 py-3 text-sm font-extrabold text-[var(--primary-ink)] transition-[color,background-color,transform] hover:-translate-y-0.5 hover:bg-[var(--teal-dark)] hover:text-white"
             disabled={submitting}
             type="submit"
           >

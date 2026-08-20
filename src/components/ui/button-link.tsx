@@ -16,7 +16,7 @@ export function ButtonLink({
 }: ButtonLinkProps) {
   const variantClass =
     variant === "primary"
-      ? "bg-[var(--teal)] text-white hover:bg-[var(--teal-dark)]"
+      ? "bg-[var(--teal)] text-[var(--primary-ink)] hover:bg-[var(--teal-dark)] hover:text-white"
       : "border border-[var(--line)] bg-white text-[var(--ink)] hover:border-[var(--teal)]";
 
   return (

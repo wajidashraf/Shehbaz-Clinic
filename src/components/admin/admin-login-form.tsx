@@ -62,7 +62,7 @@ export function AdminLoginForm() {
         </p>
       ) : null}
       <button
-        className="min-h-12 w-full rounded-full bg-[var(--teal)] px-5 font-extrabold text-white hover:bg-[var(--teal-dark)] disabled:cursor-wait disabled:opacity-60"
+        className="min-h-12 w-full rounded-full bg-[var(--teal)] px-5 font-extrabold text-[var(--primary-ink)] hover:bg-[var(--teal-dark)] hover:text-white disabled:cursor-wait disabled:opacity-60"
         disabled={busy}
         type="submit"
       >

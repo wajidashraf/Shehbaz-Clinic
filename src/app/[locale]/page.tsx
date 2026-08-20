@@ -220,7 +220,7 @@ export default async function HomePage({ params }: HomePageProps) {
                   className="rounded-3xl border border-[var(--line)] bg-[var(--mineral)] p-6"
                   key={step}
                 >
-                  <span className="grid size-10 place-items-center rounded-full bg-[var(--teal)] font-extrabold text-white">
+                  <span className="grid size-10 place-items-center rounded-full bg-[var(--teal)] font-extrabold text-[var(--primary-ink)]">
                     <bdi>{index + 1}</bdi>
                   </span>
                   <p className="mt-5 text-lg font-extrabold">{step}</p>
@@ -232,14 +232,14 @@ export default async function HomePage({ params }: HomePageProps) {
       </section>
 
       <section className="content-auto mx-auto grid max-w-7xl gap-6 px-5 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-28">
-        <article className="rounded-[2rem] bg-[var(--teal)] p-7 text-white sm:p-9">
-          <p className="text-sm font-extrabold text-white/80">
+        <article className="rounded-[2rem] bg-[var(--teal)] p-7 text-[var(--primary-ink)] sm:p-9">
+          <p className="text-sm font-extrabold text-[var(--primary-ink)]/80">
             {home("locationLabel")}
           </p>
           <h2 className="mt-3 text-3xl font-extrabold tracking-[-0.035em]">
             <bdi>{home("location")}</bdi>
           </h2>
-          <p className="mt-4 leading-7 text-white/85">
+          <p className="mt-4 leading-7 text-[var(--primary-ink)]/85">
             {home("locationDescription")}
           </p>
         </article>

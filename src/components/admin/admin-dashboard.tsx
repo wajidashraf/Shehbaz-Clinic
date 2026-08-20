@@ -252,7 +252,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
               </select>
             </label>
             <button
-              className="min-h-12 rounded-full bg-[var(--teal)] px-5 font-extrabold text-white hover:bg-[var(--teal-dark)] md:col-span-5 md:justify-self-start"
+              className="min-h-12 rounded-full bg-[var(--teal)] px-5 font-extrabold text-[var(--primary-ink)] hover:bg-[var(--teal-dark)] hover:text-white md:col-span-5 md:justify-self-start"
               disabled={busy}
               type="submit"
             >
@@ -368,7 +368,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                         type="time"
                       />
                       <button
-                        className="min-h-11 rounded-full bg-[var(--teal)] px-4 font-bold text-white"
+                        className="min-h-11 rounded-full bg-[var(--teal)] px-4 font-bold text-[var(--primary-ink)] hover:bg-[var(--teal-dark)] hover:text-white"
                         type="submit"
                       >
                         Reschedule

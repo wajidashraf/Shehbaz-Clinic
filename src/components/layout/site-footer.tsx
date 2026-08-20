@@ -35,7 +35,12 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
               }
               width={56}
             />
-            {clinicConfig.name}
+            <span className="flex flex-col">
+              <span>{clinicConfig.name}</span>
+              <span className="mt-1 text-[0.68rem] font-bold tracking-[0.08em] text-[var(--teal-dark)]">
+                {clinicConfig.registration}
+              </span>
+            </span>
           </Link>
           <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--muted-text)]">
             {labels.summary}

@@ -14,7 +14,7 @@ export default async function NotFound() {
       </h1>
       <p className="mt-4 text-slate-600">{translations("description")}</p>
       <Link
-        className="mt-8 inline-flex min-h-11 items-center rounded-full bg-[var(--teal)] px-5 font-bold text-white"
+        className="mt-8 inline-flex min-h-11 items-center rounded-full bg-[var(--teal)] px-5 font-bold text-[var(--primary-ink)] hover:bg-[var(--teal-dark)] hover:text-white"
         href={`/${locale}`}
       >
         {translations("home")}
