@@ -67,9 +67,12 @@ export default async function LocaleLayout({
               primaryNavigation: navigation("primaryNavigation"),
               home: navigation("home"),
               services: navigation("services"),
+              dentists: navigation("dentists"),
               book: navigation("book"),
-              login: navigation("login"),
+              bookShort: navigation("bookShort"),
               switchLanguage: navigation("switchLanguage"),
+              openMenu: navigation("openMenu"),
+              closeMenu: navigation("closeMenu"),
             }}
             locale={locale}
           />
@@ -77,10 +80,11 @@ export default async function LocaleLayout({
           <SiteFooter
             labels={{
               summary: footer("summary"),
-              addressPending: footer("addressPending"),
-              contactPending: footer("contactPending"),
-              privacy: footer("privacy"),
-              accessibility: footer("accessibility"),
+              locality: footer("locality"),
+              demonstration: footer("demonstration"),
+              services: footer("services"),
+              dentists: footer("dentists"),
+              book: footer("book"),
             }}
             locale={locale}
           />

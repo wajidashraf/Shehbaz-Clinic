@@ -3,12 +3,14 @@ import type { ReactNode } from "react";
 
 type ButtonLinkProps = {
   children: ReactNode;
+  compactLabel?: string;
   href: string;
   variant?: "primary" | "secondary";
 };
 
 export function ButtonLink({
   children,
+  compactLabel,
   href,
   variant = "primary",
 }: ButtonLinkProps) {
@@ -19,10 +21,20 @@ export function ButtonLink({
 
   return (
     <Link
-      className={`inline-flex min-h-11 items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition-colors ${variantClass}`}
+      aria-label={
+        compactLabel && typeof children === "string" ? children : undefined
+      }
+      className={`inline-flex min-h-11 items-center justify-center rounded-full px-4 py-3 text-center text-sm font-extrabold transition-[color,background-color,border-color,transform] hover:-translate-y-0.5 sm:px-5 ${variantClass}`}
       href={href}
     >
-      {children}
+      {compactLabel ? (
+        <>
+          <span className="sm:hidden">{compactLabel}</span>
+          <span className="hidden sm:inline">{children}</span>
+        </>
+      ) : (
+        children
+      )}
     </Link>
   );
 }

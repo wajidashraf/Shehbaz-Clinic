@@ -2,13 +2,17 @@
 
 :root {
   color-scheme: light;
-  --ink: #0b2239;
-  --teal: #0b6b68;
-  --teal-dark: #075451;
-  --aqua: #d9eae8;
-  --mineral: #f6faf9;
-  --saffron: #d9a441;
-  --line: #ccddda;
+  --ink: #123035;
+  --teal: #096b61;
+  --teal-dark: #07534c;
+  --aqua: #dcece8;
+  --aqua-soft: #edf7f4;
+  --mineral: #f7fbfa;
+  --saffron: #a96812;
+  --line: #d4e3df;
+  --line-strong: #a9c7c1;
+  --muted-text: #496469;
+  --danger: #a42121;
 }
 
 * {
@@ -17,10 +21,13 @@
 
 body {
   margin: 0;
+  min-width: 320px;
+  overflow-x: clip;
   background: var(--mineral);
   color: var(--ink);
   font-family: "Manrope Variable", "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 html[lang="ur"] body {
@@ -32,6 +39,23 @@ a {
   text-decoration: none;
 }
 
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
 :focus-visible {
   outline: 3px solid var(--saffron);
   outline-offset: 3px;
@@ -40,6 +64,13 @@ a {
 ::selection {
   background: var(--aqua);
   color: var(--ink);
+}
+
+@media (min-width: 768px) {
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 720px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
