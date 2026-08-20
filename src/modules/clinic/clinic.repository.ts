@@ -98,7 +98,7 @@ export function createClinicSeeder(connect: typeof connectMongo) {
           },
           $setOnInsert: { seedKey: "shahbaz-dental-clinic" },
         },
-        { new: true, session, upsert: true },
+        { returnDocument: "after", session, upsert: true },
       ).exec();
 
       await BranchModel.findOneAndUpdate(
@@ -118,7 +118,7 @@ export function createClinicSeeder(connect: typeof connectMongo) {
           },
           $setOnInsert: { seedKey: "samundri-primary" },
         },
-        { new: true, session, upsert: true },
+        { returnDocument: "after", session, upsert: true },
       ).exec();
     });
 

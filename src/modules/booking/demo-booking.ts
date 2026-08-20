@@ -1,4 +1,4 @@
-import { findDemoDentist, findDemoService } from "@/content/demo-content";
+import { findDemoService } from "@/content/demo-content";
 
 export type BookingStep =
   "service" | "dentist" | "time" | "details" | "review" | "confirmation";
@@ -64,7 +64,10 @@ function scalarParam(value: string | string[] | undefined): string {
   return typeof value === "string" ? value : "";
 }
 
-export function resolveBookingPrefill(searchParams: SearchParams): {
+export function resolveBookingPrefill(
+  searchParams: SearchParams,
+  validDentistIds: readonly string[],
+): {
   serviceId: string;
   dentistId: string;
 } {
@@ -76,7 +79,9 @@ export function resolveBookingPrefill(searchParams: SearchParams): {
     dentistId:
       requestedDentist === "no-preference"
         ? "no-preference"
-        : (findDemoDentist(requestedDentist)?.id ?? ""),
+        : validDentistIds.includes(requestedDentist)
+          ? requestedDentist
+          : "",
   };
 }
 

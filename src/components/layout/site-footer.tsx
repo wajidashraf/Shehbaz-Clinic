@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { clinicConfig } from "@/config/public-config";
 import type { Locale } from "@/i18n/config";
 
@@ -23,12 +24,17 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
             className="inline-flex items-center gap-3 font-extrabold tracking-[-0.02em]"
             href={`/${locale}`}
           >
-            <span
-              aria-hidden="true"
-              className="grid size-10 place-items-center rounded-[38%_62%_52%_48%] bg-[var(--teal)] text-white"
-            >
-              S
-            </span>
+            <Image
+              alt=""
+              className="size-14 object-contain"
+              height={56}
+              src={
+                locale === "ur"
+                  ? "/images/Logos/urduLogo.png"
+                  : "/images/Logos/engLogo.png"
+              }
+              width={56}
+            />
             {clinicConfig.name}
           </Link>
           <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--muted-text)]">

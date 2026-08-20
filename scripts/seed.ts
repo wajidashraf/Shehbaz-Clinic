@@ -17,6 +17,8 @@ import {
   SlotClaimModel,
 } from "../src/modules/appointments/appointment.model";
 import { DentistScheduleModel } from "../src/modules/scheduling/dentist-schedule.model";
+import { DoctorModel } from "../src/modules/doctors/doctor.model";
+import { demoDentists } from "../src/content/demo-content";
 
 loadProjectEnvironment(process.cwd());
 let seedStage = "configuration";
@@ -47,6 +49,23 @@ async function seed() {
     },
     { upsert: true },
   );
+  seedStage = "doctor records";
+  await DoctorModel.updateMany(
+    { isFeatured: true },
+    { $set: { isFeatured: false } },
+  );
+  for (const dentist of demoDentists) {
+    await DoctorModel.findOneAndUpdate(
+      { id: dentist.id },
+      { $set: { ...dentist, isActive: true } },
+      { upsert: true, runValidators: true },
+    );
+  }
+  await DoctorModel.deleteMany({
+    id: {
+      $in: ["sobia-ahmad", "amna-rauf", "ahmad", "rauf", "shahbaz"],
+    },
+  });
   seedStage = "database indexes";
   await Promise.all([
     AdminUserModel.syncIndexes(),
@@ -55,6 +74,7 @@ async function seed() {
     AppointmentModel.syncIndexes(),
     SlotClaimModel.syncIndexes(),
     NotificationJobModel.syncIndexes(),
+    DoctorModel.syncIndexes(),
   ]);
 
   seedStage = "verification counts";

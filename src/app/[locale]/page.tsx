@@ -2,11 +2,15 @@ import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DemoNotice } from "@/components/content/demo-notice";
 import { DentistCard } from "@/components/content/dentist-card";
-import { ServiceCard } from "@/components/content/service-card";
+import { FeaturedDoctorSection } from "@/components/content/featured-doctor-section";
+import { ServicesCarousel } from "@/components/content/services-carousel";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { demoDentists, demoServices } from "@/content/demo-content";
+import { demoServices } from "@/content/demo-content";
 import type { Locale } from "@/i18n/config";
+import { listDoctors } from "@/modules/doctors/doctor.repository";
+
+export const dynamic = "force-dynamic";
 
 type HomePageProps = {
   params: Promise<{ locale: Locale }>;
@@ -15,12 +19,14 @@ type HomePageProps = {
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [home, services, dentists] = await Promise.all([
-    getTranslations("Home"),
-    getTranslations("Services"),
-    getTranslations("Dentists"),
-  ]);
-  const featuredServices = demoServices.filter((service) => service.featured);
+  const [home, services, dentistsTranslations, dentistRecords] =
+    await Promise.all([
+      getTranslations("Home"),
+      getTranslations("Services"),
+      getTranslations("Dentists"),
+      listDoctors(),
+    ]);
+  const featuredDoctor = dentistRecords.find((doctor) => doctor.isFeatured);
 
   return (
     <main id="main-content">
@@ -73,6 +79,23 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
 
+      {featuredDoctor ? (
+        <FeaturedDoctorSection
+          doctor={featuredDoctor}
+          key={featuredDoctor.id}
+          labels={{
+            book: dentistsTranslations("book"),
+            eyebrow: home("featuredDoctorEyebrow"),
+            heading: home("featuredDoctorHeading"),
+            pause: home("pauseGallery"),
+            resume: home("resumeGallery"),
+            subheading: home("featuredDoctorDescription"),
+            workingHours: home("workingHours"),
+          }}
+          locale={locale}
+        />
+      ) : null}
+
       <div className="mx-auto max-w-7xl px-5 pt-8 sm:px-6 lg:px-8">
         <DemoNotice
           description={home("demoDescription")}
@@ -91,19 +114,20 @@ export default async function HomePage({ params }: HomePageProps) {
             {home("viewServices")}
           </ButtonLink>
         </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {featuredServices.map((service) => (
-            <ServiceCard
-              key={service.id}
-              labels={{
-                book: services("book"),
-                duration: services("duration"),
-                minutes: services("minutes"),
-              }}
-              locale={locale}
-              service={service}
-            />
-          ))}
+        <div className="mt-10">
+          <ServicesCarousel
+            labels={{
+              book: services("book"),
+              duration: services("duration"),
+              minutes: services("minutes"),
+              next: home("nextService"),
+              pause: home("pauseServices"),
+              previous: home("previousService"),
+              resume: home("resumeServices"),
+            }}
+            locale={locale}
+            services={demoServices}
+          />
         </div>
       </section>
 
@@ -166,15 +190,15 @@ export default async function HomePage({ params }: HomePageProps) {
           </ButtonLink>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {demoDentists.map((dentist) => (
+          {dentistRecords.map((dentist) => (
             <DentistCard
               dentist={dentist}
               key={dentist.id}
               labels={{
-                book: dentists("book"),
-                demoBadge: dentists("demoBadge"),
-                languages: dentists("languages"),
-                workingDays: dentists("workingDays"),
+                book: dentistsTranslations("book"),
+                demoBadge: dentistsTranslations("demoBadge"),
+                languages: dentistsTranslations("languages"),
+                workingDays: dentistsTranslations("workingDays"),
               }}
               locale={locale}
             />

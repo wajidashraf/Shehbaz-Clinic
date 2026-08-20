@@ -69,3 +69,18 @@ const repository = createMediaRepository({
 });
 
 export const saveMediaAsset = repository.saveMediaAsset;
+
+export async function findMediaAssetBySecureUrl(secureUrl: string) {
+  await connectMongo();
+  const asset = await MediaAssetModel.findOne({ secureUrl })
+    .select("publicId secureUrl")
+    .lean();
+  return asset
+    ? { publicId: asset.publicId, secureUrl: asset.secureUrl }
+    : null;
+}
+
+export async function removeMediaAssetRecord(publicId: string) {
+  await connectMongo();
+  await MediaAssetModel.deleteOne({ publicId });
+}

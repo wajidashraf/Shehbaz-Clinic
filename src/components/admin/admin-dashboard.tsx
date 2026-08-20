@@ -2,8 +2,10 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { demoDentists, demoServices } from "@/content/demo-content";
+import { AdminDoctorManager } from "@/components/admin/admin-doctor-manager";
+import { demoServices } from "@/content/demo-content";
 import { isNotificationRetryEligible } from "@/modules/appointments/contracts";
+import type { DoctorRecord } from "@/modules/doctors/doctor.types";
 
 type Schedule = {
   _id: string;
@@ -35,13 +37,15 @@ type Notification = {
 };
 
 export type AdminData = {
+  doctors: DoctorRecord[];
+  doctorNames: Record<string, string>;
   schedules: Schedule[];
   appointments: Appointment[];
   notifications: Notification[];
 };
 
-function dentistName(id: string) {
-  return demoDentists.find((dentist) => dentist.id === id)?.name.en ?? id;
+function dentistName(id: string, doctorNames: Record<string, string>) {
+  return doctorNames[id] ?? id;
 }
 
 function serviceName(id: string) {
@@ -180,6 +184,8 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
           </p>
         ) : null}
 
+        <AdminDoctorManager doctors={data.doctors} onChanged={load} />
+
         <section className="rounded-[2rem] border border-[var(--line)] bg-white p-5 sm:p-7">
           <h2 className="text-2xl font-extrabold">Add or update a schedule</h2>
           <p className="mt-2 text-[var(--muted-text)]">
@@ -195,7 +201,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                 className="mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] bg-white px-3"
                 name="dentistId"
               >
-                {demoDentists.map((dentist) => (
+                {data.doctors.map((dentist) => (
                   <option key={dentist.id} value={dentist.id}>
                     {dentist.name.en}
                   </option>
@@ -264,7 +270,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                 key={schedule._id}
               >
                 <p className="font-extrabold">
-                  {dentistName(schedule.dentistId)}
+                  {dentistName(schedule.dentistId, data.doctorNames)}
                 </p>
                 <p className="mt-2 text-[var(--muted-text)]">
                   {schedule.dateKey} · {schedule.opensAt}–{schedule.closesAt}
@@ -304,7 +310,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                     </p>
                   </div>
                   <span className="rounded-full bg-[var(--aqua-soft)] px-3 py-1 text-sm font-bold">
-                    {dentistName(appointment.dentistId)}
+                    {dentistName(appointment.dentistId, data.doctorNames)}
                   </span>
                 </div>
                 <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">

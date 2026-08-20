@@ -25,6 +25,8 @@ import {
   dispatchNotificationEmail,
 } from "@/modules/notifications/brevo.server";
 import { isNotificationRetryEligible } from "@/modules/appointments/contracts";
+import { eligibleDoctorIds } from "@/modules/doctors/doctor.contracts";
+import { DoctorModel } from "@/modules/doctors/doctor.model";
 
 export class SlotUnavailableError extends Error {
   constructor() {
@@ -61,8 +63,12 @@ function isDuplicateKey(error: unknown) {
 }
 
 async function eligibleSchedules(dentistId: string, dateKey: string) {
-  const query =
-    dentistId === "no-preference" ? { dateKey } : { dateKey, dentistId };
+  const currentDoctorIds = await DoctorModel.distinct("id", {
+    isActive: { $ne: false },
+  });
+  const eligibleIds = eligibleDoctorIds(dentistId, currentDoctorIds);
+  if (eligibleIds.length === 0) return [];
+  const query = { dateKey, dentistId: { $in: eligibleIds } };
   return DentistScheduleModel.find(query).sort({ dentistId: 1 }).lean();
 }
 
@@ -234,6 +240,14 @@ export async function retryNotificationEmail(id: string) {
 export async function upsertSchedule(input: unknown) {
   const schedule = scheduleInputSchema.parse(input);
   await connectMongo();
+  if (
+    !(await DoctorModel.exists({
+      id: schedule.dentistId,
+      isActive: { $ne: false },
+    }))
+  ) {
+    throw new Error("The selected doctor does not exist");
+  }
   const generated = new Set(
     generateScheduleSlots(schedule).map((slot) =>
       slot.startAtUtc.toISOString(),
@@ -267,7 +281,7 @@ export async function upsertSchedule(input: unknown) {
   return DentistScheduleModel.findOneAndUpdate(
     { dentistId: schedule.dentistId, dateKey: schedule.dateKey },
     { $set: schedule },
-    { new: true, upsert: true, runValidators: true },
+    { returnDocument: "after", upsert: true, runValidators: true },
   ).lean();
 }
 
@@ -348,6 +362,13 @@ export async function rescheduleAppointment(
       status: "confirmed",
     }).session(session);
     if (!appointment) throw new AppointmentNotFoundError();
+    if (
+      !(await DoctorModel.exists({
+        id: appointment.dentistId,
+        isActive: { $ne: false },
+      }).session(session))
+    )
+      throw new SlotUnavailableError();
     const schedule = await DentistScheduleModel.findOne({
       dentistId: appointment.dentistId,
       dateKey: input.dateKey,

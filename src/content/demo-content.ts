@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import type { DoctorRecord } from "@/modules/doctors/doctor.types";
 
 export type LocalizedText = Readonly<Record<Locale, string>>;
 
@@ -11,16 +12,7 @@ export type DemoService = Readonly<{
   featured: boolean;
 }>;
 
-export type DemoDentist = Readonly<{
-  id: string;
-  name: LocalizedText;
-  area: LocalizedText;
-  biography: LocalizedText;
-  languages: LocalizedText;
-  workingDays: LocalizedText;
-  image: string;
-  imageAlt: LocalizedText;
-}>;
+export type DemoDentist = DoctorRecord;
 
 export const demoServices: readonly DemoService[] = [
   {
@@ -118,87 +110,187 @@ export const demoServices: readonly DemoService[] = [
 
 export const demoDentists: readonly DemoDentist[] = [
   {
-    id: "sobia-ahmad",
-    name: { en: "Dr. Sobia Ahmad", ur: "ڈاکٹر صوبیہ احمد" },
-    area: {
-      en: "General and preventive care",
-      ur: "عمومی اور احتیاطی نگہداشت",
+    id: "sobia-zulfiqar",
+    name: { en: "Dr. Sobia Zulfiqar", ur: "ڈاکٹر صوبیہ ذوالفقار" },
+    title: {
+      en: "Dental Surgeon",
+      ur: "ڈینٹل سرجن",
     },
+    qualification: {
+      en: "BDS, RDS (Punjab), RDS",
+      ur: "BDS, RDS (Punjab), RDS",
+    },
+    education: {
+      en: "Akhtar House, Punjab Dental Hospital, Lahore",
+      ur: "اختر ہاؤس، پنجاب ڈینٹل ہسپتال، لاہور",
+    },
+    registration: { en: "PM&DC — 13365-D", ur: "PM&DC — 13365-D" },
     biography: {
-      en: "Focused on comfortable consultations, preventive guidance, and everyday dental care for adults and families.",
-      ur: "بڑوں اور خاندانوں کے لیے آرام دہ مشورے، احتیاطی رہنمائی اور روزمرہ دانتوں کی نگہداشت پر توجہ۔",
+      en: "Dr. Sobia Zulfiqar is a dental surgeon specializing in orthodontics and endodontics, offering braces, aligners, and root canal treatment for patients of all ages.",
+      ur: "ڈاکٹر صوبیہ ذوالفقار آرتھوڈانٹکس اور اینڈوڈانٹکس میں مہارت رکھنے والی ڈینٹل سرجن ہیں، جو ہر عمر کے مریضوں کے لیے بریسز، الائنرز اور روٹ کینال علاج فراہم کرتی ہیں۔",
     },
-    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Monday–Thursday", ur: "پیر تا جمعرات" },
+    focusAreas: [
+      {
+        en: "C-Ortho / C-Endo (Braces & Aligners)",
+        ur: "C-Ortho / C-Endo (بریسز اور الائنرز)",
+      },
+      { en: "Root canal treatment", ur: "روٹ کینال علاج" },
+    ],
+    languages: { en: "", ur: "" },
+    workingDays: { en: "", ur: "" },
     image: "/images/dentists/sobia-ahmad.webp",
     imageAlt: {
-      en: "Portrait of Dr. Sobia Ahmad",
-      ur: "ڈاکٹر صوبیہ احمد کی تصویر",
+      en: "Portrait of Dr. Sobia Zulfiqar",
+      ur: "ڈاکٹر صوبیہ ذوالفقار کی تصویر",
     },
+    featuredImages: [],
+    isFeatured: false,
+    sortOrder: 10,
   },
   {
-    id: "amna-rauf",
-    name: { en: "Dr. Amna Rauf", ur: "ڈاکٹر آمنہ رؤف" },
-    area: {
-      en: "Family and children’s care",
-      ur: "خاندانی اور بچوں کی نگہداشت",
+    id: "amna-baig",
+    name: { en: "Dr. Amna Baig", ur: "ڈاکٹر آمنہ بیگ" },
+    title: {
+      en: "Dental Surgeon",
+      ur: "ڈینٹل سرجن",
     },
+    qualification: {
+      en: "BDS, RDS (Punjab), RDS",
+      ur: "BDS, RDS (Punjab), RDS",
+    },
+    education: {
+      en: "Akhtar House, Sarwar Shaheed Medical & Dental College, Lahore",
+      ur: "اختر ہاؤس، سرور شہید میڈیکل اینڈ ڈینٹل کالج، لاہور",
+    },
+    registration: { en: "PM&DC — 13463-D", ur: "PM&DC — 13463-D" },
     biography: {
-      en: "Provides a welcoming approach to routine family visits and age-appropriate dental care for children.",
-      ur: "خاندان کے معمول کے معائنے اور بچوں کے لیے عمر کے مطابق دوستانہ دانتوں کی نگہداشت۔",
+      en: "Dr. Amna Baig is a dental surgeon with FCPS(I) certification in orthodontics. She provides general dental care with a focus on orthodontic assessment and treatment planning.",
+      ur: "ڈاکٹر آمنہ بیگ آرتھوڈانٹکس میں FCPS(I) سرٹیفیکیشن کے ساتھ ڈینٹل سرجن ہیں۔ وہ آرتھوڈانٹک معائنے اور علاج کی منصوبہ بندی پر توجہ کے ساتھ عمومی دانتوں کی نگہداشت فراہم کرتی ہیں۔",
     },
-    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Tuesday–Saturday", ur: "منگل تا ہفتہ" },
-    image: "/images/dentists/amna-rauf.webp",
+    focusAreas: [
+      {
+        en: "FCPS(I) certified in Orthodontics",
+        ur: "آرتھوڈانٹکس میں FCPS(I) سرٹیفائیڈ",
+      },
+      { en: "Orthodontic assessment", ur: "آرتھوڈانٹک معائنہ" },
+    ],
+    languages: { en: "", ur: "" },
+    workingDays: { en: "", ur: "" },
+    image: "/images/dentists/amna-baig.webp",
     imageAlt: {
-      en: "Portrait of Dr. Amna Rauf",
-      ur: "ڈاکٹر آمنہ رؤف کی تصویر",
+      en: "Portrait of Dr. Amna Baig",
+      ur: "ڈاکٹر آمنہ بیگ کی تصویر",
     },
+    featuredImages: [],
+    isFeatured: false,
+    sortOrder: 20,
   },
   {
-    id: "ahmad",
-    name: { en: "Dr. Ahmad", ur: "ڈاکٹر احمد" },
-    area: { en: "Restorative dental care", ur: "دانتوں کی بحالی کی نگہداشت" },
-    biography: {
-      en: "Supports patients with tooth assessments, fillings, and practical restorative-care planning.",
-      ur: "دانتوں کے معائنے، فلنگ اور بحالی کی نگہداشت کی عملی منصوبہ بندی میں مریضوں کی مدد۔",
+    id: "ahmed-mobeen",
+    name: { en: "Dr. Ahmed Mobeen", ur: "ڈاکٹر احمد مبین" },
+    title: {
+      en: "Managing Director · Senior Dental Technologist",
+      ur: "منیجنگ ڈائریکٹر · سینئر ڈینٹل ٹیکنالوجسٹ",
     },
-    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Wednesday–Sunday", ur: "بدھ تا اتوار" },
-    image: "/images/dentists/ahmad.webp",
+    qualification: {
+      en: "Senior Dental Technologist",
+      ur: "سینئر ڈینٹل ٹیکنالوجسٹ",
+    },
+    education: {
+      en: "Punjab Medical Faculty, Lahore",
+      ur: "پنجاب میڈیکل فیکلٹی، لاہور",
+    },
+    registration: { en: "Reg # 19169-DTT", ur: "رجسٹریشن # 19169-DTT" },
+    biography: {
+      en: "Dr. Ahmed Mobeen is our senior dental technologist, supporting the clinical team with lab work, appliance fabrication, and technical procedures behind every treatment plan.",
+      ur: "ڈاکٹر احمد مبین ہمارے سینئر ڈینٹل ٹیکنالوجسٹ ہیں، جو لیب ورک، آلات کی تیاری اور ہر علاج کے منصوبے کے تکنیکی طریقۂ کار میں کلینیکل ٹیم کی معاونت کرتے ہیں۔",
+    },
+    focusAreas: [
+      { en: "Dental laboratory work", ur: "ڈینٹل لیبارٹری ورک" },
+      { en: "Appliance fabrication", ur: "آلات کی تیاری" },
+    ],
+    languages: { en: "", ur: "" },
+    workingDays: { en: "", ur: "" },
+    image: "/images/dentists/Ahmad.png",
     imageAlt: {
-      en: "Portrait of Dr. Ahmad",
-      ur: "ڈاکٹر احمد کی تصویر",
+      en: "Portrait of Dr. Ahmed Mobeen",
+      ur: "ڈاکٹر احمد مبین کی تصویر",
     },
+    featuredImages: [],
+    isFeatured: false,
+    sortOrder: 30,
   },
   {
-    id: "rauf",
-    name: { en: "Dr. Rauf", ur: "ڈاکٹر رؤف" },
-    area: { en: "Oral-care consultations", ur: "منہ اور دانتوں کے مشورے" },
+    id: "manzoor-shahbaz",
+    name: { en: "Dr. Manzoor Shahbaz", ur: "ڈاکٹر منظور شہباز" },
+    title: { en: "Chief Executive Officer", ur: "چیف ایگزیکٹو آفیسر" },
+    qualification: { en: "", ur: "" },
+    education: { en: "", ur: "" },
+    registration: { en: "", ur: "" },
     biography: {
-      en: "Offers careful assessments for dental concerns, including consultations before extraction decisions.",
-      ur: "دانتوں کے مسائل کا محتاط معائنہ، بشمول دانت نکالنے کے فیصلے سے پہلے مشورہ۔",
+      en: "Dr. Manzoor Shahbaz is the Chief Executive Officer of Shahbaz Dental Clinic.",
+      ur: "ڈاکٹر منظور شہباز شہباز ڈینٹل کلینک کے چیف ایگزیکٹو آفیسر ہیں۔",
     },
-    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Monday–Friday", ur: "پیر تا جمعہ" },
-    image: "/images/dentists/rauf.webp",
-    imageAlt: { en: "Portrait of Dr. Rauf", ur: "ڈاکٹر رؤف کی تصویر" },
+    focusAreas: [],
+    languages: { en: "", ur: "" },
+    workingDays: { en: "", ur: "" },
+    image: "/images/dentists/shahbaz.png",
+    imageAlt: {
+      en: "Portrait of Dr. Manzoor Shahbaz",
+      ur: "ڈاکٹر منظور شہباز کی تصویر",
+    },
+    featuredImages: [
+      {
+        url: "/images/dentists/shahbaz.png",
+        altText: {
+          en: "Dr. Manzoor Shahbaz at Shahbaz Dental Clinic",
+          ur: "شہباز ڈینٹل کلینک میں ڈاکٹر منظور شہباز",
+        },
+      },
+    ],
+    isFeatured: true,
+    sortOrder: 40,
   },
   {
-    id: "shahbaz",
-    name: { en: "Dr. Shahbaz", ur: "ڈاکٹر شہباز" },
-    area: {
-      en: "General and alignment consultations",
-      ur: "عمومی نگہداشت اور دانتوں کی ترتیب کے مشورے",
+    id: "rana-muhammad-adnan",
+    name: { en: "Dr. Rana Muhammad Adnan", ur: "ڈاکٹر رانا محمد عدنان" },
+    title: {
+      en: "Consultant Dental Surgeon · Oral & Maxillofacial Surgeon",
+      ur: "کنسلٹنٹ ڈینٹل سرجن · اورل اینڈ میکسیلوفیشل سرجن",
     },
+    qualification: { en: "BDS, MDS", ur: "BDS, MDS" },
+    education: {
+      en: "King Edward Medical University & Mayo Hospital, Lahore",
+      ur: "کنگ ایڈورڈ میڈیکل یونیورسٹی اور میو ہسپتال، لاہور",
+    },
+    registration: { en: "PMDC — 10972-D", ur: "PMDC — 10972-D" },
     biography: {
-      en: "Provides general dental assessments and consultations about tooth alignment and next steps.",
-      ur: "عمومی دانتوں کا معائنہ اور دانتوں کی ترتیب کے بارے میں مشورہ اور اگلے مراحل کی رہنمائی۔",
+      en: "Dr. Adnan is our consultant oral & maxillofacial surgeon, specializing in complex jaw and facial cases — from fracture repair to implant-supported restorations in reconstructed bone. Trained at King Edward Medical University and Mayo Hospital, Lahore.",
+      ur: "ڈاکٹر عدنان ہمارے کنسلٹنٹ اورل اینڈ میکسیلوفیشل سرجن ہیں، جو جبڑے اور چہرے کے پیچیدہ کیسز، فریکچر کی مرمت اور تعمیر شدہ ہڈی میں امپلانٹ سپورٹڈ بحالی میں مہارت رکھتے ہیں۔",
     },
-    languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
-    workingDays: { en: "Tuesday–Sunday", ur: "منگل تا اتوار" },
-    image: "/images/dentists/shahbaz.webp",
-    imageAlt: { en: "Portrait of Dr. Shahbaz", ur: "ڈاکٹر شہباز کی تصویر" },
+    focusAreas: [
+      {
+        en: "Jaw & facial bone fractures",
+        ur: "جبڑے اور چہرے کی ہڈی کے فریکچر",
+      },
+      { en: "Jaw tumor & cyst removal", ur: "جبڑے کی رسولی اور سسٹ کا خاتمہ" },
+      { en: "Dental implants", ur: "ڈینٹل امپلانٹس" },
+      {
+        en: "Jawbone root canal treatment",
+        ur: "جبڑے کی ہڈی سے متعلق روٹ کینال علاج",
+      },
+      { en: "Pediatric cases", ur: "بچوں کے کیسز" },
+    ],
+    languages: { en: "", ur: "" },
+    workingDays: { en: "", ur: "" },
+    image: "/images/demo/dentist-2.webp",
+    imageAlt: {
+      en: "Portrait of Dr. Rana Muhammad Adnan",
+      ur: "ڈاکٹر رانا محمد عدنان کی تصویر",
+    },
+    featuredImages: [],
+    isFeatured: false,
+    sortOrder: 50,
   },
 ] as const;
 

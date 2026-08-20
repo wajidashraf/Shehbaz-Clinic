@@ -21,16 +21,17 @@ describe("public clinic content", () => {
     expect(findDemoService("unknown")).toBeUndefined();
   });
 
-  it("provides the five named clinic dentist records", () => {
+  it("provides the corrected five-person clinic roster without Dr. Rauf", () => {
     expect(demoDentists).toHaveLength(5);
     expect(demoDentists.map((dentist) => dentist.name.en)).toEqual([
-      "Dr. Sobia Ahmad",
-      "Dr. Amna Rauf",
-      "Dr. Ahmad",
-      "Dr. Rauf",
-      "Dr. Shahbaz",
+      "Dr. Sobia Zulfiqar",
+      "Dr. Amna Baig",
+      "Dr. Ahmed Mobeen",
+      "Dr. Manzoor Shahbaz",
+      "Dr. Rana Muhammad Adnan",
     ]);
-    expect(findDemoDentist("sobia-ahmad")?.id).toBe("sobia-ahmad");
+    expect(findDemoDentist("sobia-zulfiqar")?.id).toBe("sobia-zulfiqar");
+    expect(findDemoDentist("rauf")).toBeUndefined();
     expect(findDemoDentist("unknown")).toBeUndefined();
   });
 
@@ -39,10 +40,10 @@ describe("public clinic content", () => {
 
     expect(portraits).toEqual([
       "/images/dentists/sobia-ahmad.webp",
-      "/images/dentists/amna-rauf.webp",
-      "/images/dentists/ahmad.webp",
-      "/images/dentists/rauf.webp",
-      "/images/dentists/shahbaz.webp",
+      "/images/dentists/amna-baig.webp",
+      "/images/dentists/Ahmad.png",
+      "/images/dentists/shahbaz.png",
+      "/images/demo/dentist-2.webp",
     ]);
     expect(new Set(portraits)).toHaveLength(5);
   });

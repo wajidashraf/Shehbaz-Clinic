@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { clinicConfig } from "@/config/public-config";
 import type { Locale } from "@/i18n/config";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -29,15 +30,22 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-white/95 backdrop-blur-md">
       <div className="relative mx-auto flex min-h-[4.75rem] max-w-7xl items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8">
         <Link
+          aria-label={`${clinicConfig.name} — ${labels.home}`}
           className="flex min-h-11 min-w-0 items-center gap-3 font-extrabold tracking-[-0.025em]"
           href={localeRoot}
         >
-          <span
-            aria-hidden="true"
-            className="grid size-11 shrink-0 place-items-center rounded-[38%_62%_52%_48%] bg-[var(--teal)] text-base text-white shadow-[0_8px_22px_-12px_var(--teal-dark)]"
-          >
-            S
-          </span>
+          <Image
+            alt=""
+            className="size-13 shrink-0 object-contain"
+            height={52}
+            priority
+            src={
+              locale === "ur"
+                ? "/images/Logos/urduLogo.png"
+                : "/images/Logos/engLogo.png"
+            }
+            width={52}
+          />
           <span className="hidden max-w-48 leading-tight sm:block">
             {clinicConfig.name}
           </span>

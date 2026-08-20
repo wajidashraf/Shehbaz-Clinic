@@ -46,9 +46,14 @@ describe("public clinic cards", () => {
     );
 
     expect(screen.getByText("Clinic dentist")).toBeVisible();
-    expect(screen.getByText("Dr. Sobia Ahmad")).toBeVisible();
+    expect(screen.getByText("Dr. Sobia Zulfiqar")).toBeVisible();
+    expect(screen.getByText("BDS, RDS (Punjab), RDS")).toBeVisible();
+    expect(screen.getByText("PM&DC — 13365-D")).toBeVisible();
+    expect(
+      screen.getByText("C-Ortho / C-Endo (Braces & Aligners)"),
+    ).toBeVisible();
     expect(
       screen.getByRole("link", { name: "Book with this dentist" }),
-    ).toHaveAttribute("href", "/en/book?dentist=sobia-ahmad");
+    ).toHaveAttribute("href", "/en/book?dentist=sobia-zulfiqar");
   });
 });

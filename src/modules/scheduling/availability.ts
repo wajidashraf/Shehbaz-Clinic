@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { demoDentists } from "@/content/demo-content";
 
 export const dateKeySchema = z
   .string()
@@ -30,14 +29,9 @@ function formatTime(totalMinutes: number) {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 }
 
-export const dentistIds = demoDentists.map((dentist) => dentist.id) as [
-  string,
-  ...string[],
-];
-
 export const scheduleInputSchema = z
   .object({
-    dentistId: z.string().refine((value) => dentistIds.includes(value)),
+    dentistId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     dateKey: dateKeySchema,
     opensAt: timeSchema,
     closesAt: timeSchema,

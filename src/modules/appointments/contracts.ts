@@ -1,15 +1,13 @@
 import { z } from "zod";
-import { demoDentists, demoServices } from "@/content/demo-content";
+import { demoServices } from "@/content/demo-content";
 import { dateKeySchema } from "@/modules/scheduling/availability";
 
 const serviceIds = demoServices.map((service) => service.id);
-const dentistIds = demoDentists.map((dentist) => dentist.id);
+const dentistIdSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 
 export const bookingRequestSchema = z.object({
   serviceId: z.string().refine((value) => serviceIds.includes(value)),
-  dentistId: z
-    .string()
-    .refine((value) => value === "no-preference" || dentistIds.includes(value)),
+  dentistId: z.union([z.literal("no-preference"), dentistIdSchema]),
   dateKey: dateKeySchema,
   time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   patientName: z.string().trim().min(2).max(100),

@@ -3,6 +3,9 @@ import { BookingWizard } from "@/components/booking/booking-wizard";
 import { DemoNotice } from "@/components/content/demo-notice";
 import type { Locale } from "@/i18n/config";
 import { resolveBookingPrefill } from "@/modules/booking/demo-booking";
+import { listDoctors } from "@/modules/doctors/doctor.repository";
+
+export const dynamic = "force-dynamic";
 
 type BookingPageProps = {
   params: Promise<{ locale: Locale }>;
@@ -15,8 +18,14 @@ export default async function BookingPage({
 }: BookingPageProps) {
   const [{ locale }, query] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
-  const translations = await getTranslations("Booking");
-  const prefill = resolveBookingPrefill(query);
+  const [translations, dentists] = await Promise.all([
+    getTranslations("Booking"),
+    listDoctors(),
+  ]);
+  const prefill = resolveBookingPrefill(
+    query,
+    dentists.map((dentist) => dentist.id),
+  );
 
   return (
     <main id="main-content">
@@ -44,6 +53,7 @@ export default async function BookingPage({
 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18">
         <BookingWizard
+          dentists={dentists}
           initialDentistId={prefill.dentistId}
           initialServiceId={prefill.serviceId}
           locale={locale}

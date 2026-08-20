@@ -9,6 +9,7 @@ import userEvent from "@testing-library/user-event";
 import { NextIntlClientProvider } from "next-intl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { BookingWizard } from "@/components/booking/booking-wizard";
+import { demoDentists } from "@/content/demo-content";
 import englishMessages from "@/messages/en.json";
 
 describe("BookingWizard", () => {
@@ -36,7 +37,12 @@ describe("BookingWizard", () => {
     const user = userEvent.setup();
     render(
       <NextIntlClientProvider locale="en" messages={englishMessages}>
-        <BookingWizard initialDentistId="" initialServiceId="" locale="en" />
+        <BookingWizard
+          dentists={demoDentists}
+          initialDentistId=""
+          initialServiceId=""
+          locale="en"
+        />
       </NextIntlClientProvider>,
     );
 
@@ -92,7 +98,12 @@ describe("BookingWizard", () => {
     const user = userEvent.setup();
     render(
       <NextIntlClientProvider locale="en" messages={englishMessages}>
-        <BookingWizard initialDentistId="" initialServiceId="" locale="en" />
+        <BookingWizard
+          dentists={demoDentists}
+          initialDentistId=""
+          initialServiceId=""
+          locale="en"
+        />
       </NextIntlClientProvider>,
     );
 
@@ -112,5 +123,27 @@ describe("BookingWizard", () => {
     expect(
       screen.getByText("Availability could not be loaded. Please try again."),
     ).toBeVisible();
+  });
+
+  it("uses the doctor records supplied by the server", async () => {
+    const user = userEvent.setup();
+    render(
+      <NextIntlClientProvider locale="en" messages={englishMessages}>
+        <BookingWizard
+          dentists={[demoDentists[4]!]}
+          initialDentistId=""
+          initialServiceId=""
+          locale="en"
+        />
+      </NextIntlClientProvider>,
+    );
+
+    await user.click(screen.getByLabelText("Dental consultation"));
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+
+    expect(screen.getByLabelText("Dr. Rana Muhammad Adnan")).toBeVisible();
+    expect(
+      screen.queryByLabelText("Dr. Sobia Zulfiqar"),
+    ).not.toBeInTheDocument();
   });
 });

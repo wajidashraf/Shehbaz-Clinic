@@ -4,13 +4,12 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import {
-  demoDentists,
   demoServices,
-  findDemoDentist,
   findDemoService,
   getLocalizedText,
 } from "@/content/demo-content";
 import type { Locale } from "@/i18n/config";
+import type { DoctorRecord } from "@/modules/doctors/doctor.types";
 import {
   createBookingDraft,
   validateBookingStep,
@@ -24,6 +23,7 @@ import type {
 } from "@/modules/booking/demo-booking";
 
 type BookingWizardProps = {
+  dentists: readonly DoctorRecord[];
   initialDentistId: string;
   initialServiceId: string;
   locale: Locale;
@@ -94,6 +94,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 }
 
 export function BookingWizard({
+  dentists,
   initialDentistId,
   initialServiceId,
   locale,
@@ -252,7 +253,9 @@ export function BookingWizard({
   }
 
   const selectedService = findDemoService(draft.serviceId);
-  const selectedDentist = findDemoDentist(draft.dentistId);
+  const selectedDentist = dentists.find(
+    (dentist) => dentist.id === draft.dentistId,
+  );
   const selectedDate = draft.date
     ? new Intl.DateTimeFormat(locale === "ur" ? "ur-PK" : "en-PK", {
         dateStyle: "medium",
@@ -400,10 +403,10 @@ export function BookingWizard({
                 onChange={() => handleDentistChange("no-preference")}
                 value="no-preference"
               />
-              {demoDentists.map((dentist) => (
+              {dentists.map((dentist) => (
                 <Choice
                   checked={draft.dentistId === dentist.id}
-                  description={getLocalizedText(dentist.area, locale)}
+                  description={getLocalizedText(dentist.title, locale)}
                   key={dentist.id}
                   label={getLocalizedText(dentist.name, locale)}
                   name="dentist"

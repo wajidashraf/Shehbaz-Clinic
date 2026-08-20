@@ -9,12 +9,21 @@ import {
   requestHasValidOrigin,
   requireAdminRequest,
 } from "@/modules/auth/admin-api.server";
+import {
+  listDoctorNamesIncludingInactive,
+  listDoctors,
+} from "@/modules/doctors/doctor.repository";
 
 export async function GET(request: Request) {
   if (!(await requireAdminRequest(request)))
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   try {
-    return NextResponse.json(await listAdminData());
+    const [data, doctors, doctorNames] = await Promise.all([
+      listAdminData(),
+      listDoctors(),
+      listDoctorNamesIncludingInactive(),
+    ]);
+    return NextResponse.json({ ...data, doctors, doctorNames });
   } catch {
     return NextResponse.json({ error: "service-unavailable" }, { status: 503 });
   }

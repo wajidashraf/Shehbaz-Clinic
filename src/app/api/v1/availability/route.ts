@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAvailableSlots } from "@/modules/appointments/appointment.repository";
-import { dateKeySchema, dentistIds } from "@/modules/scheduling/availability";
+import { dateKeySchema } from "@/modules/scheduling/availability";
 
 const querySchema = z.object({
-  dentistId: z
-    .string()
-    .refine((value) => value === "no-preference" || dentistIds.includes(value)),
+  dentistId: z.union([
+    z.literal("no-preference"),
+    z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  ]),
   dateKey: dateKeySchema,
 });
 

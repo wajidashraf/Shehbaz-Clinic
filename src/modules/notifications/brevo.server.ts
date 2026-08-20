@@ -4,7 +4,8 @@ import {
   AppointmentModel,
   NotificationJobModel,
 } from "@/modules/appointments/appointment.model";
-import { demoDentists, demoServices } from "@/content/demo-content";
+import { demoServices } from "@/content/demo-content";
+import { findDoctorIncludingInactive } from "@/modules/doctors/doctor.repository";
 
 const eventSubjects = {
   "booking-confirmed": "Appointment confirmed — Shahbaz Dental Clinic",
@@ -12,15 +13,15 @@ const eventSubjects = {
   "appointment-rescheduled": "Appointment rescheduled — Shahbaz Dental Clinic",
 } as const;
 
-function appointmentEmailText(appointment: {
-  publicReference: string;
-  dentistId: string;
-  serviceId: string;
-  startAtUtc: Date;
-}) {
-  const dentist = demoDentists.find(
-    (item) => item.id === appointment.dentistId,
-  );
+function appointmentEmailText(
+  appointment: {
+    publicReference: string;
+    dentistId: string;
+    serviceId: string;
+    startAtUtc: Date;
+  },
+  dentistName: string,
+) {
   const service = demoServices.find(
     (item) => item.id === appointment.serviceId,
   );
@@ -33,7 +34,7 @@ function appointmentEmailText(appointment: {
   return [
     `Appointment reference: ${appointment.publicReference}`,
     `Service: ${service?.name.en ?? appointment.serviceId}`,
-    `Dentist: ${dentist?.name.en ?? appointment.dentistId}`,
+    `Dentist: ${dentistName}`,
     `Date and time: ${when}`,
     "Shahbaz Dental Clinic, Samundri, District Faisalabad, Punjab 37300",
   ].join("\n");
@@ -64,7 +65,7 @@ export async function dispatchNotificationEmail(jobId: string) {
       status: { $in: ["queued", "failed"] },
     },
     { $set: { status: "processing" } },
-    { new: true },
+    { returnDocument: "after" },
   );
   if (!job) return false;
 
@@ -80,6 +81,7 @@ export async function dispatchNotificationEmail(jobId: string) {
   }
 
   try {
+    const dentist = await findDoctorIncludingInactive(appointment.dentistId);
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -93,7 +95,10 @@ export async function dispatchNotificationEmail(jobId: string) {
           name: environment.EMAIL_FROM_NAME,
         },
         subject: eventSubjects[job.event as keyof typeof eventSubjects],
-        textContent: appointmentEmailText(appointment),
+        textContent: appointmentEmailText(
+          appointment,
+          dentist?.name.en ?? appointment.dentistId,
+        ),
         to: [{ email: job.recipient }],
       }),
     });

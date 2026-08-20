@@ -8,20 +8,25 @@ import {
 describe("booking rules", () => {
   it("accepts only allow-listed service and dentist preselection", () => {
     expect(
-      resolveBookingPrefill({
-        dentist: "sobia-ahmad",
-        service: "consultation",
-      }),
+      resolveBookingPrefill(
+        { dentist: "sobia-ahmad", service: "consultation" },
+        ["sobia-ahmad"],
+      ),
     ).toEqual({ dentistId: "sobia-ahmad", serviceId: "consultation" });
     expect(
-      resolveBookingPrefill({
-        dentist: "unknown",
-        service: "<script>",
-      }),
+      resolveBookingPrefill({ dentist: "unknown", service: "<script>" }, [
+        "sobia-ahmad",
+      ]),
     ).toEqual({ dentistId: "", serviceId: "" });
-    expect(resolveBookingPrefill({ dentist: "no-preference" }).dentistId).toBe(
-      "no-preference",
-    );
+    expect(
+      resolveBookingPrefill({ dentist: "no-preference" }, ["sobia-ahmad"])
+        .dentistId,
+    ).toBe("no-preference");
+    expect(
+      resolveBookingPrefill({ dentist: "admin-created-doctor" }, [
+        "admin-created-doctor",
+      ]).dentistId,
+    ).toBe("admin-created-doctor");
   });
 
   it("requires a service and a dentist choice", () => {

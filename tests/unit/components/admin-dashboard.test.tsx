@@ -12,6 +12,8 @@ vi.mock("next/navigation", () => ({
 }));
 
 const emptyAdminData = {
+  doctors: [],
+  doctorNames: {},
   schedules: [],
   appointments: [],
   notifications: [],

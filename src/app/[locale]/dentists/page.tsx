@@ -2,8 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DemoNotice } from "@/components/content/demo-notice";
 import { DentistCard } from "@/components/content/dentist-card";
 import { ButtonLink } from "@/components/ui/button-link";
-import { demoDentists } from "@/content/demo-content";
 import type { Locale } from "@/i18n/config";
+import { listDoctors } from "@/modules/doctors/doctor.repository";
+
+export const dynamic = "force-dynamic";
 
 type DentistsPageProps = {
   params: Promise<{ locale: Locale }>;
@@ -12,7 +14,10 @@ type DentistsPageProps = {
 export default async function DentistsPage({ params }: DentistsPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const translations = await getTranslations("Dentists");
+  const [translations, dentists] = await Promise.all([
+    getTranslations("Dentists"),
+    listDoctors(),
+  ]);
 
   return (
     <main id="main-content">
@@ -38,7 +43,7 @@ export default async function DentistsPage({ params }: DentistsPageProps) {
 
       <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {demoDentists.map((dentist) => (
+          {dentists.map((dentist) => (
             <DentistCard
               dentist={dentist}
               key={dentist.id}
