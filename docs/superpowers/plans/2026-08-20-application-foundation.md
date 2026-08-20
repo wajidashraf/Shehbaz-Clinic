@@ -1,4 +1,4 @@
-# Shehbaz Dental Clinic Application Foundation Implementation Plan
+# Shahbaz Dental Clinic Application Foundation Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- The clinic has exactly one active branch: Shehbaz Dental Clinic, Samundri, District Faisalabad, Punjab 37300, Pakistan.
+- The clinic has exactly one active branch: Shahbaz Dental Clinic, Samundri, District Faisalabad, Punjab 37300, Pakistan.
 - Do not render or request a branch selector.
 - Store dates in UTC and render clinic times in `Asia/Karachi`.
 - Use only synthetic development data.
@@ -77,6 +77,7 @@ Files in later modules may consume these interfaces but must not bypass them.
 ### Task 1: Scaffold the Next.js application and quality commands
 
 **Files:**
+
 - Create: `package.json`
 - Create: `package-lock.json`
 - Create: `tsconfig.json`
@@ -91,6 +92,7 @@ Files in later modules may consume these interfaces but must not bypass them.
 - Create: `tests/unit/scaffold.test.ts`
 
 **Interfaces:**
+
 - Consumes: Node.js `>=24 <25` and npm `>=11` installed locally.
 - Produces: `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`, and `npm run test:e2e` commands used by every later task.
 
@@ -102,7 +104,7 @@ Run from the repository root as separate commands:
 
 ```powershell
 npm init -y
-npm pkg set name="shehbaz-dental-clinic"
+npm pkg set name="shahbaz-dental-clinic"
 npm pkg set private=true --json
 npm install next@latest react@latest react-dom@latest
 npm install -D typescript @types/node @types/react @types/react-dom tailwindcss @tailwindcss/postcss eslint eslint-config-next
@@ -129,12 +131,7 @@ Create `tsconfig.json`:
     "plugins": [{ "name": "next" }],
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
 ```
@@ -219,7 +216,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 ```tsx
 // src/app/page.tsx
 export default function Page() {
-  return <main>Shehbaz Dental Clinic</main>;
+  return <main>Shahbaz Dental Clinic</main>;
 }
 ```
 
@@ -347,6 +344,7 @@ git commit -m "build: scaffold clinic Next.js application"
 ### Task 2: Define and validate the environment contract
 
 **Files:**
+
 - Create: `.env.example`
 - Create: `.env.local`
 - Modify: `.gitignore`
@@ -354,6 +352,7 @@ git commit -m "build: scaffold clinic Next.js application"
 - Create: `tests/unit/config/env.test.ts`
 
 **Interfaces:**
+
 - Consumes: `zod` and `server-only` packages.
 - Produces: `getServerEnv(source?: NodeJS.ProcessEnv): ServerEnv`, `isCloudinaryConfigured(env: ServerEnv): boolean`, and a safe local configuration template.
 
@@ -375,13 +374,13 @@ const base = {
   NODE_ENV: "test",
   APP_URL: "http://localhost:3000",
   MONGODB_URI: "mongodb+srv://user:password@example.mongodb.net/",
-  MONGODB_DATABASE: "shehbaz_clinic_test",
+  MONGODB_DATABASE: "shahbaz_clinic_test",
   SESSION_SECRET: "a".repeat(64),
 };
 
 describe("server environment", () => {
   it("accepts the required MongoDB and application values", () => {
-    expect(getServerEnv(base).MONGODB_DATABASE).toBe("shehbaz_clinic_test");
+    expect(getServerEnv(base).MONGODB_DATABASE).toBe("shahbaz_clinic_test");
   });
 
   it("rejects a partial Cloudinary credential set", () => {
@@ -433,11 +432,8 @@ const serverEnvSchema = z
     CLOUDINARY_CLOUD_NAME: optionalCredential,
     CLOUDINARY_API_KEY: optionalCredential,
     CLOUDINARY_API_SECRET: optionalCredential,
-    CLOUDINARY_FOLDER: z.string().default("shehbaz-dental-clinic/development"),
+    CLOUDINARY_FOLDER: z.string().default("shahbaz-dental-clinic/development"),
     REDIS_URL: optionalCredential,
-    NOTIFICATION_TRANSPORT: z
-      .enum(["development", "provider"])
-      .default("development"),
   })
   .superRefine((value, context) => {
     const credentials = [
@@ -464,8 +460,8 @@ export function getServerEnv(
 export function isCloudinaryConfigured(env: ServerEnv): boolean {
   return Boolean(
     env.CLOUDINARY_CLOUD_NAME &&
-      env.CLOUDINARY_API_KEY &&
-      env.CLOUDINARY_API_SECRET,
+    env.CLOUDINARY_API_KEY &&
+    env.CLOUDINARY_API_SECRET,
   );
 }
 ```
@@ -478,14 +474,13 @@ Create both `.env.example` and the ignored `.env.local` with these keys; `.env.l
 NODE_ENV=development
 APP_URL=http://localhost:3000
 MONGODB_URI=
-MONGODB_DATABASE=shehbaz_clinic_dev
+MONGODB_DATABASE=shahbaz_clinic_dev
 SESSION_SECRET=
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
-CLOUDINARY_FOLDER=shehbaz-dental-clinic/development
+CLOUDINARY_FOLDER=shahbaz-dental-clinic/development
 REDIS_URL=
-NOTIFICATION_TRANSPORT=development
 ```
 
 Ensure `.gitignore` contains:
@@ -517,6 +512,7 @@ git commit -m "feat: validate server integration settings"
 ### Task 3: Add the bilingual accessible application shell
 
 **Files:**
+
 - Create: `src/config/public-config.ts`
 - Create: `src/i18n/config.ts`
 - Create: `src/i18n/routing.ts`
@@ -536,6 +532,7 @@ git commit -m "feat: validate server integration settings"
 - Create: `tests/unit/components/site-header.test.tsx`
 
 **Interfaces:**
+
 - Consumes: Next.js App Router and `next-intl`.
 - Produces: `Locale = "en" | "ur"`, `isLocale(value): value is Locale`, `getDirection(locale): "ltr" | "rtl"`, and locale-aware navigation used by all screens.
 
@@ -599,7 +596,7 @@ Create `src/config/public-config.ts`:
 
 ```ts
 export const clinicConfig = {
-  name: "Shehbaz Dental Clinic",
+  name: "Shahbaz Dental Clinic",
   location: {
     city: "Samundri",
     district: "Faisalabad",
@@ -634,7 +631,7 @@ The dictionaries must include the same keys:
   "Home": {
     "eyebrow": "Dental care in Samundri",
     "title": "Clear, respectful dental care for every family",
-    "description": "Explore services and request an appointment with Shehbaz Dental Clinic.",
+    "description": "Explore services and request an appointment with Shahbaz Dental Clinic.",
     "detailsPending": "Complete contact details and opening hours will be published after clinic verification."
   }
 }
@@ -668,6 +665,7 @@ git commit -m "feat: add bilingual accessible application shell"
 ### Task 4: Add MongoDB infrastructure and the single-branch seed
 
 **Files:**
+
 - Create: `src/infrastructure/database/mongoose.ts`
 - Create: `src/infrastructure/database/health.ts`
 - Create: `src/modules/clinic/clinic.model.ts`
@@ -679,6 +677,7 @@ git commit -m "feat: add bilingual accessible application shell"
 - Create: `tests/unit/clinic/clinic.repository.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getServerEnv()`, Mongoose, and the confirmed clinic configuration.
 - Produces: `connectMongo(): Promise<typeof mongoose>`, `checkMongoHealth(): Promise<DatabaseHealth>`, `getActiveBranch(): Promise<BranchRecord>`, and `upsertDevelopmentClinic(): Promise<void>`.
 
@@ -781,6 +780,7 @@ git commit -m "feat: add MongoDB clinic foundation"
 ### Task 5: Add the Cloudinary public-media adapter
 
 **Files:**
+
 - Create: `src/modules/media/media.types.ts`
 - Create: `src/modules/media/media.validation.ts`
 - Create: `src/modules/media/cloudinary.server.ts`
@@ -791,6 +791,7 @@ git commit -m "feat: add MongoDB clinic foundation"
 - Create: `tests/unit/media/cloudinary.adapter.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getServerEnv()`, `connectMongo()`, and the Cloudinary Node SDK.
 - Produces: `MediaStorage` with `uploadPublicImage(input): Promise<StoredMedia>` and `deletePublicImage(publicId): Promise<void>`; `saveMediaAsset(asset): Promise<MediaAssetRecord>`.
 
@@ -910,12 +911,14 @@ git commit -m "feat: add secure Cloudinary media adapter"
 ### Task 6: Add sanitized health reporting and setup documentation
 
 **Files:**
+
 - Create: `src/app/api/v1/health/route.ts`
 - Create: `tests/unit/api/health.test.ts`
 - Create: `docs/setup/credentials.md`
 - Modify: `README.md`
 
 **Interfaces:**
+
 - Consumes: `checkMongoHealth()` and `isCloudinaryConfigured()`.
 - Produces: `GET /api/v1/health` returning only process status, database readiness, and Cloudinary configuration state.
 
@@ -952,7 +955,7 @@ Return HTTP 200 when MongoDB is up and HTTP 503 when it is down. Cloudinary is `
 `docs/setup/credentials.md` must tell the user:
 
 1. MongoDB Atlas: create/select a cluster, create an application database user, allow only the current development IP, choose Connect > Drivers, and copy the `mongodb+srv://...` string into `MONGODB_URI` after replacing the password placeholder.
-2. MongoDB: set `MONGODB_DATABASE=shehbaz_clinic_dev`; do not paste the URI into chat.
+2. MongoDB: set `MONGODB_DATABASE=shahbaz_clinic_dev`; do not paste the URI into chat.
 3. Cloudinary: open Console Settings > API Keys and copy Cloud name, API key, and API secret into the three matching variables.
 4. Cloudinary: do not create an unsigned preset and never expose the API secret to browser code.
 5. Generate `SESSION_SECRET` locally with a cryptographically secure command and never share it.
@@ -993,17 +996,20 @@ git commit -m "docs: add database and media credential setup"
 ### Task 7: Add browser smoke tests and perform foundation verification
 
 **Files:**
+
 - Create: `playwright.config.ts`
 - Create: `tests/e2e/foundation.spec.ts`
+- Create: `tests/e2e/global-setup.ts`
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Consumes: the locale routes and setup from Tasks 1–6.
 - Produces: repeatable verification that the foundation is usable in both directions and keeps secret variables server-side.
 
 - [ ] **Step 1: Configure Playwright**
 
-Create a config that starts `npm run dev` on `http://127.0.0.1:3000`, reuses an existing server outside CI, tests Chromium, and captures traces only on first retry.
+Create a config that builds the production application, starts `next start` on `http://127.0.0.1:3000`, tests Chromium, and captures traces only on first retry. Use an explicit setup/teardown owner for the server process because Playwright's managed web-server process group leaves Next.js child processes open on Windows. A pre-existing local server may be reused outside CI; CI must require a clean port.
 
 - [ ] **Step 2: Write the failing browser tests**
 

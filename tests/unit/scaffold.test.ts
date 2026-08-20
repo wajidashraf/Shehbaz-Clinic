@@ -8,7 +8,7 @@ describe("project scaffold", () => {
       lint: "eslint .",
       typecheck: "tsc --noEmit",
       test: "vitest run",
-      "test:e2e": "playwright test",
+      "test:e2e": "npm run build && playwright test",
     });
   });
 });

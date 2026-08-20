@@ -1,8 +1,8 @@
-# Shehbaz Dental Clinic MVP Design
+# Shahbaz Dental Clinic MVP Design
 
 **Date:** 2026-08-20  
 **Status:** Approved for implementation planning  
-**Clinic:** Shehbaz Dental Clinic  
+**Clinic:** Shahbaz Dental Clinic
 **Location:** Samundri, District Faisalabad, Punjab 37300, Pakistan  
 **Time zone:** Asia/Karachi  
 **Languages:** English and Urdu
@@ -11,7 +11,7 @@
 
 The first delivery is a working vertical slice of a secure bilingual dental-clinic platform. It includes a public website, patient authentication, an appointment-booking wizard, a basic patient portal, and a basic receptionist calendar. MongoDB Atlas is the system of record. A transaction-backed interval-claim model prevents overlapping appointments even when concurrent requests select the same time.
 
-The product serves one clinic branch. Patients never select a branch; all appointments are assigned automatically to Shehbaz Dental Clinic in Samundri. The data model retains clinic and branch boundaries so additional branches can be introduced later without changing appointment ownership.
+The product serves one clinic branch. Patients never select a branch; all appointments are assigned automatically to Shahbaz Dental Clinic in Samundri. The data model retains clinic and branch boundaries so additional branches can be introduced later without changing appointment ownership.
 
 The MVP uses only synthetic development data. Production email, SMS, deployment, real clinic content, and real patient use remain explicitly gated on provider setup, verified clinic information, security review, restore testing, and legal/privacy review.
 
@@ -33,7 +33,7 @@ The MVP uses only synthetic development data. Production email, SMS, deployment,
 
 The initial branch configuration is:
 
-- Clinic name: Shehbaz Dental Clinic
+- Clinic name: Shahbaz Dental Clinic
 - City/tehsil: Samundri
 - District: Faisalabad
 - Province: Punjab

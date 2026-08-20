@@ -1,5 +1,5 @@
 export const clinicConfig = {
-  name: "Shehbaz Dental Clinic",
+  name: "Shahbaz Dental Clinic",
   location: {
     city: "Samundri",
     district: "Faisalabad",

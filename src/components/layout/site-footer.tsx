@@ -28,7 +28,9 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
           <p>{labels.contactPending}</p>
           <div className="flex gap-5 md:justify-end">
             <Link href={`/${locale}/privacy`}>{labels.privacy}</Link>
-            <Link href={`/${locale}/accessibility`}>{labels.accessibility}</Link>
+            <Link href={`/${locale}/accessibility`}>
+              {labels.accessibility}
+            </Link>
           </div>
         </div>
       </div>

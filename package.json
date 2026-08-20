@@ -1,7 +1,7 @@
 {
-  "name": "shehbaz-dental-clinic",
+  "name": "shahbaz-dental-clinic",
   "version": "0.1.0",
-  "description": "Bilingual appointment and clinic management application for Shehbaz Dental Clinic.",
+  "description": "Bilingual appointment and clinic management application for Shahbaz Dental Clinic.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,9 +10,10 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "npm run build && playwright test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "seed": "node --conditions react-server --import tsx scripts/seed.ts"
   },
   "license": "UNLICENSED",
   "type": "module",
@@ -23,11 +24,17 @@
   "dependencies": {
     "@fontsource-variable/manrope": "^5.3.0",
     "@fontsource-variable/noto-sans-arabic": "^5.3.0",
+    "@next/env": "^16.3.1",
+    "cloudinary": "^2.10.1",
+    "file-type": "^22.0.2",
+    "mongodb": "^7.5.0",
+    "mongoose": "^9.9.3",
     "next": "^16.3.1",
     "next-intl": "^4.13.7",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "server-only": "^0.0.1",
+    "sharp": "^0.35.3",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -46,6 +53,7 @@
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.12",
     "typescript": "^6.0.3",
     "vitest": "^4.1.11"
   }
