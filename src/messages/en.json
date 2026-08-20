@@ -1,0 +1,43 @@
+{
+  "Metadata": {
+    "title": "Shehbaz Dental Clinic | Samundri",
+    "description": "Explore dental services and request an appointment with Shehbaz Dental Clinic in Samundri."
+  },
+  "Navigation": {
+    "primaryNavigation": "Primary navigation",
+    "home": "Home",
+    "services": "Services",
+    "book": "Book an appointment",
+    "login": "Patient login",
+    "switchLanguage": "اردو"
+  },
+  "Home": {
+    "eyebrow": "Dental care in Samundri",
+    "title": "Clear, respectful dental care for every family",
+    "description": "Explore our services and request an appointment with Shehbaz Dental Clinic.",
+    "book": "Book an appointment",
+    "explore": "Explore services",
+    "locationLabel": "Clinic location",
+    "location": "Samundri, District Faisalabad, Punjab 37300",
+    "detailStatus": "Clinic details",
+    "detailsPending": "The complete street address, contact details and opening hours will be published after clinic verification.",
+    "careLabel": "What to expect",
+    "careTitle": "A calm route from question to appointment",
+    "careDescription": "Choose a service, select an available dentist and time, then verify your contact details. We collect only the information needed to manage your visit.",
+    "urgentLabel": "Urgent care",
+    "urgentTitle": "This website is not an emergency-response service",
+    "urgentDescription": "Clinic-approved emergency instructions and contact numbers will appear here before launch."
+  },
+  "Footer": {
+    "summary": "Professional dental care and appointment services for the Samundri community.",
+    "addressPending": "Complete street address to be provided",
+    "contactPending": "Telephone and email to be provided",
+    "privacy": "Privacy notice",
+    "accessibility": "Accessibility"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you requested is unavailable.",
+    "home": "Return home"
+  }
+}

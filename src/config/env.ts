@@ -9,7 +9,9 @@ const optionalCredential = z.preprocess(
 
 const serverEnvironmentSchema = z
   .object({
-    NODE_ENV: z.enum(["development", "test", "production"]),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
     APP_URL: z.url(),
     MONGODB_URI: z.string().min(1),
     MONGODB_DATABASE: z.string().regex(/^[a-zA-Z0-9_-]+$/),

@@ -57,4 +57,13 @@ describe("server environment", () => {
       }),
     ).toThrow();
   });
+
+  it("defaults to development outside the Next.js runtime", () => {
+    const withoutNodeEnvironment: Record<string, string> = {
+      ...baseEnvironment,
+    };
+    delete withoutNodeEnvironment.NODE_ENV;
+
+    expect(getServerEnv(withoutNodeEnvironment).NODE_ENV).toBe("development");
+  });
 });

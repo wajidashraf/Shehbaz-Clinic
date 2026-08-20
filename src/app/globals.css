@@ -2,6 +2,13 @@
 
 :root {
   color-scheme: light;
+  --ink: #0b2239;
+  --teal: #0b6b68;
+  --teal-dark: #075451;
+  --aqua: #d9eae8;
+  --mineral: #f6faf9;
+  --saffron: #d9a441;
+  --line: #ccddda;
 }
 
 * {
@@ -10,4 +17,38 @@
 
 body {
   margin: 0;
+  background: var(--mineral);
+  color: var(--ink);
+  font-family: "Manrope Variable", "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+html[lang="ur"] body {
+  font-family: "Noto Sans Arabic Variable", "Segoe UI", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--saffron);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--aqua);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

@@ -1,0 +1,16 @@
+export const clinicConfig = {
+  name: "Shehbaz Dental Clinic",
+  location: {
+    city: "Samundri",
+    district: "Faisalabad",
+    province: "Punjab",
+    postalCode: "37300",
+    country: "Pakistan",
+  },
+  timeZone: "Asia/Karachi",
+  currency: "PKR",
+  streetAddress: null,
+  phone: null,
+  email: null,
+  mapsUrl: null,
+} as const;
