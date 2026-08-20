@@ -20,6 +20,7 @@ The MVP uses only synthetic development data. Production email, SMS, deployment,
 - Use a modular Next.js application rather than separate frontend and backend deployments.
 - Use TypeScript, the Next.js App Router, and Tailwind CSS.
 - Use MongoDB Atlas and Mongoose.
+- Use Cloudinary for approved public clinic imagery; store asset metadata and Cloudinary public IDs in MongoDB.
 - Validate every server boundary with Zod.
 - Store secrets only in local or deployment environment variables.
 - Use a separately runnable Redis/BullMQ worker in the same repository for queued notifications and scheduled work.
@@ -80,6 +81,8 @@ No implementation may invent these values. Synthetic records must be unmistakabl
 - Role-based and resource-level authorization
 - Appointment status history and audit logging
 - Provider-independent email and SMS interfaces
+- Cloudinary media adapter for approved logo, clinic, service, and dentist images
+- Administrator-authorized server-side image upload API without a full media-management UI
 - Development notification mailbox and delivery status
 - Background job foundations, retries, and idempotency
 - Automated unit, integration, concurrency, authorization, localization, accessibility, and browser tests
@@ -115,6 +118,7 @@ Primary modules:
 - `scheduling`: opening rules, availability rules, exceptions, and slot calculation
 - `appointments`: holds, confirmation, transitions, rescheduling, and cancellation
 - `notifications`: templates, jobs, adapters, delivery events, and webhook contracts
+- `media`: Cloudinary uploads, transformations, metadata, and lifecycle controls
 - `consent`: versioned patient acknowledgements and notification consent
 - `audit`: append-only security and business activity records
 
@@ -182,6 +186,7 @@ Initial collections:
 - `consentRecords`
 - `notificationJobs`
 - `notificationDeliveryEvents`
+- `mediaAssets`
 - `auditLogs`
 - `idempotencyRecords`
 
@@ -192,6 +197,7 @@ Important indexes include:
 - Unique normalized email identity where email login is enabled
 - Unique normalized mobile identity where mobile login is enabled
 - Unique session token digest
+- Unique Cloudinary asset identifier and public ID
 - Unique appointment public reference
 - Unique compound slot claim on `branchId`, `dentistId`, and `intervalStartUtc`
 - TTL on temporary slot-claim `expiresAt`
@@ -280,6 +286,7 @@ Every transition is checked against an explicit state machine. Status changes ap
 - Collect only contact and appointment information needed for the booking workflow.
 - Do not collect detailed medical histories in public forms.
 - Never place private patient data in URLs, analytics, logs, exceptions, or notification subjects.
+- Never upload patient records, X-rays, treatment images, medical documents, or other clinical content to Cloudinary in this MVP.
 - Mask email addresses and mobile numbers unless the active task requires full display.
 - Use structured allow-listed audit metadata rather than arbitrary serialized requests.
 - Apply rate limits to login, verification, password reset, availability, holds, booking, and resend actions.
@@ -308,6 +315,14 @@ The MVP implements:
 - Template version, locale, masked recipient, attempts, and provider identifier metadata
 
 Development adapters must never send network messages. Production provider adapters and signed webhook endpoints are later modules, but their interfaces are established in this MVP.
+
+## 12.1 Public image storage
+
+Cloudinary stores approved public website imagery such as the clinic logo, clinic photographs, service illustrations, and verified dentist portraits. MongoDB stores each asset's Cloudinary public ID, asset ID, version, resource type, dimensions, format, bytes, alt-text translations, ownership purpose, upload actor, and timestamps.
+
+Uploads use the current Cloudinary Node SDK from server-only code. The API secret is never exposed through a `NEXT_PUBLIC_` variable or sent to the browser. The server validates authorization, MIME type, decoded file signature, dimensions, and size before uploading into a clinic-specific folder. Only an administrator may upload or replace public content imagery. Deletion requires an explicit authorized operation and records an audit event.
+
+The MVP provides the media service, protected API, tests, and reusable optimized image renderer but defers a full media-management interface. When Cloudinary credentials are absent in development, synthetic local placeholders remain available and upload actions report that media storage is not configured.
 
 ## 13. Localization and content direction
 
@@ -404,9 +419,11 @@ Tests use only synthetic identities and appointments. The first milestone is acc
 
 ## 17. Local development and configuration
 
-The repository commits `.env.example` and ignores `.env.local`. Required local values include MongoDB connection details, application URL, session secret, encryption/pepper material where used, and Redis connection details. Secrets must not be pasted into chat or committed.
+The repository commits `.env.example` and ignores `.env.local`. Required local values include MongoDB connection details, Cloudinary cloud name/API key/API secret, application URL, session secret, encryption/pepper material where used, and Redis connection details. Secrets must not be pasted into chat or committed.
 
 MongoDB Atlas supplies replica-set transactions. The developer creates an application-specific database user, restricts the Atlas IP access list, and places the connection string in `.env.local`. Redis may run locally through Docker for the MVP worker. Synthetic seed commands create the one Samundri branch, demonstration services, demonstration dentists, schedules, and test users.
+
+The Cloudinary product environment supplies `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`. All three remain server-only. The application does not use an unsigned upload preset.
 
 Startup validation fails fast when required environment variables are missing or malformed. Production mode refuses development notification adapters and demonstration credentials.
 
@@ -427,6 +444,7 @@ The MVP is ready for its next review when:
 11. Development notifications are queued once and never reach real recipients.
 12. Critical English and Urdu flows are keyboard accessible and pass the defined automated checks.
 13. The application starts from documented commands with only the documented local prerequisites.
+14. An administrator can upload a validated public clinic image through the protected API, MongoDB records its metadata, and no Cloudinary secret is present in client bundles.
 
 ## 19. Delivery sequence
 
@@ -443,6 +461,7 @@ Implementation planning will decompose the MVP into independently testable incre
 9. Patient dashboard and appointment management
 10. Receptionist calendar and operations
 11. Notification worker and development adapters
-12. End-to-end security, accessibility, and concurrency verification
+12. Cloudinary media adapter and protected public-image upload API
+13. End-to-end security, accessibility, and concurrency verification
 
 Each increment must include its own tests and documentation. Production integrations and deployment are intentionally separate specifications after this vertical slice is accepted.
