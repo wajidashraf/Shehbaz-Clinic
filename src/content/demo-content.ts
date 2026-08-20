@@ -121,7 +121,10 @@ export const demoDentists: readonly DemoDentist[] = [
   {
     id: "demo-sana",
     name: { en: "Dr. Sana Ahmed", ur: "ڈاکٹر ثنا احمد" },
-    area: { en: "General and preventive care", ur: "عمومی اور احتیاطی نگہداشت" },
+    area: {
+      en: "General and preventive care",
+      ur: "عمومی اور احتیاطی نگہداشت",
+    },
     biography: {
       en: "A sample profile illustrating a calm, prevention-first approach for adults and families.",
       ur: "یہ ایک نمونہ پروفائل ہے جو بڑوں اور خاندانوں کے لیے پُرسکون، احتیاطی نگہداشت کو ظاہر کرتا ہے۔",
@@ -129,7 +132,10 @@ export const demoDentists: readonly DemoDentist[] = [
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Sample: Monday–Thursday", ur: "نمونہ: پیر تا جمعرات" },
     image: "/images/demo/dentist-1.webp",
-    imageAlt: { en: "Synthetic portrait for a sample dentist profile", ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر" },
+    imageAlt: {
+      en: "Synthetic portrait for a sample dentist profile",
+      ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر",
+    },
     isDemo: true,
   },
   {
@@ -143,21 +149,26 @@ export const demoDentists: readonly DemoDentist[] = [
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Sample: Tuesday–Saturday", ur: "نمونہ: منگل تا ہفتہ" },
     image: "/images/demo/dentist-2.webp",
-    imageAlt: { en: "Synthetic portrait for a sample dentist profile", ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر" },
+    imageAlt: {
+      en: "Synthetic portrait for a sample dentist profile",
+      ur: "نمونہ ڈینٹسٹ پروفائل کے لیے مصنوعی تصویر",
+    },
     isDemo: true,
   },
   {
     id: "demo-mahnoor",
     name: { en: "Dr. Mahnoor Iqbal", ur: "ڈاکٹر ماہ نور اقبال" },
-    area: { en: "Family and children’s care", ur: "خاندانی اور بچوں کی نگہداشت" },
+    area: {
+      en: "Family and children’s care",
+      ur: "خاندانی اور بچوں کی نگہداشت",
+    },
     biography: {
       en: "A sample profile demonstrating a welcoming family-care presentation for the future directory.",
       ur: "یہ نمونہ مستقبل کی فہرست کے لیے دوستانہ خاندانی نگہداشت کی پیشکش دکھاتا ہے۔",
     },
     languages: { en: "Urdu, Punjabi, English", ur: "اردو، پنجابی، انگریزی" },
     workingDays: { en: "Sample: Wednesday–Sunday", ur: "نمونہ: بدھ تا اتوار" },
-    image:
-      "https://images.pexels.com/photos/37458045/pexels-photo-37458045/free-photo-of-professional-dentist-in-modern-dental-office.jpeg?auto=compress&dpr=1&h=900&w=900",
+    image: "/images/demo/dentist-3.jpg",
     imageAlt: {
       en: "Temporary stock portrait used for a sample dentist profile",
       ur: "نمونہ ڈینٹسٹ پروفائل کے لیے عارضی اسٹاک تصویر",

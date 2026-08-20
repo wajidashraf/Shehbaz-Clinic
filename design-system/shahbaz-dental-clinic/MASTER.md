@@ -17,54 +17,57 @@
 
 ### Color Palette
 
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#0F172A` | `--color-primary` |
-| On Primary | `#FFFFFF` | `--color-on-primary` |
-| Secondary | `#334155` | `--color-secondary` |
-| Accent/CTA | `#0369A1` | `--color-accent` |
-| Background | `#F8FAFC` | `--color-background` |
-| Foreground | `#020617` | `--color-foreground` |
-| Muted | `#E8ECF1` | `--color-muted` |
-| Border | `#E2E8F0` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| Ring | `#0F172A` | `--color-ring` |
+| Role               | Hex       | CSS Variable   |
+| ------------------ | --------- | -------------- |
+| Primary            | `#096B61` | `--teal`       |
+| Primary Hover      | `#07534C` | `--teal-dark`  |
+| On Primary         | `#FFFFFF` | n/a            |
+| Background         | `#F7FBFA` | `--mineral`    |
+| Foreground         | `#123035` | `--ink`        |
+| Muted Surface      | `#EDF7F4` | `--aqua-soft`  |
+| Supporting Surface | `#DCECE8` | `--aqua`       |
+| Muted Text         | `#496469` | `--muted-text` |
+| Border             | `#D4E3DF` | `--line`       |
+| Accent             | `#A96812` | `--saffron`    |
+| Destructive        | `#A42121` | `--danger`     |
 
-**Color Notes:** High contrast navy + blue
+**Color Notes:** Light, high-contrast mineral white with clinical teal and a restrained saffron accent.
 
 ### Typography
 
-- **Heading Font:** Noto Sans Hebrew
-- **Body Font:** Noto Sans Hebrew
-- **Mood:** hebrew, modern, RTL, clean, professional, readable
-- **Google Fonts:** [Noto Sans Hebrew + Noto Sans Hebrew](https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;700&display=swap)
+- **English Font:** Manrope Variable
+- **Urdu Font:** Noto Sans Arabic Variable
+- **Mood:** calm, modern, bilingual, readable, community-focused
+- **Source:** self-hosted npm font packages; no runtime font request
 
 **CSS Import:**
+
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;700&display=swap');
+@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/noto-sans-arabic";
 ```
 
 ### Spacing Variables
 
-*Density: 4/10 — Standard*
+_Density: 4/10 — Standard_
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-xs` | `4px` / `0.25rem` | Tight gaps |
-| `--space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
-| `--space-md` | `16px` / `1rem` | Standard padding |
-| `--space-lg` | `24px` / `1.5rem` | Section padding |
-| `--space-xl` | `32px` / `2rem` | Large gaps |
-| `--space-2xl` | `48px` / `3rem` | Section margins |
-| `--space-3xl` | `64px` / `4rem` | Hero padding |
+| Token         | Value             | Usage                     |
+| ------------- | ----------------- | ------------------------- |
+| `--space-xs`  | `4px` / `0.25rem` | Tight gaps                |
+| `--space-sm`  | `8px` / `0.5rem`  | Icon gaps, inline spacing |
+| `--space-md`  | `16px` / `1rem`   | Standard padding          |
+| `--space-lg`  | `24px` / `1.5rem` | Section padding           |
+| `--space-xl`  | `32px` / `2rem`   | Large gaps                |
+| `--space-2xl` | `48px` / `3rem`   | Section margins           |
+| `--space-3xl` | `64px` / `4rem`   | Hero padding              |
 
 ### Shadow Depths
 
-| Level | Value | Usage |
-|-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
+| Level         | Value                          | Usage                       |
+| ------------- | ------------------------------ | --------------------------- |
+| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)`   | Subtle lift                 |
+| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)`    | Cards, buttons              |
+| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)`  | Modals, dropdowns           |
 | `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
 
 ---
@@ -76,11 +79,11 @@
 ```css
 /* Primary Button */
 .btn-primary {
-  background: #0369A1;
+  background: var(--teal);
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 9999px;
+  font-weight: 800;
   transition: all 200ms ease;
   cursor: pointer;
 }
@@ -93,11 +96,11 @@
 /* Secondary Button */
 .btn-secondary {
   background: transparent;
-  color: #0F172A;
-  border: 2px solid #0F172A;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
   padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 9999px;
+  font-weight: 800;
   transition: all 200ms ease;
   cursor: pointer;
 }
@@ -107,8 +110,9 @@
 
 ```css
 .card {
-  background: #F8FAFC;
-  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
   padding: 24px;
   box-shadow: var(--shadow-md);
   transition: all 200ms ease;
@@ -126,16 +130,16 @@
 ```css
 .input {
   padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
   font-size: 16px;
   transition: border-color 200ms ease;
 }
 
 .input:focus {
-  border-color: #0F172A;
+  border-color: var(--teal);
   outline: none;
-  box-shadow: 0 0 0 3px #0F172A20;
+  box-shadow: 0 0 0 3px rgba(9, 107, 97, 0.18);
 }
 ```
 
@@ -183,7 +187,17 @@
 **Scroll Reveal** (Subtle) — Trigger: scroll (viewport enter) | Duration: 300-400ms | Easing: `power1.out`
 
 ```js
-gsap.from(el, { opacity: 0, y: 12, duration: 0.35, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' } });
+gsap.from(el, {
+  opacity: 0,
+  y: 12,
+  duration: 0.35,
+  ease: "power1.out",
+  scrollTrigger: {
+    trigger: el,
+    start: "top 90%",
+    toggleActions: "play none none reverse",
+  },
+});
 ```
 
 **Framework notes:** Requires the ScrollTrigger plugin registered once via gsap.registerPlugin(ScrollTrigger)

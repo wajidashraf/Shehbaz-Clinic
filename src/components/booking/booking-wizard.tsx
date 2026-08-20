@@ -244,10 +244,7 @@ export function BookingWizard({
             {stepTitle}
           </h2>
         </div>
-        <div
-          aria-hidden="true"
-          className="grid grid-cols-6 gap-1.5 sm:w-56"
-        >
+        <div aria-hidden="true" className="grid grid-cols-6 gap-1.5 sm:w-56">
           {steps.map((step, index) => (
             <span
               className={`h-2 rounded-full ${index <= stepIndex ? "bg-[var(--teal)]" : "bg-[var(--line)]"}`}

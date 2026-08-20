@@ -57,9 +57,10 @@ describe("SiteHeader", () => {
 
     await user.click(openButton);
 
-    expect(
-      screen.getByRole("button", { name: "Close menu" }),
-    ).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("button", { name: "Close menu" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
     expect(screen.getByTestId("mobile-navigation")).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Close menu" }));

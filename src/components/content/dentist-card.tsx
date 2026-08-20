@@ -42,13 +42,17 @@ export function DentistCard({ dentist, labels, locale }: DentistCardProps) {
         </p>
         <dl className="mt-5 space-y-3 border-t border-[var(--line)] pt-5 text-sm">
           <div>
-            <dt className="font-extrabold text-[var(--ink)]">{labels.languages}</dt>
+            <dt className="font-extrabold text-[var(--ink)]">
+              {labels.languages}
+            </dt>
             <dd className="mt-1 text-[var(--muted-text)]">
               {getLocalizedText(dentist.languages, locale)}
             </dd>
           </div>
           <div>
-            <dt className="font-extrabold text-[var(--ink)]">{labels.workingDays}</dt>
+            <dt className="font-extrabold text-[var(--ink)]">
+              {labels.workingDays}
+            </dt>
             <dd className="mt-1 text-[var(--muted-text)]">
               {getLocalizedText(dentist.workingDays, locale)}
             </dd>

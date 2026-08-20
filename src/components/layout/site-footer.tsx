@@ -43,7 +43,9 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
             aria-label={labels.summary}
             className="flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold md:justify-end"
           >
-            <Link href={`/${locale}`}>{locale === "ur" ? "صفحہ اول" : "Home"}</Link>
+            <Link href={`/${locale}`}>
+              {locale === "ur" ? "صفحہ اول" : "Home"}
+            </Link>
             <Link href={`/${locale}/services`}>{labels.services}</Link>
             <Link href={`/${locale}/dentists`}>{labels.dentists}</Link>
             <Link href={`/${locale}/book`}>{labels.book}</Link>

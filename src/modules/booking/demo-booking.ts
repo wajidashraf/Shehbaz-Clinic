@@ -1,12 +1,7 @@
 import { findDemoDentist, findDemoService } from "@/content/demo-content";
 
 export type BookingStep =
-  | "service"
-  | "dentist"
-  | "time"
-  | "details"
-  | "review"
-  | "confirmation";
+  "service" | "dentist" | "time" | "details" | "review" | "confirmation";
 
 export type BookingDraft = {
   serviceId: string;
@@ -41,8 +36,7 @@ const defaultValidationMessages: BookingValidationMessages = {
   requiredName: "Enter a sample full name.",
   requiredMobile: "Enter a sample Pakistani mobile number.",
   invalidEmail: "Enter a valid sample email address or leave it blank.",
-  requiredConsent:
-    "Confirm that you understand this is only a demonstration.",
+  requiredConsent: "Confirm that you understand this is only a demonstration.",
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

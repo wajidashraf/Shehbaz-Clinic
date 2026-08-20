@@ -35,7 +35,6 @@ html[lang="ur"] body {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
@@ -43,7 +42,6 @@ button,
 input,
 select,
 textarea {
-  color: inherit;
   font: inherit;
 }
 

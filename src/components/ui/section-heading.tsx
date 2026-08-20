@@ -12,7 +12,11 @@ export function SectionHeading({
   title,
 }: SectionHeadingProps) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <div
+      className={
+        align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"
+      }
+    >
       <p className="text-xs font-extrabold tracking-[0.16em] text-[var(--teal-dark)] uppercase">
         {eyebrow}
       </p>

@@ -1,7 +1,8 @@
 import { spawn, spawnSync, type ChildProcess } from "node:child_process";
 import { once } from "node:events";
 
-const serverUrl = "http://127.0.0.1:3000/en";
+const testPort = "3100";
+const serverUrl = `http://127.0.0.1:${testPort}/en`;
 
 async function serverIsReady(): Promise<boolean> {
   try {
@@ -50,10 +51,9 @@ async function stopServer(server: ChildProcess): Promise<void> {
 
 export default async function globalSetup() {
   if (await serverIsReady()) {
-    if (process.env.CI) {
-      throw new Error("Port 3000 is already in use in CI");
-    }
-    return;
+    throw new Error(
+      `Playwright's dedicated port ${testPort} is already in use. Stop the stale test server and retry.`,
+    );
   }
 
   const server = spawn(
@@ -64,7 +64,7 @@ export default async function globalSetup() {
       "--hostname",
       "127.0.0.1",
       "--port",
-      "3000",
+      testPort,
     ],
     {
       cwd: process.cwd(),

@@ -10,11 +10,7 @@ describe("BookingWizard", () => {
     const user = userEvent.setup();
     render(
       <NextIntlClientProvider locale="en" messages={englishMessages}>
-        <BookingWizard
-          initialDentistId=""
-          initialServiceId=""
-          locale="en"
-        />
+        <BookingWizard initialDentistId="" initialServiceId="" locale="en" />
       </NextIntlClientProvider>,
     );
 

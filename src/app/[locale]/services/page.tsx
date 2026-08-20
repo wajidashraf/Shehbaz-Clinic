@@ -53,7 +53,10 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
           );
 
           return (
-            <section aria-labelledby={`category-${categoryServices[0]?.id}`} key={categoryName}>
+            <section
+              aria-labelledby={`category-${categoryServices[0]?.id}`}
+              key={categoryName}
+            >
               <div className="flex items-center gap-4">
                 <span
                   aria-hidden="true"

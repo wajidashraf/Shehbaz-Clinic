@@ -23,10 +23,12 @@
 ### Task 1: Typed demonstration content
 
 **Files:**
+
 - Create: `src/content/demo-content.ts`
 - Create: `tests/unit/content/demo-content.test.ts`
 
 **Interfaces:**
+
 - Produces: `LocalizedText`, `DemoService`, `DemoDentist`, `demoServices`, `demoDentists`, `getLocalizedText()`, `findDemoService()`, and `findDemoDentist()`.
 - Consumes: `Locale` from `src/i18n/config.ts`.
 
@@ -61,6 +63,7 @@ describe("demonstration content", () => {
 ### Task 2: Light design system and responsive site shell
 
 **Files:**
+
 - Modify: `src/app/globals.css`
 - Modify: `src/components/layout/site-header.tsx`
 - Create: `src/components/layout/mobile-navigation.tsx`
@@ -72,6 +75,7 @@ describe("demonstration content", () => {
 - Modify: `tests/unit/components/site-header.test.tsx`
 
 **Interfaces:**
+
 - Produces: a header containing only Home, Services, Dentists, locale switch, and Book Appointment; an accessible mobile disclosure menu; light-theme CSS tokens and shared section utilities.
 - Consumes: locale-aware labels supplied by the layout.
 
@@ -95,6 +99,7 @@ expect(screen.getByRole("button", { name: /open menu/i })).toBeInTheDocument();
 ### Task 3: Shared cards and three content pages
 
 **Files:**
+
 - Create: `src/components/content/demo-notice.tsx`
 - Create: `src/components/content/service-card.tsx`
 - Create: `src/components/content/dentist-card.tsx`
@@ -110,6 +115,7 @@ expect(screen.getByRole("button", { name: /open menu/i })).toBeInTheDocument();
 - Create: `tests/unit/components/public-cards.test.tsx`
 
 **Interfaces:**
+
 - Produces: reusable localized `ServiceCard`, `DentistCard`, `DemoNotice`, and `SectionHeading` components.
 - Consumes: Task 1 records and `Locale`.
 
@@ -134,6 +140,7 @@ expect(screen.getByRole("link", { name: /book with/i })).toHaveAttribute(
 ### Task 4: Interactive booking demonstration
 
 **Files:**
+
 - Create: `src/modules/booking/demo-booking.ts`
 - Create: `src/components/booking/booking-wizard.tsx`
 - Create: `src/app/[locale]/book/page.tsx`
@@ -141,6 +148,7 @@ expect(screen.getByRole("link", { name: /book with/i })).toHaveAttribute(
 - Create: `tests/unit/components/booking-wizard.test.tsx`
 
 **Interfaces:**
+
 - Produces: `BookingDraft`, `BookingStep`, `createBookingDraft()`, `validateBookingStep()`, `resolveBookingPrefill()`, and `BookingWizard`.
 - Consumes: allow-listed service and dentist records from Task 1 and `service`/`dentist` search parameters.
 
@@ -167,12 +175,14 @@ expect(validateBookingStep("service", createBookingDraft())).toEqual({
 ### Task 5: Responsive browser coverage and final polish
 
 **Files:**
+
 - Modify: `tests/e2e/foundation.spec.ts`
 - Create: `tests/e2e/public-website.spec.ts`
 - Modify: `src/app/[locale]/not-found.tsx` if excluded-route links remain
 - Modify: public components only where a failing browser test demonstrates a defect
 
 **Interfaces:**
+
 - Consumes: all completed pages and interactions.
 - Produces: repeatable route, RTL, responsive, keyboard, booking, and secret-exposure checks.
 
@@ -183,7 +193,9 @@ test("the public pages fit a 320px viewport", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto("/en");
   const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    () =>
+      document.documentElement.scrollWidth >
+      document.documentElement.clientWidth,
   );
   expect(overflow).toBe(false);
 });

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { clinicConfig } from "@/config/public-config";
 import type { Locale } from "@/i18n/config";
 import { ButtonLink } from "@/components/ui/button-link";
+import { LocaleSwitch } from "@/components/layout/locale-switch";
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
 
 export type SiteHeaderLabels = {
@@ -22,7 +23,6 @@ type SiteHeaderProps = {
 };
 
 export function SiteHeader({ labels, locale }: SiteHeaderProps) {
-  const alternateLocale = locale === "en" ? "ur" : "en";
   const localeRoot = `/${locale}`;
 
   return (
@@ -67,14 +67,11 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
               {labels.dentists}
             </Link>
           </span>
-          <Link
-            className="grid min-h-11 place-items-center rounded-full border border-[var(--line-strong)] bg-white px-3 text-sm font-extrabold transition-colors hover:bg-[var(--aqua-soft)] sm:px-4"
-            href={`/${alternateLocale}`}
-            hrefLang={alternateLocale}
+          <LocaleSwitch label={labels.switchLanguage} locale={locale} />
+          <ButtonLink
+            compactLabel={labels.bookShort}
+            href={`${localeRoot}/book`}
           >
-            <bdi>{labels.switchLanguage}</bdi>
-          </Link>
-          <ButtonLink compactLabel={labels.bookShort} href={`${localeRoot}/book`}>
             {labels.book}
           </ButtonLink>
           <MobileNavigation labels={labels} locale={locale} />
