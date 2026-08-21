@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import type { Locale } from "@/i18n/config";
 
 type LocaleSwitchProps = {
@@ -14,7 +15,10 @@ export function getAlternateLocalePath(
   locale: Locale,
 ) {
   const alternateLocale = locale === "en" ? "ur" : "en";
-  if (!pathname) return `/${alternateLocale}`;
+
+  if (!pathname) {
+    return `/${alternateLocale}`;
+  }
 
   const segments = pathname.split("/");
 
@@ -32,7 +36,27 @@ export function LocaleSwitch({ label, locale }: LocaleSwitchProps) {
 
   return (
     <Link
-      className="grid min-h-11 place-items-center rounded-full border border-[var(--line-strong)] bg-white px-3 text-sm font-extrabold transition-colors hover:bg-[var(--aqua-soft)] sm:px-4"
+      aria-label={label}
+      className="
+        inline-flex min-h-11 items-center justify-center
+        rounded-xl border border-slate-200
+        bg-white px-3.5
+        text-sm font-bold text-slate-700
+        shadow-sm
+        transition-[color,background-color,border-color,box-shadow,transform]
+        duration-200
+        hover:-translate-y-0.5
+        hover:border-sky-200
+        hover:bg-[var(--aqua-soft)]
+        hover:text-[var(--teal-dark)]
+        hover:shadow-md
+        active:translate-y-0
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-[var(--teal-dark)]
+        focus-visible:ring-offset-2
+        sm:px-4
+      "
       href={getAlternateLocalePath(pathname, locale)}
       hrefLang={alternateLocale}
     >

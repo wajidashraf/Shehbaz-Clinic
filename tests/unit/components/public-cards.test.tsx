@@ -22,7 +22,7 @@ describe("public clinic cards", () => {
     expect(
       screen.getByText(
         (_, element) =>
-          element?.tagName === "P" &&
+          element?.tagName === "SPAN" &&
           element.textContent === "Appointment duration: 30 minutes",
       ),
     ).toBeVisible();

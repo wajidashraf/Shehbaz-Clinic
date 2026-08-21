@@ -4,7 +4,7 @@
   color-scheme: light;
   --ink: #123035;
   --primary-ink: #073047;
-  --teal: #20a7e0;
+  --teal: #2093e0;
   --teal-dark: #00678f;
   --aqua: #d9f3fd;
   --aqua-soft: #eefaff;
@@ -80,5 +80,18 @@ img {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+@keyframes service-title-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
