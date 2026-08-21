@@ -8,7 +8,7 @@
     "home": "Home",
     "services": "Services",
     "dentists": "Dentists",
-    "book": "Book an appointment",
+    "book": "Book Appointment",
     "bookShort": "Book",
     "switchLanguage": "اردو",
     "openMenu": "Open menu",
@@ -18,7 +18,7 @@
     "eyebrow": "Thoughtful dental care in Samundri",
     "title": "A clearer path to a healthier smile",
     "description": "Explore everyday dental care and book an appointment through a clear process designed around comfort, clarity, and respect.",
-    "book": "Book an appointment",
+    "book": "Book Appointment",
     "explore": "Explore services",
     "demoTitle": "Plan your visit",
     "demoDescription": "Explore services, choose a dentist, and reserve an available appointment time online.",
@@ -66,7 +66,7 @@
     "finalEyebrow": "Ready to explore?",
     "finalTitle": "Book your appointment",
     "finalDescription": "Choose an available dentist and time, then receive your confirmed appointment reference.",
-    "finalAction": "Book an appointment"
+    "finalAction": "Book Appointment"
   },
   "Services": {
     "eyebrow": "Dental services",
@@ -100,7 +100,7 @@
   },
   "Booking": {
     "eyebrow": "Online appointment",
-    "title": "Book an appointment",
+    "title": "Book Appointment",
     "description": "Choose an available date and time to create a confirmed clinic appointment.",
     "demoTitle": "Confirmed online booking",
     "demoDescription": "Your selected time is reserved after successful submission. Keep your appointment reference for future changes.",
@@ -162,7 +162,7 @@
     "demonstration": "Appointments are confirmed from the clinic's currently available schedule.",
     "services": "Services",
     "dentists": "Dentists",
-    "book": "Book appointment"
+    "book": "Book Appointment"
   },
   "NotFound": {
     "title": "Page not found",

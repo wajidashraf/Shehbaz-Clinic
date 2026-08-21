@@ -4,7 +4,7 @@ const englishPages = [
   ["/en", "A clearer path to a healthier smile"],
   ["/en/services", "Dental care, explained simply"],
   ["/en/dentists", "Choose the right dentist for your visit"],
-  ["/en/book", "Book an appointment"],
+  ["/en/book", "Book Appointment"],
 ] as const;
 
 const urduPages = [
@@ -40,7 +40,7 @@ test("the header exposes only approved destinations", async ({ page }) => {
     navigation.getByRole("link", { name: "Dentists" }),
   ).toHaveAttribute("href", "/en/dentists");
   await expect(
-    navigation.getByRole("link", { name: "Book an appointment" }),
+    navigation.getByRole("link", { name: "Book Appointment" }),
   ).toHaveAttribute("href", "/en/book");
   await expect(
     navigation.getByRole("link", { name: /login|about|contact/i }),
