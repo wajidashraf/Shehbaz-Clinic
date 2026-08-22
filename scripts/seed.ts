@@ -20,6 +20,9 @@ import {
 import { DentistScheduleModel } from "../src/modules/scheduling/dentist-schedule.model";
 import { DoctorModel } from "../src/modules/doctors/doctor.model";
 import { demoDentists } from "../src/content/demo-content";
+import { verifiedLegacyDoctorIdPairs } from "../src/modules/doctors/legacy-doctor-id";
+import { demoTestimonials } from "../src/content/demo-testimonials";
+import { TestimonialModel } from "../src/modules/testimonials/testimonial.model";
 
 loadProjectEnvironment(process.cwd());
 let seedStage = "configuration";
@@ -67,11 +70,36 @@ async function seed() {
       { upsert: true, runValidators: true },
     );
   }
+  seedStage = "legacy doctor references";
+  for (const [legacyId, currentId] of verifiedLegacyDoctorIdPairs) {
+    await Promise.all([
+      DentistScheduleModel.updateMany(
+        { dentistId: legacyId },
+        { $set: { dentistId: currentId } },
+      ),
+      AppointmentModel.updateMany(
+        { dentistId: legacyId },
+        { $set: { dentistId: currentId } },
+      ),
+      SlotClaimModel.updateMany(
+        { dentistId: legacyId },
+        { $set: { dentistId: currentId } },
+      ),
+    ]);
+  }
   await DoctorModel.deleteMany({
     id: {
       $in: ["sobia-ahmad", "amna-rauf", "ahmad", "rauf", "shahbaz"],
     },
   });
+  seedStage = "testimonial records";
+  for (const testimonial of demoTestimonials) {
+    await TestimonialModel.findOneAndUpdate(
+      { id: testimonial.id },
+      { $set: testimonial },
+      { upsert: true, runValidators: true },
+    );
+  }
   seedStage = "database indexes";
   await Promise.all([
     AdminUserModel.syncIndexes(),
@@ -81,6 +109,7 @@ async function seed() {
     SlotClaimModel.syncIndexes(),
     NotificationJobModel.syncIndexes(),
     DoctorModel.syncIndexes(),
+    TestimonialModel.syncIndexes(),
   ]);
 
   seedStage = "verification counts";

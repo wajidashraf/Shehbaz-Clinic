@@ -40,7 +40,7 @@ export function AdminLoginForm() {
         Email
         <input
           autoComplete="username"
-          className="mt-2 min-h-12 w-full rounded-2xl border border-[var(--line-strong)] bg-white px-4 outline-none focus:border-[var(--teal)]"
+          className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] bg-white px-4 outline-none focus:border-[var(--teal)]"
           name="email"
           required
           type="email"
@@ -50,7 +50,7 @@ export function AdminLoginForm() {
         Password
         <input
           autoComplete="current-password"
-          className="mt-2 min-h-12 w-full rounded-2xl border border-[var(--line-strong)] bg-white px-4 outline-none focus:border-[var(--teal)]"
+          className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] bg-white px-4 outline-none focus:border-[var(--teal)]"
           name="password"
           required
           type="password"

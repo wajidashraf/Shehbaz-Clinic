@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getDirection, isLocale } from "@/i18n/config";
+import { getDirection, getDocumentLanguageAttributes, isLocale } from "@/i18n/config";
 
 describe("locale configuration", () => {
   it("recognizes only the supported languages", () => {
@@ -12,5 +12,13 @@ describe("locale configuration", () => {
   it("sets Urdu to RTL without changing English direction", () => {
     expect(getDirection("en")).toBe("ltr");
     expect(getDirection("ur")).toBe("rtl");
+  });
+
+  it("protects the native Urdu document from automatic browser translation", () => {
+    expect(getDocumentLanguageAttributes("ur")).toEqual({
+      dir: "rtl",
+      lang: "ur",
+      translate: "no",
+    });
   });
 });

@@ -1,6 +1,5 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { BookingWizard } from "@/components/booking/booking-wizard";
-import { DemoNotice } from "@/components/content/demo-notice";
 import type { Locale } from "@/i18n/config";
 import { resolveBookingPrefill } from "@/modules/booking/demo-booking";
 import { listDoctors } from "@/modules/doctors/doctor.repository";
@@ -18,40 +17,26 @@ export default async function BookingPage({
 }: BookingPageProps) {
   const [{ locale }, query] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
-  const [translations, dentists] = await Promise.all([
-    getTranslations("Booking"),
-    listDoctors(),
-  ]);
+  const dentists = await listDoctors();
   const prefill = resolveBookingPrefill(
     query,
     dentists.map((dentist) => dentist.id),
   );
 
   return (
-    <main id="main-content">
-      <section className="border-b border-[var(--line)] bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-end">
-            <div>
-              <p className="text-xs font-extrabold tracking-[0.16em] text-[var(--teal-dark)] uppercase">
-                {translations("eyebrow")}
-              </p>
-              <h1 className="mt-4 max-w-4xl text-4xl leading-[1.08] font-extrabold tracking-[-0.05em] text-balance sm:text-6xl">
-                {translations("title")}
-              </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted-text)]">
-                {translations("description")}
-              </p>
-            </div>
-            <DemoNotice
-              description={translations("demoDescription")}
-              title={translations("demoTitle")}
-            />
-          </div>
-        </div>
-      </section>
-
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18">
+    <main
+      className="relative min-h-[calc(100svh-5rem)] overflow-hidden bg-[var(--aqua-soft)]"
+      id="main-content"
+    >
+      <span
+        aria-hidden="true"
+        className="absolute -start-28 top-20 size-72 rounded-full bg-[var(--aqua)]/55 blur-3xl"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute -end-24 bottom-12 size-64 rounded-full bg-[var(--saffron)]/10 blur-3xl"
+      />
+      <div className="relative mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <BookingWizard
           dentists={dentists}
           initialDentistId={prefill.dentistId}

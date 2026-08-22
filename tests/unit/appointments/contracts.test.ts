@@ -22,6 +22,27 @@ describe("appointment contracts", () => {
     expect(bookingRequestSchema.parse(validBooking)).toEqual(validBooking);
   });
 
+  it("normalizes local and +92 mobile numbers to one stored format", () => {
+    expect(
+      bookingRequestSchema.parse({
+        ...validBooking,
+        mobile: "03068010673",
+      }).mobile,
+    ).toBe("+923068010673");
+    expect(
+      bookingRequestSchema.parse({
+        ...validBooking,
+        mobile: "+923068010673",
+      }).mobile,
+    ).toBe("+923068010673");
+  });
+
+  it("accepts a date-only request when the time is awaiting clinic follow-up", () => {
+    expect(bookingRequestSchema.parse({ ...validBooking, time: "" }).time).toBe(
+      "",
+    );
+  });
+
   it("rejects unknown dentists and missing consent", () => {
     expect(
       bookingRequestSchema.safeParse({

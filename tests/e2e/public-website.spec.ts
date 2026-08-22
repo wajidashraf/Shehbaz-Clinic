@@ -1,14 +1,14 @@
 import { expect, test } from "@playwright/test";
 
 const englishPages = [
-  ["/en", "A clearer path to a healthier smile"],
+  ["/en", "Your trusted partner in dental health"],
   ["/en/services", "Dental care, explained simply"],
   ["/en/dentists", "Choose the right dentist for your visit"],
   ["/en/book", "Book Appointment"],
 ] as const;
 
 const urduPages = [
-  ["/ur", "صحت مند مسکراہٹ کی طرف ایک واضح راستہ"],
+  ["/ur", "دانتوں کی صحت کے لیے آپ کا قابلِ اعتماد ساتھی"],
   ["/ur/services", "دانتوں کی نگہداشت، آسان وضاحت کے ساتھ"],
   ["/ur/dentists", "اپنی ملاقات کے لیے مناسب ڈینٹسٹ منتخب کریں"],
   ["/ur/book", "اپائنٹمنٹ بک کریں"],
@@ -35,16 +35,47 @@ test("the header exposes only approved destinations", async ({ page }) => {
   );
   await expect(
     navigation.getByRole("link", { name: "Services" }),
-  ).toHaveAttribute("href", "/en/services");
+  ).toHaveAttribute("href", "/en#services");
   await expect(
     navigation.getByRole("link", { name: "Dentists" }),
-  ).toHaveAttribute("href", "/en/dentists");
+  ).toHaveAttribute("href", "/en#dentists");
   await expect(
     navigation.getByRole("link", { name: "Book Appointment" }),
   ).toHaveAttribute("href", "/en/book");
   await expect(
     navigation.getByRole("link", { name: /login|about|contact/i }),
   ).toHaveCount(0);
+});
+
+test("doctor cards open localized profiles without appointment actions", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  const dentistSection = page.locator("#dentists");
+  const profileLink = dentistSection.getByRole("link", {
+    name: "View Profile",
+  });
+  await expect(profileLink).toHaveAttribute(
+    "href",
+    /\/en\/dentists\/[a-z0-9-]+$/,
+  );
+  await expect(dentistSection.getByRole("link", { name: /book/i })).toHaveCount(
+    0,
+  );
+});
+
+test("Dr. Manzoor Shahbaz has an informational profile without booking", async ({
+  page,
+}) => {
+  await page.goto("/en/dentists/manzoor-shahbaz");
+  const profile = page.locator("main article").first();
+  await expect(
+    profile.getByRole("heading", { level: 1, name: "Dr. Manzoor Shahbaz" }),
+  ).toBeVisible();
+  await expect(profile.getByRole("link", { name: /book/i })).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Meet the rest of our dental team" }),
+  ).toBeVisible();
 });
 
 test("the English-only admin area redirects guests to its protected sign in", async ({
@@ -104,14 +135,10 @@ test("the English guest booking confirms an appointment", async ({ page }) => {
   );
   await page.goto("/en/book?service=consultation&dentist=no-preference");
 
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByLabel("Appointment date").fill("2026-09-01");
-  await page.getByRole("radio", { name: /10:00/i }).check();
-  await page.getByRole("button", { name: "Continue" }).click();
   await page.getByLabel("Full name").fill("Ali Khan");
-  await page.getByLabel("Mobile number").fill("0300 0000000");
-  await page.getByRole("button", { name: "Continue" }).click();
+  await page.getByLabel("Mobile number").fill("+92 300 0000000");
+  await page.getByLabel("Appointment date").fill("2026-09-01");
+  await page.getByLabel("Available time").selectOption("10:00");
   await page
     .getByRole("checkbox", { name: /I consent to Shahbaz Dental Clinic/ })
     .check();
@@ -138,19 +165,13 @@ test("the Urdu guest booking confirms an appointment in RTL", async ({
   await page.goto("/ur/book?service=consultation&dentist=no-preference");
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
 
-  await page.getByRole("button", { name: "جاری رکھیں" }).click();
-  await page.getByRole("button", { name: "جاری رکھیں" }).click();
-  await page.getByLabel("اپائنٹمنٹ کی تاریخ").fill("2026-09-01");
-  await page.getByRole("radio").first().check();
-  await page.getByRole("button", { name: "جاری رکھیں" }).click();
-  await page.getByLabel("پورا نام").fill("علی خان");
-  await page.getByLabel("موبائل نمبر").fill("0300 0000000");
-  await page.getByRole("button", { name: "جاری رکھیں" }).click();
-  await page.getByRole("checkbox", { name: /میں شہباز ڈینٹل کلینک/ }).check();
-  await page.getByRole("button", { name: "اپائنٹمنٹ کی تصدیق کریں" }).click();
+  await page.locator("#booking-name").fill("Ali Khan");
+  await page.locator("#booking-mobile").fill("0300 0000000");
+  await page.locator("#booking-date").fill("2026-09-01");
+  await page.locator("#booking-time").selectOption("10:00");
+  await page.locator('input[type="checkbox"]').check();
+  await page.locator('button[type="submit"]').click();
 
-  await expect(
-    page.getByRole("heading", { name: "آپ کی اپائنٹمنٹ کی تصدیق ہوگئی ہے" }),
-  ).toBeVisible();
+  await expect(page.locator("#booking-confirmation-title")).toBeVisible();
   await expect(page.getByText("SDC-2026-UR1234")).toBeVisible();
 });

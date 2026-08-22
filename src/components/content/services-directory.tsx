@@ -12,6 +12,7 @@ type ServicesDirectoryProps = {
     book: string;
     duration: string;
     minutes: string;
+    viewDetails: string;
   };
   locale: Locale;
   services: readonly DemoService[];
@@ -71,7 +72,16 @@ export function ServicesDirectory({
         <div className="mx-auto grid max-w-7xl gap-5 px-5 py-12 sm:px-6 md:grid-cols-2 lg:px-8 xl:grid-cols-3">
           {visibleServices.map((service) => (
             <div data-testid="service-directory-card" key={service.id}>
-              <ServiceCard labels={labels} locale={locale} service={service} />
+              <ServiceCard
+                href={`/${locale}/services/${service.id}`}
+                labels={{
+                  book: labels.viewDetails,
+                  duration: labels.duration,
+                  minutes: labels.minutes,
+                }}
+                locale={locale}
+                service={service}
+              />
             </div>
           ))}
         </div>

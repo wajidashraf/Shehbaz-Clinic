@@ -90,6 +90,28 @@ describe("server environment", () => {
     ).toThrow(/Brevo email settings must be provided together/);
   });
 
+  it("accepts Brevo SMS with the existing API key and an SMS sender", () => {
+    const environment = getServerEnv({
+      ...baseEnvironment,
+      BREVO_API_KEY: "xkeysib-synthetic-key",
+      BREVO_SMS_SENDER: "ShahbazDent",
+      SMS_PROVIDER: "brevo",
+    });
+
+    expect(environment.SMS_PROVIDER).toBe("brevo");
+    expect(environment.BREVO_SMS_SENDER).toBe("ShahbazDent");
+  });
+
+  it("rejects an incomplete Brevo SMS configuration", () => {
+    expect(() =>
+      getServerEnv({
+        ...baseEnvironment,
+        BREVO_API_KEY: "xkeysib-synthetic-key",
+        SMS_PROVIDER: "brevo",
+      }),
+    ).toThrow(/Brevo SMS settings must be provided together/);
+  });
+
   it("accepts only Redis protocol connection strings", () => {
     expect(
       getServerEnv({

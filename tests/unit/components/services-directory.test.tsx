@@ -12,6 +12,7 @@ describe("ServicesDirectory", () => {
           book: "Book this service",
           duration: "Appointment duration",
           minutes: "minutes",
+          viewDetails: "View service details",
         }}
         locale="en"
         services={demoServices}
@@ -27,5 +28,10 @@ describe("ServicesDirectory", () => {
     expect(screen.getAllByTestId("service-directory-card")).toHaveLength(2);
     expect(screen.getByText("General dental check-up")).toBeVisible();
     expect(screen.queryByText("Dental filling")).not.toBeInTheDocument();
+    expect(
+      screen
+        .getAllByRole("link", { name: "View service details" })
+        .find((link) => link.getAttribute("href") === "/en/services/check-up"),
+    ).toBeVisible();
   });
 });

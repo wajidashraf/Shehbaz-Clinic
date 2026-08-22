@@ -16,6 +16,23 @@ export const clinicConfig = {
   streetAddress: "Circular Road near Ahle Hadees Masjid, Samundri",
 
   phone: "+92 344 3420001",
+  landline: "041-3420001",
+
+  socialLinks: [
+    { label: "Facebook", href: "https://www.facebook.com/" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    {
+      label: "Marham",
+      href: "https://www.marham.pk/hospitals/samundri/shahbaz-dental-clinic/samundri",
+    },
+    {
+      label: "Oladoc",
+      href: "https://oladoc.com/pakistan/faisalabad/h/shahbaz-dental-clinic/15342",
+    },
+    { label: "Instagram", href: "https://www.instagram.com/" },
+    { label: "X", href: "https://x.com/" },
+    { label: "TikTok", href: "https://www.tiktok.com/" },
+  ],
 
   email: null,
 
@@ -30,5 +47,8 @@ export const clinicConfig = {
   coordinates: {
     latitude: 31.0613673,
     longitude: 72.9608833,
+  },
+  whatsapp: {
+    number: "+923443420001",
   },
 } as const;

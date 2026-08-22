@@ -1,42 +1,12 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 import { clinicConfig } from "@/config/public-config";
 
-export function HeaderTopBar() {
-  const [isVisible, setIsVisible] = useState(true);
+type HeaderTopBarProps = {
+  labels: { address: string; openDaily: string };
+};
 
-  useEffect(() => {
-    function handleScroll() {
-      setIsVisible(window.scrollY < 60);
-    }
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+export function HeaderTopBar({ labels }: HeaderTopBarProps) {
   return (
-    <div
-      className={`
-        hidden overflow-hidden bg-[var(--primary-ink)]
-        transition-[max-height,opacity,transform]
-        duration-300 ease-out
-        md:block
-        ${
-          isVisible
-            ? "max-h-12 translate-y-0 opacity-100"
-            : "max-h-0 -translate-y-2 opacity-0"
-        }
-      `}
-    >
+    <div className="hidden bg-[var(--primary-ink)] md:block">
       <div className="mx-auto flex min-h-10 max-w-7xl items-center justify-between gap-6 px-6 lg:px-8">
         {/* Opening Hours */}
         <div className="flex items-center gap-2 text-xs font-semibold text-white/90">
@@ -64,7 +34,7 @@ export function HeaderTopBar() {
           </svg>
 
           <span>
-            Open Daily: {clinicConfig.openingHours.display}
+            {labels.openDaily}: <bdi>{clinicConfig.openingHours.display}</bdi>
           </span>
         </div>
 
@@ -74,7 +44,7 @@ export function HeaderTopBar() {
             className="
               flex min-w-0 items-center gap-2
               text-xs font-semibold text-white/90
-              transition-colors duration-300 ease-out
+              transition-colors duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]
               hover:text-white
             "
             href={clinicConfig.mapsUrl}
@@ -104,41 +74,42 @@ export function HeaderTopBar() {
               />
             </svg>
 
-            <span className="max-w-[24rem] truncate">
-              {clinicConfig.streetAddress}
-            </span>
+            <span className="max-w-[24rem] truncate">{labels.address}</span>
           </a>
         ) : null}
 
-        {/* Phone */}
-        {clinicConfig.phone ? (
+        {/* Clinic phone numbers */}
+        <div className="flex items-center gap-2 text-xs font-semibold text-white/90">
+          <svg
+            aria-hidden="true"
+            className="size-4 shrink-0 text-white/80"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M8.5 4.5 10 8l-2 1.5c1.2 2.6 3.4 4.8 6 6l1.5-2 3.5 1.5c.4.2.7.6.6 1.1-.3 2.1-2.1 3.7-4.2 3.7C9.2 19.8 4.2 14.8 4.2 8.6c0-2.1 1.6-3.9 3.7-4.2.2 0 .4 0 .6.1Z"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.8"
+            />
+          </svg>
           <a
-            className="
-              flex items-center gap-2
-              text-xs font-semibold text-white/90
-              transition-colors duration-300 ease-out
-              hover:text-white
-            "
+            className="transition-colors duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] hover:text-white"
             href={`tel:${clinicConfig.phone.replace(/\s+/g, "")}`}
           >
-            <svg
-              aria-hidden="true"
-              className="size-4 shrink-0 text-white/80"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M8.5 4.5 10 8l-2 1.5c1.2 2.6 3.4 4.8 6 6l1.5-2 3.5 1.5c.4.2.7.6.6 1.1-.3 2.1-2.1 3.7-4.2 3.7C9.2 19.8 4.2 14.8 4.2 8.6c0-2.1 1.6-3.9 3.7-4.2.2 0 .4 0 .6.1Z"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.8"
-              />
-            </svg>
-
-            <span>{clinicConfig.phone}</span>
+            <bdi>{clinicConfig.phone}</bdi>
           </a>
-        ) : null}
+          <span aria-hidden="true" className="text-white/35">
+            |
+          </span>
+          <a
+            className="transition-colors duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] hover:text-white"
+            href={`tel:${clinicConfig.landline.replace(/-/g, "")}`}
+          >
+            <bdi>{clinicConfig.landline}</bdi>
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -17,10 +17,18 @@ const emptyAdminData = {
   schedules: [],
   appointments: [],
   notifications: [],
+  testimonials: [],
 };
 
 describe("AdminDashboard", () => {
   afterEach(() => vi.unstubAllGlobals());
+
+  it("includes testimonial management in the administration dashboard", () => {
+    render(<AdminDashboard initialData={emptyAdminData} />);
+
+    expect(screen.getByRole("heading", { name: "Testimonials" })).toBeVisible();
+    expect(screen.getByText("No testimonials added yet.")).toBeVisible();
+  });
 
   it("offers a retry control for failed email delivery", async () => {
     const failedEmail = {
@@ -63,5 +71,32 @@ describe("AdminDashboard", () => {
       "Notification sent.",
     );
     expect(screen.queryByRole("button", { name: "Retry email" })).toBeNull();
+  });
+
+  it("shows the requested date when an appointment time is pending", () => {
+    render(
+      <AdminDashboard
+        initialData={{
+          ...emptyAdminData,
+          appointments: [
+            {
+              publicReference: "SDC-2026-DATE01",
+              dentistId: "sobia-zulfiqar",
+              serviceId: "dental-checkup",
+              requestedDateKey: "2026-08-31",
+              startAtUtc: null,
+              durationMinutes: null,
+              patientName: "Ahmad Ali",
+              mobile: "03001234567",
+              email: null,
+              status: "confirmed" as const,
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(screen.getByText(/31-Aug-2026/)).toBeInTheDocument();
+    expect(screen.getByText(/Time to be informed/)).toBeInTheDocument();
   });
 });

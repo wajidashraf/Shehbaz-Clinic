@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { DemoNotice } from "@/components/content/demo-notice";
-import { DentistCard } from "@/components/content/dentist-card";
+import { DentistsCarousel } from "@/components/content/dentists-carousel";
 import { ButtonLink } from "@/components/ui/button-link";
 import type { Locale } from "@/i18n/config";
 import { listDoctors } from "@/modules/doctors/doctor.repository";
@@ -21,41 +20,43 @@ export default async function DentistsPage({ params }: DentistsPageProps) {
 
   return (
     <main id="main-content">
-      <section className="border-b border-[var(--line)] bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-          <p className="text-xs font-extrabold tracking-[0.16em] text-[var(--teal-dark)] uppercase">
-            {translations("eyebrow")}
-          </p>
-          <h1 className="mt-4 max-w-4xl text-4xl leading-[1.08] font-extrabold tracking-[-0.05em] text-balance sm:text-6xl">
-            {translations("title")}
-          </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--muted-text)]">
-            {translations("description")}
-          </p>
-          <div className="mt-8 max-w-4xl">
-            <DemoNotice
-              description={translations("demoDescription")}
-              title={translations("demoTitle")}
-            />
+      <section className="border-b border-[var(--line)] bg-[var(--aqua-light)]">
+        <div className="mx-auto grid max-w-7xl items-end gap-10 px-5 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_22rem] lg:px-8 lg:py-24">
+          <div>
+            <p className="text-xs font-extrabold tracking-[0.16em] text-[var(--teal-dark)] uppercase">
+              {translations("eyebrow")}
+            </p>
+            <h1 className="mt-4 max-w-4xl text-4xl leading-[1.08] font-extrabold tracking-[-0.05em] text-balance text-[var(--primary-ink)] sm:text-6xl">
+              {translations("title")}
+            </h1>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--muted-text)]">
+              {translations("description")}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--line)] bg-white p-6 shadow-[0_20px_50px_-42px_rgba(7,48,71,0.6)]">
+            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--teal-dark)]">
+              {translations("demoTitle")}
+            </p>
+            <p className="mt-3 text-sm leading-7 text-[var(--muted-text)]">
+              {translations("demoDescription")}
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {dentists.map((dentist) => (
-            <DentistCard
-              dentist={dentist}
-              key={dentist.id}
-              labels={{
-                book: translations("book"),
-                demoBadge: translations("demoBadge"),
-                languages: translations("languages"),
-                workingDays: translations("workingDays"),
-              }}
-              locale={locale}
-            />
-          ))}
+      <section className="bg-white px-5 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <DentistsCarousel
+            dentists={dentists}
+            labels={{
+              carousel: translations("carousel"),
+              demoBadge: translations("demoBadge"),
+              next: translations("next"),
+              previous: translations("previous"),
+              viewProfile: translations("viewProfile"),
+            }}
+            locale={locale}
+          />
         </div>
       </section>
 

@@ -11,9 +11,11 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { getDirection, locales } from "@/i18n/config";
+import { WhatsAppChat } from "@/components/layout/whatsapp-chat";
+import { getDocumentLanguageAttributes, locales } from "@/i18n/config";
 import { routing } from "@/i18n/routing";
 
 type LocaleLayoutProps = {
@@ -29,12 +31,22 @@ export async function generateMetadata({
   params,
 }: LocaleLayoutProps): Promise<Metadata> {
   const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) return {};
-  const translations = await getTranslations({ locale, namespace: "Metadata" });
+
+  if (!hasLocale(routing.locales, locale)) {
+    return {};
+  }
+
+  const translations = await getTranslations({
+    locale,
+    namespace: "Metadata",
+  });
 
   return {
     title: translations("title"),
     description: translations("description"),
+    other: {
+      google: "notranslate",
+    },
   };
 }
 
@@ -43,32 +55,55 @@ export default async function LocaleLayout({
   params,
 }: LocaleLayoutProps) {
   const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) notFound();
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
 
   setRequestLocale(locale);
-  const [messages, navigation, footer] = await Promise.all([
+
+  const [messages, navigation, footer, whatsapp] = await Promise.all([
     getMessages(),
     getTranslations("Navigation"),
     getTranslations("Footer"),
+    getTranslations("WhatsApp"),
   ]);
 
   return (
-    <html dir={getDirection(locale)} lang={locale}>
+    <html {...getDocumentLanguageAttributes(locale)}>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {/* Skip to main content */}
           <a
-            className="fixed start-4 top-4 z-50 -translate-y-24 rounded-full bg-white px-4 py-3 font-bold shadow-lg focus:translate-y-0"
+            className="
+              fixed start-4 top-4 z-50
+              -translate-y-24
+              rounded-full
+              bg-white
+              px-4 py-3
+              font-bold
+              shadow-lg
+              focus:translate-y-0
+            "
             href="#main-content"
           >
-            {locale === "ur" ? "مرکزی مواد پر جائیں" : "Skip to main content"}
+            {locale === "ur"
+              ? "مرکزی مواد پر جائیں"
+              : "Skip to main content"}
           </a>
+
+          {/* Header */}
           <SiteHeader
             labels={{
               primaryNavigation: navigation("primaryNavigation"),
               home: navigation("home"),
               services: navigation("services"),
               dentists: navigation("dentists"),
+              contact: navigation("contact"),
               book: navigation("book"),
+              mobileNavigation: navigation("mobileNavigation"),
+              openDaily: navigation("openDaily"),
+              address: navigation("address"),
               bookShort: navigation("bookShort"),
               switchLanguage: navigation("switchLanguage"),
               openMenu: navigation("openMenu"),
@@ -76,15 +111,48 @@ export default async function LocaleLayout({
             }}
             locale={locale}
           />
+
+          {/* Page content */}
           {children}
+
+          {/* Footer */}
           <SiteFooter
             labels={{
+              addressLabel: footer("addressLabel"),
+              daily: footer("daily"),
+              home: footer("home"),
+              hoursLabel: footer("hoursLabel"),
+              quickLinks: footer("quickLinks"),
+              rights: footer("rights"),
+              serviceChildren: footer("serviceChildren"),
+              serviceCleaning: footer("serviceCleaning"),
+              serviceConsultation: footer("serviceConsultation"),
+              serviceRootCanal: footer("serviceRootCanal"),
               summary: footer("summary"),
               locality: footer("locality"),
-              demonstration: footer("demonstration"),
               services: footer("services"),
               dentists: footer("dentists"),
               book: footer("book"),
+            }}
+            locale={locale}
+          />
+
+          {/* WhatsApp */}
+          <WhatsAppChat
+            labels={{
+              open: whatsapp("open"),
+              close: whatsapp("close"),
+              online: whatsapp("online"),
+              welcome: whatsapp("welcome"),
+              quickQuestions: whatsapp("quickQuestions"),
+              bookAppointment: whatsapp("bookAppointment"),
+              askTreatment: whatsapp("askTreatment"),
+              clinicTimings: whatsapp("clinicTimings"),
+              talkToTeam: whatsapp("talkToTeam"),
+              messageLabel: whatsapp("messageLabel"),
+              messagePlaceholder: whatsapp("messagePlaceholder"),
+              send: whatsapp("send"),
+              emptyMessage: whatsapp("emptyMessage"),
             }}
             locale={locale}
           />

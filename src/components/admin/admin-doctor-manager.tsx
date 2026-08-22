@@ -10,7 +10,7 @@ type AdminDoctorManagerProps = {
 };
 
 const inputClass =
-  "mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] bg-white px-3";
+  "mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] bg-white px-3";
 
 export function AdminDoctorManager({
   doctors,
@@ -101,7 +101,7 @@ export function AdminDoctorManager({
   }
 
   return (
-    <section className="rounded-[2rem] border border-[var(--line)] bg-white p-5 sm:p-7">
+    <section className="rounded-lg border border-[var(--line)] bg-white p-5 sm:p-7">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-extrabold">Doctors</h2>
@@ -122,7 +122,7 @@ export function AdminDoctorManager({
 
       {message ? (
         <p
-          className="mt-5 rounded-2xl bg-[var(--aqua-soft)] px-4 py-3 font-bold"
+          className="mt-5 rounded-lg bg-[var(--aqua-soft)] px-4 py-3 font-bold"
           role="status"
         >
           {message}
@@ -132,11 +132,11 @@ export function AdminDoctorManager({
       <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {doctors.map((doctor) => (
           <article
-            className="rounded-2xl border border-[var(--line)] p-4"
+            className="rounded-lg border border-[var(--line)] p-4"
             key={doctor.id}
           >
             <div className="flex gap-4">
-              <div className="relative size-20 shrink-0 overflow-hidden rounded-2xl bg-[var(--aqua)]">
+              <div className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-[var(--aqua)]">
                 <Image
                   alt={doctor.imageAlt.en}
                   className="object-cover"
@@ -310,7 +310,7 @@ export function AdminDoctorManager({
                     type="checkbox"
                     value={entry.url}
                   />
-                  <span className="relative block size-24 overflow-hidden rounded-xl border-2 border-transparent opacity-50 peer-checked:border-[var(--teal)] peer-checked:opacity-100">
+                  <span className="relative block size-24 overflow-hidden rounded-lg border-2 border-transparent opacity-50 peer-checked:border-[var(--teal)] peer-checked:opacity-100">
                     <Image
                       alt={entry.altText.en}
                       className="object-cover"
@@ -325,7 +325,7 @@ export function AdminDoctorManager({
           </fieldset>
         ) : null}
 
-        <label className="mt-6 flex cursor-pointer items-center gap-3 rounded-2xl bg-[var(--aqua-soft)] p-4 font-extrabold">
+        <label className="mt-6 flex cursor-pointer items-center gap-3 rounded-lg bg-[var(--aqua-soft)] p-4 font-extrabold">
           <input
             className="size-5 accent-[var(--teal)]"
             defaultChecked={editing?.isFeatured}

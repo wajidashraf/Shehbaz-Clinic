@@ -71,4 +71,24 @@ describe("booking rules", () => {
       consent: "Confirm your consent to create this appointment.",
     });
   });
+
+  it("accepts local and +92 Pakistani mobile formats", () => {
+    const details = createBookingDraft({
+      fullName: "Wajid Ashraf",
+      email: "wajid@example.com",
+    });
+
+    expect(
+      validateBookingStep("details", {
+        ...details,
+        mobile: "03068010673",
+      }),
+    ).toEqual({});
+    expect(
+      validateBookingStep("details", {
+        ...details,
+        mobile: "+923068010673",
+      }),
+    ).toEqual({});
+  });
 });

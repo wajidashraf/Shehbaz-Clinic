@@ -1,4 +1,5 @@
 import { findDemoService } from "@/content/demo-content";
+import { normalizePakistanMobile } from "@/modules/booking/pakistan-mobile";
 
 export type BookingStep =
   "service" | "dentist" | "time" | "details" | "review" | "confirmation";
@@ -40,7 +41,6 @@ const defaultValidationMessages: BookingValidationMessages = {
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const pakistanMobilePattern = /^03\d{9}$/;
 
 export function createBookingDraft(
   initial: Partial<BookingDraft> = {},
@@ -110,7 +110,7 @@ export function validateBookingStep(
     if (draft.fullName.trim().length < 2) {
       errors.fullName = messages.requiredName;
     }
-    if (!pakistanMobilePattern.test(draft.mobile.replace(/\D/g, ""))) {
+    if (!normalizePakistanMobile(draft.mobile)) {
       errors.mobile = messages.requiredMobile;
     }
     if (draft.email && !emailPattern.test(draft.email.trim())) {

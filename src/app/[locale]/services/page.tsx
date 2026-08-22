@@ -26,7 +26,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
           <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted-text)]">
             {translations("description")}
           </p>
-          <div className="mt-8 flex max-w-2xl gap-4 rounded-2xl border border-[var(--line)] bg-[var(--aqua-soft)] p-5">
+          <div className="mt-8 flex max-w-2xl gap-4 rounded-lg border border-[var(--line)] bg-[var(--aqua-soft)] p-5">
             <span
               aria-hidden="true"
               className="grid size-7 shrink-0 place-items-center rounded-full bg-[var(--teal)] text-sm font-extrabold text-[var(--primary-ink)]"
@@ -49,6 +49,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
           book: translations("book"),
           duration: translations("duration"),
           minutes: translations("minutes"),
+          viewDetails: translations("viewDetails"),
         }}
         locale={locale}
         services={demoServices}

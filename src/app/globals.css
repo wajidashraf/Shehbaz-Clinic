@@ -7,6 +7,8 @@
   --teal: #2093e0;
   --teal-dark: #00678f;
   --aqua: #d9f3fd;
+  --aqua-light: #effaff;
+  --aqua-md: #c1eafccd;
   --aqua-soft: #eefaff;
   --mineral: #f7fcff;
   --saffron: #a96812;
@@ -31,8 +33,29 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom));
+  }
+}
+
 html[lang="ur"] body {
   font-family: "Noto Sans Arabic Variable", "Segoe UI", sans-serif;
+}
+
+html[lang="ur"] :where(h1, h2, h3, h4) {
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+
+html[lang="ur"] .uppercase {
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 a {

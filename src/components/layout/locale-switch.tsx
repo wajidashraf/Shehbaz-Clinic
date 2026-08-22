@@ -39,12 +39,12 @@ export function LocaleSwitch({ label, locale }: LocaleSwitchProps) {
       aria-label={label}
       className="
         inline-flex min-h-11 items-center justify-center
-        rounded-xl border border-slate-200
+        rounded-lg border border-slate-200
         bg-white px-3.5
         text-sm font-bold text-slate-700
         shadow-sm
         transition-[color,background-color,border-color,box-shadow,transform]
-        duration-200
+        duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]
         hover:-translate-y-0.5
         hover:border-sky-200
         hover:bg-[var(--aqua-soft)]

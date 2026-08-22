@@ -11,3 +11,11 @@ export function isLocale(value: string): value is Locale {
 export function getDirection(locale: Locale): "ltr" | "rtl" {
   return locale === "ur" ? "rtl" : "ltr";
 }
+
+export function getDocumentLanguageAttributes(locale: Locale) {
+  return {
+    dir: getDirection(locale),
+    lang: locale,
+    translate: "no" as const,
+  };
+}

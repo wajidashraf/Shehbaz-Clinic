@@ -1,335 +1,208 @@
 import Image from "next/image";
 import { ButtonLink } from "@/components/ui/button-link";
 
-// ═══════════════════════════════════════════════════════════════
-//  Premium Hero Section — Dental Clinic
-//  Supports: English + Urdu (RTL) | Responsive | Viewport-fit
-// ═══════════════════════════════════════════════════════════════
-
-interface HeroSectionProps {
+type HeroSectionProps = {
   locale: "en" | "ur";
   home: (key: string) => string;
-}
+};
 
 export function HeroSection({ locale, home }: HeroSectionProps) {
-  const isRTL = locale === "ur";
+  const isRtl = locale === "ur";
 
   return (
     <section
-      className="
-        relative
-        overflow-hidden
-        bg-gradient-to-b
-        from-[var(--mineral)]
-        via-white
-        to-[var(--mineral)]
-      "
       aria-label={home("title")}
+      className=" relative isolate min-h-[clamp(36rem,68dvh,46rem)] overflow-hidden bg-[var(--mineral)] lg:min-h-[calc(100dvh-7.5rem)]"
     >
-      {/* ── Ambient background glows ───────────────────────── */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        {/* Top-left teal glow */}
-        <div
-          className="
-            absolute
-            -top-[20%]
-            -start-[10%]
-            h-[600px]
-            w-[600px]
-            rounded-full
-            bg-[var(--aqua)]
-            opacity-40
-            blur-[120px]
-            sm:h-[700px]
-            sm:w-[700px]
-          "
-        />
-        {/* Bottom-right subtle glow */}
-        <div
-          className="
-            absolute
-            -bottom-[10%]
-            -end-[5%]
-            h-[400px]
-            w-[400px]
-            rounded-full
-            bg-[var(--aqua-soft)]
-            opacity-60
-            blur-[100px]
-            sm:h-[500px]
-            sm:w-[500px]
-          "
-        />
-        {/* Fine grain texture overlay for premium feel */}
-        <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          }}
-        />
-      </div>
-
-      {/* ── Main content grid ──────────────────────────────── */}
+      {/* Hero image frame */}
       <div
         className="
-          relative
-          z-10
-          mx-auto
-          grid
-          max-w-7xl
-          min-h-[calc(100dvh-4rem)]
-          items-center
-          gap-10
-          px-5
-          py-10
-          sm:px-6
-          sm:py-14
-          lg:grid-cols-[0.9fr_1.1fr]
-          lg:gap-16
-          lg:px-8
-          lg:py-0
-        "
-      >
-        {/* ── Left column: copy ───────────────────────────── */}
-        <div className="flex flex-col justify-center">
-          {/* Eyebrow badge */}
-          <div
-            className="
-              inline-flex
-              w-fit
-              items-center
-              gap-2.5
-              rounded-full
-              border
-              border-[var(--line)]
-              bg-white/80
-              px-4
-              py-2
-              text-xs
-              font-extrabold
-              uppercase
-              tracking-[0.12em]
-              text-[var(--teal-dark)]
-              shadow-sm
-              backdrop-blur-sm
-            "
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--teal)] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--teal)]" />
-            </span>
-            {home("eyebrow")}
-          </div>
+    absolute inset-0 overflow-hidden
+    border-0 bg-[var(--aqua)] p-0
+    shadow-none
 
-          {/* Headline */}
+    lg:inset-y-[9%]
+    lg:end-[max(2rem,calc((100vw-80rem)/2+2rem))]
+    lg:start-auto
+    lg:w-[min(calc(43vw-20px),40rem)]
+    lg:rounded-4xl
+    lg:border-[5px]
+    lg:border-[var(--line-strong)]
+    lg:bg-white
+    lg:p-2
+    lg:shadow-[0_30px_80px_-38px_rgba(7,48,71,0.5)]
+  "
+      >
+        <div
+          className="
+      relative size-full overflow-hidden
+      rounded-none bg-[var(--aqua)]
+      lg:rounded-4xl
+    "
+        >
+          <Image
+            alt={home("imageAlt")}
+            className="object-cover object-center lg:object-[52%_center]"
+            fill
+            preload
+            sizes="(max-width: 1023px) 100vw, 43vw"
+            src="/images/demo/care-room.webp"
+          />
+
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,48,71,0.02)_0%,rgba(7,48,71,0.12)_100%)] lg:hidden"
+          />
+        </div>
+      </div>
+
+      {/* Mobile text readability overlay */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,rgba(0,103,143,0)_0%,rgba(0,103,143,0.72)_22%,rgba(7,48,71,0.96)_100%)] backdrop-blur-[2px] lg:hidden"
+      />
+
+      {/* Desktop decorative shape */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -start-40 -top-44 hidden size-[38rem] rounded-full bg-[var(--aqua)] opacity-70 blur-3xl lg:block"
+      />
+
+      {/* Main content */}
+      <div className=" relative z-10 mx-auto flex min-h-[clamp(36rem,68dvh,46rem)] max-w-7xl items-end px-5 py-6 sm:px-6 sm:py-8 lg:min-h-[calc(100dvh-7.5rem)] lg:items-center lg:px-8 lg:py-16">
+        <div className="w-full text-center lg:max-w-[42%] lg:pe-8 lg:text-start">
+          <p
+            className={`mx-auto hidden w-fit items-center gap-2 rounded-full border border-white/25 bg-white/14 px-3.5 py-2 text-[0.68rem] font-extrabold text-white shadow-sm backdrop-blur-md lg:mx-0 lg:inline-flex lg:border-[var(--line)] lg:bg-white lg:text-[var(--teal-dark)] ${
+              isRtl
+                ? "leading-6 tracking-normal"
+                : "uppercase tracking-[0.13em]"
+            }`}
+          >
+            <span
+              aria-hidden="true"
+              className="size-2 rounded-full bg-[var(--saffron)]"
+            />
+
+            {home("eyebrow")}
+          </p>
+
           <h1
-            className="
-              mt-6
-              max-w-3xl
-              text-[2.5rem]
-              font-extrabold
-              leading-[1.05]
-              tracking-[-0.055em]
-              text-balance
-              text-[var(--primary-ink)]
-              sm:text-[3.5rem]
-              lg:text-[4rem]
-              xl:text-[4.5rem]
-            "
+            className={`mx-auto mt-10 max-w-[15ch] text-[clamp(2.1rem,9.2vw,3rem)] font-extrabold leading-[1.06] text-balance text-white sm:max-w-[17ch] lg:mx-0 lg:mt-6 lg:max-w-[11ch] lg:text-[clamp(3.6rem,5.1vw,4.75rem)] lg:text-[var(--primary-ink)] ${
+              isRtl
+                ? "tracking-normal"
+                : "tracking-[-0.052em] [word-spacing:0.09em]"
+            }`}
           >
             {home("title")}
           </h1>
 
-          {/* Description */}
-          <p
-            className="
-              mt-5
-              max-w-lg
-              text-base
-              leading-relaxed
-              text-[var(--muted-text)]
-              sm:text-lg
-              sm:leading-8
-            "
-          >
+          <p className="mx-auto mt-4 max-w-[36rem] text-sm leading-6 text-pretty text-white/90 sm:text-base sm:leading-7 lg:mx-0 lg:mt-5 lg:max-w-xl lg:text-lg lg:leading-8 lg:text-[var(--muted-text)]">
             {home("description")}
           </p>
 
-          {/* CTA buttons */}
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mx-auto mt-5 grid max-w-md grid-cols-1 gap-2.5 min-[360px]:grid-cols-2 lg:mx-0 lg:mt-8 lg:flex lg:max-w-none lg:flex-wrap lg:gap-3">
             <ButtonLink
+              className="w-full lg:w-auto"
               href={`/${locale}/book`}
-              variant="primary"
-              size="large"
               icon={
                 <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                   aria-hidden="true"
+                  className="size-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
+                  <rect
+                    x="3"
+                    y="5"
+                    width="18"
+                    height="16"
+                    rx="3"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  />
+
+                  <path
+                    d="M8 3v4M16 3v4M3 10h18"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="1.8"
+                  />
                 </svg>
               }
+              size="large"
             >
               {home("book")}
             </ButtonLink>
 
             <ButtonLink
-              href={`/${locale}/services`}
-              variant="secondary"
+              className="w-full border-white/70 bg-white/92 lg:w-auto lg:border-[var(--line-strong)] lg:bg-white"
+              href={`/${locale}#services`}
               icon={
                 <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                   aria-hidden="true"
+                  className="size-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                  <polyline
-                    points={isRTL ? "15 18 9 12 15 6" : "9 18 15 12 9 6"}
+                  <path
+                    d={isRtl ? "m15 6-6 6 6 6" : "m9 6 6 6-6 6"}
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                   />
                 </svg>
               }
+              variant="secondary"
             >
               {home("explore")}
             </ButtonLink>
           </div>
         </div>
+      </div>
 
-        {/* ── Right column: image composition ─────────────── */}
-        <div className="relative flex items-center justify-center lg:justify-end">
-          {/* Decorative background shape */}
-          <div
-            aria-hidden="true"
-            className={`
-              absolute
-              inset-x-4
-              -bottom-2
-              top-4
-              rounded-[2rem_2rem_2rem_0.5rem]
-              bg-[var(--teal)]
-              opacity-90
-              shadow-[0_20px_60px_color-mix(in_srgb,var(--teal)_25%,transparent)]
-              ${isRTL ? "rounded-[2rem_2rem_0.5rem_2rem]" : ""}
-            `}
-          />
-
-          {/* Main image frame */}
-          <div
-            className={`
-              relative
-              aspect-[4/3]
-              w-full
-              max-w-xl
-              overflow-hidden
-              rounded-[2rem_2rem_2rem_0.5rem]
-              bg-[var(--aqua)]
-              shadow-[0_12px_40px_rgba(7,48,71,0.12)]
-              ring-1
-              ring-white/40
-              ${isRTL ? "rounded-[2rem_2rem_0.5rem_2rem]" : ""}
-            `}
+      {/* PHC Registration - top right */}
+      <div
+        className="
+          absolute
+          end-[max(1rem,calc((100vw-90rem)/2+3rem))]
+          bottom-[8%]
+          z-20
+          hidden items-center gap-3
+          rounded-xl border border-white/80
+          bg-white/95 px-4 py-3
+          text-[var(--primary-ink)]
+          shadow-[0_14px_38px_-20px_rgba(7,48,71,0.95)]
+          backdrop-blur-md
+          lg:flex
+        "
+      >
+        <span className="grid size-9 place-items-center rounded-lg bg-[var(--aqua-soft)] text-[var(--teal)]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            className="size-5"
           >
-            <Image
-              alt={
-                locale === "ur"
-                  ? "صاف اور روشن ڈینٹل ٹریٹمنٹ روم کی مصنوعی تصویر"
-                  : "Synthetic image of a clean, bright dental treatment room"
-              }
-              className="object-cover"
-              fill
-              sizes="(max-width: 1023px) 100vw, 45vw"
-              src="/images/demo/care-room.webp"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
             />
+          </svg>
+        </span>
 
-            {/* Subtle vignette overlay for depth */}
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background: `radial-gradient(ellipse at 30% 20%, transparent 50%, rgba(7,48,71,0.06) 100%)`,
-              }}
-              aria-hidden="true"
-            />
-          </div>
+        <span>
+          <strong className="block text-sm leading-5">
+            {home("registrationLabel")}
+          </strong>
 
-          {/* Floating badge */}
-          <span
-            className={`
-              absolute
-              top-2
-              rounded-2xl
-              bg-white/95
-              px-4
-              py-2.5
-              text-xs
-              font-extrabold
-              text-[var(--teal-dark)]
-              shadow-[0_4px_20px_rgba(7,48,71,0.1)]
-              backdrop-blur-md
-              border
-              border-[var(--line)]/50
-              ${isRTL ? "start-0 rounded-se-none" : "end-0 rounded-ss-none"}
-            `}
-          >
-            {home("demoTitle")}
-          </span>
-
-          {/* Floating stat card (bottom) */}
-          <div
-            className={`
-              absolute
-              -bottom-4
-              hidden
-              items-center
-              gap-3
-              rounded-2xl
-              bg-white
-              px-5
-              py-3.5
-              shadow-[0_8px_30px_rgba(7,48,71,0.1)]
-              border
-              border-[var(--line)]/40
-              sm:flex
-              ${isRTL ? "start-4" : "end-4"}
-            `}
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--aqua-soft)] text-[var(--teal)]">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-lg font-extrabold leading-none text-[var(--primary-ink)]">
-                PHC REG Number
-              </p>
-              <p className="text-[0.7rem] font-semibold uppercase tracking-wider text-[var(--muted-text)]">
-                24988
-              </p>
-            </div>
-          </div>
-        </div>
+          <bdi className="block text-xs font-bold text-[var(--muted-text)]">
+            24988
+          </bdi>
+        </span>
       </div>
     </section>
   );

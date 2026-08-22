@@ -10,8 +10,8 @@ export default async function AdminLoginPage() {
 
   return (
     <main className="grid min-h-dvh place-items-center bg-[var(--mineral)] px-4 py-12">
-      <section className="w-full max-w-md rounded-[2rem] border border-[var(--line)] bg-white p-7 shadow-[0_24px_70px_-44px_rgba(18,48,53,0.55)] sm:p-9">
-        <span className="grid size-12 place-items-center rounded-[40%] bg-[var(--teal)] font-extrabold text-[var(--primary-ink)]">
+      <section className="w-full max-w-md rounded-lg border border-[var(--line)] bg-white p-7 shadow-[0_24px_70px_-44px_rgba(18,48,53,0.55)] sm:p-9">
+        <span className="grid size-12 place-items-center rounded-lg bg-[var(--teal)] font-extrabold text-[var(--primary-ink)]">
           S
         </span>
         <p className="mt-7 text-xs font-extrabold tracking-[0.16em] text-[var(--teal-dark)] uppercase">

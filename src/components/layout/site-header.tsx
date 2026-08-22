@@ -14,7 +14,11 @@ export type SiteHeaderLabels = {
   home: string;
   services: string;
   dentists: string;
+  contact: string;
   book: string;
+  mobileNavigation: string;
+  openDaily?: string;
+  address?: string;
   bookShort?: string;
   switchLanguage: string;
   openMenu: string;
@@ -38,21 +42,21 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
   const localeRoot = `/${locale}`;
 
   return (<>
-  <HeaderTopBar />
-  <header className="sticky top-0 z-50">
+  <HeaderTopBar labels={{ address: labels.address ?? clinicConfig.streetAddress, openDaily: labels.openDaily ?? "Open daily" }} />
+  <header className="sticky top-0 z-40">
 
   <HeaderScrollSurface>
-    <div className="mx-auto flex min-h-[5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:min-h-[5rem] sm:px-6 lg:px-8">
       {/* Brand */}
       <Link
         aria-label={`${clinicConfig.name} — ${labels.home}`}
         className="group flex min-w-0 items-center gap-3.5"
         href={localeRoot}
       >
-        <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-white transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md">
+        <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-0.5 group-hover:shadow-md sm:size-14">
           <Image
             alt=""
-            className="size-13 object-contain"
+            className="size-10 object-contain sm:size-13"
             height={52}
             priority
             src={
@@ -87,14 +91,14 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
 
           <Link
             className={desktopNavLinkClass}
-            href={`${localeRoot}/services`}
+            href={`${localeRoot}#services`}
           >
             {labels.services}
           </Link>
 
           <Link
             className={desktopNavLinkClass}
-            href={`${localeRoot}/dentists`}
+            href={`${localeRoot}#dentists`}
           >
             {labels.dentists}
           </Link>
@@ -111,27 +115,18 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
         />
 
         <div className="hidden sm:block">
-          {/* <ButtonLink
-            compactLabel={labels.bookShort}
+          <ButtonLink
             href={`${localeRoot}/book`}
+            size="large"
           >
             {labels.book}
-          </ButtonLink> */}
-          <ButtonLink
-                href={`${localeRoot}/book`}
-                variant="primary"
-                size="large"
-
-              >
-               {labels.book}
-              </ButtonLink>
+          </ButtonLink>
         </div>
-
-        <MobileNavigation labels={labels} locale={locale} />
       </nav>
     </div>
   </HeaderScrollSurface>
 </header>
+  <MobileNavigation labels={labels} locale={locale} />
 </>
   );
 }

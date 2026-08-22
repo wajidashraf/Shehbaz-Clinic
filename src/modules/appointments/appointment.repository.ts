@@ -22,6 +22,7 @@ import {
 } from "@/modules/scheduling/availability";
 import {
   dispatchAppointmentEmails,
+  dispatchAppointmentSms,
   dispatchNotificationEmail,
 } from "@/modules/notifications/brevo.server";
 import { isNotificationRetryEligible } from "@/modules/appointments/contracts";
@@ -110,6 +111,71 @@ export async function getAvailableSlots(dentistId: string, dateKey: string) {
 export async function createConfirmedAppointment(input: unknown) {
   const booking = bookingRequestSchema.parse(input);
   const database = await connectMongo();
+
+  if (booking.time === "") {
+    const selectedDoctorExists = await DoctorModel.exists(
+      booking.dentistId === "no-preference"
+        ? { isActive: { $ne: false } }
+        : { id: booking.dentistId, isActive: { $ne: false } },
+    );
+    if (!selectedDoctorExists) throw new SlotUnavailableError();
+    if (booking.dateKey < getPakistanDateKey())
+      throw new SlotUnavailableError();
+    if (
+      (await getAvailableSlots(booking.dentistId, booking.dateKey)).length > 0
+    )
+      throw new SlotUnavailableError();
+
+    const publicReference = createReference();
+    await database.connection.transaction(async (session) => {
+      await AppointmentModel.create(
+        [
+          {
+            publicReference,
+            dentistId: booking.dentistId,
+            serviceId: booking.serviceId,
+            requestedDateKey: booking.dateKey,
+            startAtUtc: null,
+            durationMinutes: null,
+            patientName: booking.patientName,
+            mobile: booking.mobile,
+            email: booking.email || null,
+            locale: booking.locale,
+            status: "confirmed",
+            history: [
+              {
+                from: null,
+                to: "confirmed",
+                actor: "guest",
+                at: new Date(),
+              },
+            ],
+          },
+        ],
+        { session },
+      );
+      await NotificationJobModel.insertMany(
+        createNotificationDrafts({
+          appointmentReference: publicReference,
+          email: booking.email || undefined,
+          mobile: booking.mobile,
+          event: "booking-confirmed",
+        }),
+        { session },
+      );
+    });
+
+    await Promise.allSettled([
+      dispatchAppointmentEmails(publicReference),
+      dispatchAppointmentSms(publicReference),
+    ]);
+    return {
+      publicReference,
+      status: "confirmed" as const,
+      timePending: true,
+    };
+  }
+
   const schedules = await eligibleSchedules(booking.dentistId, booking.dateKey);
   const candidates = schedules.filter((schedule) =>
     generateScheduleSlots(schedule).some((slot) => slot.time === booking.time),
@@ -143,6 +209,7 @@ export async function createConfirmedAppointment(input: unknown) {
               publicReference,
               dentistId: schedule.dentistId,
               serviceId: booking.serviceId,
+              requestedDateKey: booking.dateKey,
               startAtUtc,
               durationMinutes: schedule.slotDurationMinutes,
               patientName: booking.patientName,
@@ -184,8 +251,15 @@ export async function createConfirmedAppointment(input: unknown) {
 
   if (!createdReference) throw new SlotUnavailableError();
 
-  await dispatchAppointmentEmails(createdReference);
-  return { publicReference: createdReference, status: "confirmed" as const };
+  await Promise.allSettled([
+    dispatchAppointmentEmails(createdReference),
+    dispatchAppointmentSms(createdReference),
+  ]);
+  return {
+    publicReference: createdReference,
+    status: "confirmed" as const,
+    timePending: false,
+  };
 }
 
 export async function listAdminData() {
@@ -210,8 +284,13 @@ export async function listAdminData() {
       publicReference: appointment.publicReference,
       dentistId: appointment.dentistId,
       serviceId: appointment.serviceId,
-      startAtUtc: appointment.startAtUtc.toISOString(),
-      durationMinutes: appointment.durationMinutes,
+      requestedDateKey:
+        appointment.requestedDateKey ??
+        (appointment.startAtUtc
+          ? getPakistanDateKey(appointment.startAtUtc)
+          : ""),
+      startAtUtc: appointment.startAtUtc?.toISOString() ?? null,
+      durationMinutes: appointment.durationMinutes ?? null,
       patientName: appointment.patientName,
       mobile: appointment.mobile,
       email: appointment.email,
@@ -406,6 +485,7 @@ export async function rescheduleAppointment(
     );
     appointment.startAtUtc = newStart;
     appointment.durationMinutes = schedule.slotDurationMinutes;
+    appointment.requestedDateKey = input.dateKey;
     appointment.history.push({
       from: "confirmed",
       to: "confirmed",

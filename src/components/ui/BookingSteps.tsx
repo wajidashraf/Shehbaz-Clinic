@@ -124,7 +124,7 @@ export function BookingStepsSection({
   ];
 
   return (
-    <section className="content-auto relative overflow-hidden border-y border-[var(--line)] bg-gradient-to-b from-white via-[var(--mineral)] to-white py-20 sm:py-24 lg:py-28">
+    <section className="relative overflow-hidden border-y border-[var(--line)] bg-gradient-to-b from-white via-[var(--mineral)] to-white py-20 sm:py-24 lg:py-28">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -top-[20%] left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[var(--aqua)] opacity-20 blur-[120px]" />
@@ -164,16 +164,16 @@ export function BookingStepsSection({
               key={step.title}
               className="group relative"
             >
-              <div className="relative flex h-full flex-col rounded-[1.5rem] border border-[var(--line)] bg-white p-6 shadow-[0_1px_3px_rgba(7,48,71,0.04)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-[var(--line-strong)] hover:shadow-[0_12px_40px_rgba(7,48,71,0.08)] sm:p-7">
+              <div className="relative flex h-full flex-col rounded-lg border border-[var(--line)] bg-white p-6 shadow-[0_1px_3px_rgba(7,48,71,0.04)] transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] hover:-translate-y-1 hover:border-[var(--line-strong)] hover:shadow-[0_12px_40px_rgba(7,48,71,0.08)] sm:p-7">
                 {/* Step number + icon row */}
                 <div className="flex items-start justify-between">
                   {/* Icon container */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--aqua-soft)] text-[var(--teal)] shadow-sm ring-1 ring-[var(--line)]/50 transition-colors duration-300 group-hover:bg-[var(--aqua)] group-hover:text-[var(--teal-dark)]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--aqua-soft)] text-[var(--teal)] shadow-sm ring-1 ring-[var(--line)]/50 transition-colors duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:bg-[var(--aqua)] group-hover:text-[var(--teal-dark)]">
                     {step.icon}
                   </div>
 
                   {/* Step number */}
-                  <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--line-strong)] bg-white text-xs font-extrabold text-[var(--teal-dark)] shadow-sm transition-all duration-300 group-hover:border-[var(--teal)] group-hover:bg-[var(--teal)] group-hover:text-white">
+                  <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--line-strong)] bg-white text-xs font-extrabold text-[var(--teal-dark)] shadow-sm transition-[background-color,border-color,color] duration-300 group-hover:border-[var(--teal)] group-hover:bg-[var(--teal)] group-hover:text-white">
                     <bdi>{index + 1}</bdi>
                   </span>
                 </div>
@@ -192,7 +192,7 @@ export function BookingStepsSection({
 
                 {/* Bottom accent line */}
                 <div className="mt-auto pt-5">
-                  <div className="h-0.5 w-12 rounded-full bg-[var(--line)] transition-all duration-500 group-hover:w-20 group-hover:bg-[var(--teal)]" />
+                  <div className="h-0.5 w-20 origin-start scale-x-60 rounded-full bg-[var(--line)] transition-[background-color,transform] duration-300 group-hover:scale-x-100 group-hover:bg-[var(--teal)]" />
                 </div>
               </div>
             </li>

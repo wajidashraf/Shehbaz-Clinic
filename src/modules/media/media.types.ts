@@ -3,6 +3,7 @@ export const mediaPurposes = [
   "clinic-photo",
   "service-image",
   "dentist-portrait",
+  "testimonial-image",
 ] as const;
 
 export type MediaPurpose = (typeof mediaPurposes)[number];

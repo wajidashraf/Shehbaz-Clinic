@@ -31,15 +31,13 @@ describe("public clinic cards", () => {
     ).toHaveAttribute("href", "/en/book?service=consultation");
   });
 
-  it("presents a clinic dentist and safely preselects that record", () => {
+  it("presents concise dentist information and links to the localized profile", () => {
     render(
       <DentistCard
         dentist={demoDentists[0]!}
         labels={{
-          book: "Book with this dentist",
           demoBadge: "Clinic dentist",
-          languages: "Languages",
-          workingDays: "Working days",
+          viewProfile: "View profile",
         }}
         locale="en"
       />,
@@ -50,10 +48,10 @@ describe("public clinic cards", () => {
     expect(screen.getByText("BDS, RDS (Punjab), RDS")).toBeVisible();
     expect(screen.getByText("PM&DC — 13365-D")).toBeVisible();
     expect(
-      screen.getByText("C-Ortho / C-Endo (Braces & Aligners)"),
-    ).toBeVisible();
+      screen.getByRole("link", { name: "View profile" }),
+    ).toHaveAttribute("href", "/en/dentists/sobia-zulfiqar");
     expect(
-      screen.getByRole("link", { name: "Book with this dentist" }),
-    ).toHaveAttribute("href", "/en/book?dentist=sobia-zulfiqar");
+      screen.queryByRole("link", { name: /book/i }),
+    ).not.toBeInTheDocument();
   });
 });

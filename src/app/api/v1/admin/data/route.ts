@@ -13,17 +13,19 @@ import {
   listDoctorNamesIncludingInactive,
   listDoctors,
 } from "@/modules/doctors/doctor.repository";
+import { listAdminTestimonials } from "@/modules/testimonials/testimonial.repository";
 
 export async function GET(request: Request) {
   if (!(await requireAdminRequest(request)))
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   try {
-    const [data, doctors, doctorNames] = await Promise.all([
+    const [data, doctors, doctorNames, testimonials] = await Promise.all([
       listAdminData(),
       listDoctors(),
       listDoctorNamesIncludingInactive(),
+      listAdminTestimonials(),
     ]);
-    return NextResponse.json({ ...data, doctors, doctorNames });
+    return NextResponse.json({ ...data, doctors, doctorNames, testimonials });
   } catch {
     return NextResponse.json({ error: "service-unavailable" }, { status: 503 });
   }

@@ -56,7 +56,8 @@ const serverEnvironmentSchema = z
     BREVO_API_KEY: optionalCredential,
     EMAIL_FROM_NAME: optionalCredential,
     EMAIL_FROM_ADDRESS: optionalEmailAddress,
-    SMS_PROVIDER: z.literal("development").default("development"),
+    SMS_PROVIDER: z.enum(["development", "brevo"]).default("development"),
+    BREVO_SMS_SENDER: optionalCredential,
   })
   .superRefine((environment, context) => {
     const cloudinaryCredentials = [
@@ -88,6 +89,26 @@ const serverEnvironmentSchema = z
       context.addIssue({
         code: "custom",
         message: "Brevo email settings must be provided together",
+      });
+    }
+
+    if (
+      environment.SMS_PROVIDER === "brevo" &&
+      !(environment.BREVO_API_KEY && environment.BREVO_SMS_SENDER)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Brevo SMS settings must be provided together",
+      });
+    }
+
+    if (
+      environment.BREVO_SMS_SENDER &&
+      !/^(?:[a-zA-Z0-9]{1,11}|[0-9]{12,15})$/.test(environment.BREVO_SMS_SENDER)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Brevo SMS sender must be 1-11 letters or digits",
       });
     }
   });

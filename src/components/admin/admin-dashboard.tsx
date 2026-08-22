@@ -3,9 +3,11 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AdminDoctorManager } from "@/components/admin/admin-doctor-manager";
+import { AdminTestimonialManager } from "@/components/admin/admin-testimonial-manager";
 import { demoServices } from "@/content/demo-content";
 import { isNotificationRetryEligible } from "@/modules/appointments/contracts";
 import type { DoctorRecord } from "@/modules/doctors/doctor.types";
+import type { TestimonialRecord } from "@/modules/testimonials/testimonial.types";
 
 type Schedule = {
   _id: string;
@@ -20,8 +22,9 @@ type Appointment = {
   publicReference: string;
   dentistId: string;
   serviceId: string;
-  startAtUtc: string;
-  durationMinutes: number;
+  requestedDateKey: string;
+  startAtUtc: string | null;
+  durationMinutes: number | null;
   patientName: string;
   mobile: string;
   email?: string | null;
@@ -42,6 +45,7 @@ export type AdminData = {
   schedules: Schedule[];
   appointments: Appointment[];
   notifications: Notification[];
+  testimonials: TestimonialRecord[];
 };
 
 function dentistName(id: string, doctorNames: Record<string, string>) {
@@ -177,7 +181,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
       <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
         {message ? (
           <p
-            className="rounded-2xl bg-[var(--aqua)] px-4 py-3 font-bold"
+            className="rounded-lg bg-[var(--aqua)] px-4 py-3 font-bold"
             role="status"
           >
             {message}
@@ -186,7 +190,12 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
 
         <AdminDoctorManager doctors={data.doctors} onChanged={load} />
 
-        <section className="rounded-[2rem] border border-[var(--line)] bg-white p-5 sm:p-7">
+        <AdminTestimonialManager
+          onChanged={load}
+          testimonials={data.testimonials}
+        />
+
+        <section className="rounded-lg border border-[var(--line)] bg-white p-5 sm:p-7">
           <h2 className="text-2xl font-extrabold">Add or update a schedule</h2>
           <p className="mt-2 text-[var(--muted-text)]">
             Slots are generated separately for each dentist and date.
@@ -198,7 +207,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
             <label className="font-bold">
               Dentist
               <select
-                className="mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] bg-white px-3"
+                className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] bg-white px-3"
                 name="dentistId"
               >
                 {data.doctors.map((dentist) => (
@@ -211,7 +220,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
             <label className="font-bold">
               Date
               <input
-                className="mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] px-3"
+                className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] px-3"
                 name="dateKey"
                 required
                 type="date"
@@ -220,7 +229,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
             <label className="font-bold">
               Opening
               <input
-                className="mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] px-3"
+                className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] px-3"
                 defaultValue="09:00"
                 name="opensAt"
                 required
@@ -230,7 +239,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
             <label className="font-bold">
               Closing
               <input
-                className="mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] px-3"
+                className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] px-3"
                 defaultValue="17:00"
                 name="closesAt"
                 required
@@ -240,7 +249,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
             <label className="font-bold">
               Slot duration
               <select
-                className="mt-2 min-h-12 w-full rounded-xl border border-[var(--line-strong)] bg-white px-3"
+                className="mt-2 min-h-12 w-full rounded-lg border border-[var(--line-strong)] bg-white px-3"
                 defaultValue="30"
                 name="slotDurationMinutes"
               >
@@ -266,7 +275,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
           <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {data.schedules.map((schedule) => (
               <article
-                className="rounded-2xl border border-[var(--line)] bg-white p-5"
+                className="rounded-lg border border-[var(--line)] bg-white p-5"
                 key={schedule._id}
               >
                 <p className="font-extrabold">
@@ -298,7 +307,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
           <div className="mt-4 space-y-4">
             {data.appointments.map((appointment) => (
               <article
-                className="rounded-2xl border border-[var(--line)] bg-white p-5"
+                className="rounded-lg border border-[var(--line)] bg-white p-5"
                 key={appointment.publicReference}
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
@@ -321,11 +330,25 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                   <div>
                     <dt className="font-bold">Date and time</dt>
                     <dd>
-                      {new Intl.DateTimeFormat("en-PK", {
-                        dateStyle: "medium",
-                        timeStyle: "short",
-                        timeZone: "Asia/Karachi",
-                      }).format(new Date(appointment.startAtUtc))}
+                      {appointment.startAtUtc ? (
+                        new Intl.DateTimeFormat("en-PK", {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                          timeZone: "Asia/Karachi",
+                        }).format(new Date(appointment.startAtUtc))
+                      ) : (
+                        <>
+                          {new Intl.DateTimeFormat("en-PK", {
+                            dateStyle: "medium",
+                            timeZone: "Asia/Karachi",
+                          }).format(
+                            new Date(
+                              `${appointment.requestedDateKey}T00:00:00+05:00`,
+                            ),
+                          )}
+                          {" · Time to be informed"}
+                        </>
+                      )}
                     </dd>
                   </div>
                   <div>
@@ -355,14 +378,14 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                     >
                       <input
                         aria-label="New appointment date"
-                        className="min-h-11 rounded-xl border border-[var(--line-strong)] px-3"
+                        className="min-h-11 rounded-lg border border-[var(--line-strong)] px-3"
                         name="dateKey"
                         required
                         type="date"
                       />
                       <input
                         aria-label="New appointment time"
-                        className="min-h-11 rounded-xl border border-[var(--line-strong)] px-3"
+                        className="min-h-11 rounded-lg border border-[var(--line-strong)] px-3"
                         name="time"
                         required
                         type="time"
@@ -390,7 +413,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
                     >
                       <input
                         aria-label="Cancellation reason"
-                        className="min-h-11 rounded-xl border border-[var(--line-strong)] px-3"
+                        className="min-h-11 rounded-lg border border-[var(--line-strong)] px-3"
                         name="reason"
                         placeholder="Cancellation reason"
                         required
@@ -414,7 +437,7 @@ export function AdminDashboard({ initialData }: { initialData: AdminData }) {
 
         <section>
           <h2 className="text-2xl font-extrabold">Notification delivery</h2>
-          <div className="mt-4 overflow-x-auto rounded-2xl border border-[var(--line)] bg-white">
+          <div className="mt-4 overflow-x-auto rounded-lg border border-[var(--line)] bg-white">
             <table className="w-full min-w-[42rem] text-left text-sm">
               <thead className="bg-[var(--aqua-soft)]">
                 <tr>
