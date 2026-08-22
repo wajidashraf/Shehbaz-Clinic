@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { SiteHeader } from "@/components/layout/site-header";
 
 const englishLabels = {
+  clinicName: "Shahbaz Dental Clinic",
   primaryNavigation: "Primary navigation",
   home: "Home",
   services: "Services",
@@ -16,6 +17,7 @@ const englishLabels = {
 };
 
 const urduLabels = {
+  clinicName: "شہباز ڈینٹل کلینک",
   primaryNavigation: "مرکزی نیویگیشن",
   home: "صفحہ اول",
   services: "خدمات",
@@ -39,6 +41,7 @@ describe("SiteHeader", () => {
     const clinicName = screen.getByText("Shahbaz Dental Clinic");
     expect(clinicName.parentElement).not.toHaveClass("hidden");
     expect(clinicName).toHaveClass("text-[var(--teal-dark)]");
+    expect(clinicName).not.toHaveClass("truncate");
     expect(
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toBeInTheDocument();
@@ -90,6 +93,8 @@ describe("SiteHeader", () => {
   it("preserves Urdu destinations", () => {
     render(<SiteHeader labels={urduLabels} locale="ur" />);
 
+    expect(screen.getByText("شہباز ڈینٹل کلینک")).toBeVisible();
+    expect(screen.queryByText("Shahbaz Dental Clinic")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
       "href",
       "/en",

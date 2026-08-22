@@ -95,6 +95,7 @@ export default async function LocaleLayout({
           {/* Header */}
           <SiteHeader
             labels={{
+              clinicName: navigation("clinicName"),
               primaryNavigation: navigation("primaryNavigation"),
               home: navigation("home"),
               services: navigation("services"),

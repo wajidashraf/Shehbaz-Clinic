@@ -10,6 +10,7 @@ import { HeaderTopBar } from "@/components/ui/headerTopBar";
 import { HeaderScrollSurface } from "@/components/ui/header-scroll-surface";
 
 export type SiteHeaderLabels = {
+  clinicName: string;
   primaryNavigation: string;
   home: string;
   services: string;
@@ -49,7 +50,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
     <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:min-h-[5rem] sm:px-6 lg:px-8">
       {/* Brand */}
       <Link
-        aria-label={`${clinicConfig.name} — ${labels.home}`}
+        aria-label={`${labels.clinicName} — ${labels.home}`}
         className="group flex min-w-0 items-center gap-3.5"
         href={localeRoot}
       >
@@ -69,8 +70,8 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
         </span>
 
         <span className="min-w-0">
-          <span className="block max-w-32 truncate text-sm font-extrabold leading-tight tracking-[-0.025em] text-[var(--teal-dark)] transition-colors duration-200 sm:max-w-56 sm:text-[0.98rem] sm:text-slate-900 group-hover:text-[var(--teal-dark)]">
-            {clinicConfig.name}
+          <span className="block max-w-36 whitespace-normal text-sm font-extrabold leading-tight tracking-[-0.025em] text-[var(--teal-dark)] transition-colors duration-200 sm:max-w-none sm:whitespace-nowrap sm:text-[0.98rem] sm:text-slate-900 group-hover:text-[var(--teal-dark)]">
+            {labels.clinicName}
           </span>
 
           <span className="mt-1 hidden text-[0.63rem] font-bold uppercase tracking-[0.12em] text-slate-500 sm:block md:hidden">

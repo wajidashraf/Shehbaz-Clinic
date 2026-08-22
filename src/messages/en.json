@@ -4,6 +4,7 @@
     "description": "Explore dental services and book an appointment with Shahbaz Dental Clinic in Samundri."
   },
   "Navigation": {
+    "clinicName": "Shahbaz Dental Clinic",
     "primaryNavigation": "Primary navigation",
     "home": "Home",
     "services": "Services",
