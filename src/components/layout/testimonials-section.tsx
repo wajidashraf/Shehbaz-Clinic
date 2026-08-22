@@ -131,7 +131,6 @@ export function TestimonialsSection({
   labels,
   testimonials,
 }: TestimonialsSectionProps) {
-  const [explicitlyPaused, setExplicitlyPaused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [autoplay] = useState(() =>
     Autoplay({
@@ -164,7 +163,6 @@ export function TestimonialsSection({
 
     if (
       testimonials.length <= 1 ||
-      explicitlyPaused ||
       isHovered ||
       prefersReducedMotion
     ) {
@@ -173,11 +171,7 @@ export function TestimonialsSection({
     }
 
     autoplay.play();
-  }, [autoplay, emblaApi, explicitlyPaused, isHovered, testimonials.length]);
-
-  function toggleAutoplay() {
-    setExplicitlyPaused((current) => !current);
-  }
+  }, [autoplay, emblaApi, isHovered, testimonials.length]);
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
@@ -292,15 +286,6 @@ export function TestimonialsSection({
                 type="button"
               >
                 <ArrowIcon direction={locale === "ur" ? "left" : "right"} />
-              </button>
-
-              <button
-                aria-pressed={explicitlyPaused}
-                className="ms-1 inline-flex min-h-10 items-center rounded-lg border border-[var(--line-strong)] bg-white px-4 text-xs font-bold text-[var(--teal-dark)] transition-[background-color,border-color,transform] duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] hover:-translate-y-0.5 hover:border-[var(--teal)] hover:bg-[var(--aqua-soft)]"
-                onClick={toggleAutoplay}
-                type="button"
-              >
-                {explicitlyPaused ? labels.resume : labels.pause}
               </button>
             </div>
           ) : null}

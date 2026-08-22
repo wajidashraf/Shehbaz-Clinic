@@ -68,12 +68,12 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
           />
         </span>
 
-        <span className="hidden min-w-0 sm:block">
-          <span className="block max-w-56 truncate text-[0.98rem] font-extrabold leading-tight tracking-[-0.025em] text-slate-900 transition-colors duration-200 group-hover:text-[var(--teal-dark)]">
+        <span className="min-w-0">
+          <span className="block max-w-32 truncate text-sm font-extrabold leading-tight tracking-[-0.025em] text-[var(--teal-dark)] transition-colors duration-200 sm:max-w-56 sm:text-[0.98rem] sm:text-slate-900 group-hover:text-[var(--teal-dark)]">
             {clinicConfig.name}
           </span>
 
-          <span className="mt-1 block text-[0.63rem] font-bold uppercase tracking-[0.12em] text-slate-500 md:hidden">
+          <span className="mt-1 hidden text-[0.63rem] font-bold uppercase tracking-[0.12em] text-slate-500 sm:block md:hidden">
             {clinicConfig.registration}
           </span>
         </span>

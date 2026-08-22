@@ -36,6 +36,9 @@ describe("SiteHeader", () => {
   it("contains only the approved English destinations", () => {
     render(<SiteHeader labels={englishLabels} locale="en" />);
 
+    const clinicName = screen.getByText("Shahbaz Dental Clinic");
+    expect(clinicName.parentElement).not.toHaveClass("hidden");
+    expect(clinicName).toHaveClass("text-[var(--teal-dark)]");
     expect(
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toBeInTheDocument();

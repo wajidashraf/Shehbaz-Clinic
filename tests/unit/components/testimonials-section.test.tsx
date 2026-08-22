@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { TestimonialsSection } from "@/components/layout/testimonials-section";
 import type { TestimonialRecord } from "@/modules/testimonials/testimonial.types";
@@ -103,7 +103,7 @@ describe("TestimonialsSection", () => {
     expect(section.querySelectorAll("[data-embla-slide]")).toHaveLength(3);
   });
 
-  it("keeps an explicit pause selected after hover ends", () => {
+  it("keeps the carousel controls focused on review navigation", () => {
     render(
       <TestimonialsSection
         labels={labels}
@@ -114,17 +114,9 @@ describe("TestimonialsSection", () => {
         ]}
       />,
     );
-    const carousel = screen.getByRole("region", {
-      name: "Care patients remember",
-    });
-
-    fireEvent.mouseEnter(carousel);
-    fireEvent.click(screen.getByRole("button", { name: "Pause reviews" }));
-    fireEvent.mouseLeave(carousel);
-
-    expect(
-      screen.getByRole("button", { name: "Resume reviews" }),
-    ).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Previous review" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Next review" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Pause reviews" })).not.toBeInTheDocument();
   });
 
   it("waits three seconds before autoplay advances a review", async () => {

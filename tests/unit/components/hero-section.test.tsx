@@ -23,9 +23,14 @@ describe("HeroSection", () => {
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading).toHaveTextContent(copy.title);
     expect(heading.parentElement).toHaveClass("lg:pe-8");
+    const exploreLink = screen.getByRole("link", { name: "Explore services" });
+    expect(exploreLink).toHaveAttribute("href", "/en#services");
     expect(
-      screen.getByRole("link", { name: "Explore services" }),
-    ).toHaveAttribute("href", "/en#services");
+      screen.getByRole("link", { name: "Book Appointment" }).querySelector("svg"),
+    ).toHaveClass(
+      "hidden",
+      "lg:inline-block",
+    );
     expect(screen.getByAltText("Bright dental treatment room")).toBeVisible();
     expect(screen.getByText("Dental care in Samundri")).toHaveClass("hidden");
     expect(consoleError.mock.calls.flat().join(" ")).not.toContain(

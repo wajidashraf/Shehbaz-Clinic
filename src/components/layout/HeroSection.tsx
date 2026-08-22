@@ -107,7 +107,7 @@ export function HeroSection({ locale, home }: HeroSectionProps) {
               icon={
                 <svg
                   aria-hidden="true"
-                  className="size-5"
+                  className="hidden size-5 lg:inline-block"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
