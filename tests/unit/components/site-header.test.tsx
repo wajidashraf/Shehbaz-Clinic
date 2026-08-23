@@ -39,9 +39,8 @@ describe("SiteHeader", () => {
       "The Dentist",
       "Reviews",
       "Contact",
-      "اردو",
-      "Book appointment",
     ]);
+    expect(links).toHaveLength(5);
     expect(links.slice(0, 5).map((link) => link.getAttribute("href"))).toEqual([
       "/en#about",
       "/en#services",
@@ -58,8 +57,12 @@ describe("SiteHeader", () => {
     expect(
       screen.getByRole("link", { name: "Shahbaz Dental Clinic — Home" }),
     ).toHaveAttribute("href", "/en");
+    expect(screen.getByRole("link", { name: "اردو" })).toHaveAttribute(
+      "href",
+      "/ur",
+    );
     expect(
-      within(navigation).getByRole("link", { name: "Book appointment" }),
+      screen.getByRole("link", { name: "Book appointment" }),
     ).toHaveAttribute("href", "/en/book");
   });
 

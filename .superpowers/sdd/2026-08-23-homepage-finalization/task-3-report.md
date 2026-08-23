@@ -60,3 +60,13 @@ is conditionally rendered, so it has no focusable hidden content. Existing
 desktop header/top-bar/brand/booking styling and quick-action URL sources were
 preserved. Legacy translation keys remain in both message files. No concerns
 remain within Task 3 scope.
+
+## Review fix round 1
+
+Reviewer feedback found that the primary-navigation `<nav>` also contained the
+desktop locale switch, booking CTA, and mobile-menu control. The header test
+was strengthened to require exactly five links in that nav and to verify the
+locale switch and booking CTA separately. The test failed with the two extra
+links, then passed after the non-primary controls moved into a sibling visual
+controls container. No homepage section was changed; the `#reviews` target is
+intentionally deferred to Task 4.

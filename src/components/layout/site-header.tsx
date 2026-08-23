@@ -93,46 +93,45 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
             </Link>
 
             {/* Navigation */}
-            <nav
-              aria-label={labels.primaryNavigation}
-              className="flex items-center gap-1.5 lg:gap-3"
-            >
-              <div className="hidden items-center md:flex">
-                <Link
-                  className={desktopNavLinkClass}
-                  href={`${localeRoot}#about`}
-                >
-                  {labels.about}
-                </Link>
+            <div className="flex items-center gap-1.5 lg:gap-3">
+              <nav aria-label={labels.primaryNavigation}>
+                <div className="hidden items-center md:flex">
+                  <Link
+                    className={desktopNavLinkClass}
+                    href={`${localeRoot}#about`}
+                  >
+                    {labels.about}
+                  </Link>
 
-                <Link
-                  className={desktopNavLinkClass}
-                  href={`${localeRoot}#services`}
-                >
-                  {labels.services}
-                </Link>
+                  <Link
+                    className={desktopNavLinkClass}
+                    href={`${localeRoot}#services`}
+                  >
+                    {labels.services}
+                  </Link>
 
-                <Link
-                  className={desktopNavLinkClass}
-                  href={`${localeRoot}#dentist`}
-                >
-                  {labels.theDentist}
-                </Link>
+                  <Link
+                    className={desktopNavLinkClass}
+                    href={`${localeRoot}#dentist`}
+                  >
+                    {labels.theDentist}
+                  </Link>
 
-                <Link
-                  className={desktopNavLinkClass}
-                  href={`${localeRoot}#reviews`}
-                >
-                  {labels.reviews}
-                </Link>
+                  <Link
+                    className={desktopNavLinkClass}
+                    href={`${localeRoot}#reviews`}
+                  >
+                    {labels.reviews}
+                  </Link>
 
-                <Link
-                  className={desktopNavLinkClass}
-                  href={`${localeRoot}#contact`}
-                >
-                  {labels.contact}
-                </Link>
-              </div>
+                  <Link
+                    className={desktopNavLinkClass}
+                    href={`${localeRoot}#contact`}
+                  >
+                    {labels.contact}
+                  </Link>
+                </div>
+              </nav>
 
               <span
                 aria-hidden="true"
@@ -163,7 +162,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
                 }}
                 locale={locale}
               />
-            </nav>
+            </div>
           </div>
         </HeaderScrollSurface>
       </header>
