@@ -123,11 +123,13 @@ export default async function LocaleLayout({
           {/* Footer */}
           <SiteFooter
             labels={{
+              about: footer("about"),
               addressLabel: footer("addressLabel"),
               daily: footer("daily"),
-              home: footer("home"),
+              contact: footer("contact"),
               hoursLabel: footer("hoursLabel"),
               quickLinks: footer("quickLinks"),
+              reviews: footer("reviews"),
               rights: footer("rights"),
               serviceChildren: footer("serviceChildren"),
               serviceCleaning: footer("serviceCleaning"),
@@ -136,7 +138,7 @@ export default async function LocaleLayout({
               summary: footer("summary"),
               locality: footer("locality"),
               services: footer("services"),
-              dentists: footer("dentists"),
+              theDentist: footer("theDentist"),
               book: footer("book"),
             }}
             locale={locale}

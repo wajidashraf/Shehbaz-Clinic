@@ -14,14 +14,15 @@ import type { Locale } from "@/i18n/config";
 type SiteFooterProps = {
   locale: Locale;
   labels: {
+    about: string;
     addressLabel: string;
     book: string;
+    contact: string;
     daily: string;
-    dentists: string;
-    home: string;
     hoursLabel: string;
     locality: string;
     quickLinks: string;
+    reviews: string;
     rights: string;
     serviceChildren: string;
     serviceCleaning: string;
@@ -29,6 +30,7 @@ type SiteFooterProps = {
     serviceRootCanal: string;
     services: string;
     summary: string;
+    theDentist: string;
   };
 };
 
@@ -146,20 +148,24 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
 
   const navigation = [
     {
-      href: root,
-      label: labels.home,
+      href: `${root}#about`,
+      label: labels.about,
     },
     {
       href: `${root}#services`,
       label: labels.services,
     },
     {
-      href: `${root}#dentists`,
-      label: labels.dentists,
+      href: `${root}#dentist`,
+      label: labels.theDentist,
     },
     {
-      href: `${root}/book`,
-      label: labels.book,
+      href: `${root}#reviews`,
+      label: labels.reviews,
+    },
+    {
+      href: `${root}#contact`,
+      label: labels.contact,
     },
   ];
 

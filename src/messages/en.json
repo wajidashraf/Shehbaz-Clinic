@@ -238,14 +238,17 @@
     "appointmentReference": "Appointment reference"
   },
   "Footer": {
+    "about": "About",
     "summary": "Bilingual dental care and online appointment booking for the Samundri community.",
     "locality": "Samundri, District Faisalabad, Punjab 37300",
     "demonstration": "Appointments are confirmed from the clinic's currently available schedule.",
     "services": "Services",
     "dentists": "Dentists",
     "book": "Book Appointment",
+    "contact": "Contact",
     "home": "Home",
     "quickLinks": "Quick links",
+    "reviews": "Reviews",
     "addressLabel": "Clinic address",
     "hoursLabel": "Opening hours",
     "daily": "Daily",
@@ -253,7 +256,8 @@
     "serviceConsultation": "Dental consultation",
     "serviceCleaning": "Cleaning and scaling",
     "serviceRootCanal": "Root canal assessment",
-    "serviceChildren": "Children's dental visit"
+    "serviceChildren": "Children's dental visit",
+    "theDentist": "The Dentist"
   },
   "NotFound": {
     "title": "Page not found",

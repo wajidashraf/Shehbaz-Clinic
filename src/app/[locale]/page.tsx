@@ -57,7 +57,7 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
 
-      <TestimonialsSection />
+      <TestimonialsSection locale={locale} />
 
       <PatientTrustSection locale={locale} />
       <FaqSection locale={locale} />

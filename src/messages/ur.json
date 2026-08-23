@@ -238,14 +238,17 @@
     "appointmentReference": "اپائنٹمنٹ حوالہ"
   },
   "Footer": {
+    "about": "ہمارے بارے میں",
     "summary": "سمندری کی کمیونٹی کے لیے دو لسانی دانتوں کی نگہداشت اور آن لائن اپائنٹمنٹ بکنگ۔",
     "locality": "سمندری، ضلع فیصل آباد، پنجاب 37300",
     "demonstration": "اپائنٹمنٹ کلینک کے موجودہ دستیاب شیڈول سے تصدیق کی جاتی ہے۔",
     "services": "خدمات",
     "dentists": "ڈینٹسٹس",
     "book": "اپائنٹمنٹ بک کریں",
+    "contact": "رابطہ",
     "home": "صفحہ اول",
     "quickLinks": "فوری روابط",
+    "reviews": "مریضوں کے تاثرات",
     "addressLabel": "کلینک کا پتہ",
     "hoursLabel": "اوقاتِ کار",
     "daily": "روزانہ",
@@ -253,7 +256,8 @@
     "serviceConsultation": "دانتوں کا مشورہ",
     "serviceCleaning": "دانتوں کی صفائی",
     "serviceRootCanal": "روٹ کینال کا معائنہ",
-    "serviceChildren": "بچوں کے دانتوں کی ملاقات"
+    "serviceChildren": "بچوں کے دانتوں کی ملاقات",
+    "theDentist": "ڈینٹسٹ"
   },
   "NotFound": {
     "title": "صفحہ نہیں ملا",
