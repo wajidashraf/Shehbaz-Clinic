@@ -54,8 +54,8 @@ export function ClinicContactSection({
   labels,
   locale,
 }: ClinicContactSectionProps) {
-  const phoneHref = `tel:${clinicConfig.phone.replace(/\s+/g, "")}`;
-  const landlineHref = `tel:${clinicConfig.landline.replace(/-/g, "")}`;
+  const phoneHref = clinicConfig.phoneHref;
+  const landlineHref = clinicConfig.landlineHref;
 
   return (
     <section

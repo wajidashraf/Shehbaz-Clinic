@@ -16,7 +16,9 @@ export const clinicConfig = {
   streetAddress: "Circular Road near Ahle Hadees Masjid, Samundri",
 
   phone: "+92 344 3420001",
+  phoneHref: "tel:+923443420001",
   landline: "041-3420001",
+  landlineHref: "tel:0413420001",
 
   socialLinks: [
     { label: "Facebook", href: "https://www.facebook.com/" },
@@ -50,5 +52,12 @@ export const clinicConfig = {
   },
   whatsapp: {
     number: "+923443420001",
+    href: (message?: string) => {
+      const baseUrl = "https://wa.me/923443420001";
+
+      return message
+        ? `${baseUrl}?text=${encodeURIComponent(message)}`
+        : baseUrl;
+    },
   },
 } as const;

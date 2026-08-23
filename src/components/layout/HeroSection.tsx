@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ButtonLink } from "@/components/ui/button-link";
+import { clinicConfig } from "@/config/public-config";
 
 type HeroSectionProps = {
   locale: "en" | "ur";
@@ -135,7 +136,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
             </ButtonLink>
 
             <ButtonLink
-              href="tel:+923443420001"
+              href={clinicConfig.phoneHref}
               size="large"
               variant="secondary"
               className="

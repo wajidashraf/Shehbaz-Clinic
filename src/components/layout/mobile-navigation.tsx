@@ -84,9 +84,8 @@ function DirectionsIcon() {
 }
 
 export function MobileNavigation({ locale, labels }: MobileNavigationProps) {
-  const phoneHref = `tel:${clinicConfig.phone.replace(/\s+/g, "")}`;
-  const whatsappNumber = clinicConfig.whatsapp.number.replace(/\D/g, "");
-  const whatsappHref = `https://wa.me/${whatsappNumber}`;
+  const phoneHref = clinicConfig.phoneHref;
+  const whatsappHref = clinicConfig.whatsapp.href();
 
   const itemClass =
     "flex min-w-0 flex-1 flex-col items-center justify-center gap-1.5 py-3 text-center text-[11px] font-extrabold leading-none text-[var(--primary-ink)] transition-colors duration-300 hover:bg-[var(--aqua-light)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--teal)]";

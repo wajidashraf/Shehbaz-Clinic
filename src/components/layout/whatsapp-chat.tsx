@@ -127,25 +127,11 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
       return;
     }
 
-    /*
-     * WhatsApp requires the number in international format,
-     * containing digits only.
-     *
-     * +92 300 1234567
-     * becomes
-     * 923001234567
-     */
-    const normalizedNumber = whatsappNumber.replace(/\D/g, "");
-
-    if (!normalizedNumber) {
-      return;
-    }
-
-    const whatsappUrl =
-      `https://wa.me/${normalizedNumber}` +
-      `?text=${encodeURIComponent(trimmedMessage)}`;
-
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    window.open(
+      clinicConfig.whatsapp.href(trimmedMessage),
+      "_blank",
+      "noopener,noreferrer",
+    );
   }
 
   return (

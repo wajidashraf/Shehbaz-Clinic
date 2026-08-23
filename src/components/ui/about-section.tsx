@@ -6,6 +6,8 @@ import {
   HiOutlinePhone,
 } from "react-icons/hi2";
 
+import { clinicConfig } from "@/config/public-config";
+
 type AboutSectionProps = {
   locale: "en" | "ur";
 };
@@ -444,7 +446,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
                     </h3>
 
                     <p className="mt-0.5 text-sm text-[var(--muted-text)]">
-                      <a dir="ltr" href="tel:+923443420001">
+                      <a dir="ltr" href={clinicConfig.phoneHref}>
                         <bdi>+92 344 3420001</bdi>
                       </a>
                     </p>

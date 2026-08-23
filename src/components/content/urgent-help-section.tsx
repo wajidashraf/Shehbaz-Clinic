@@ -11,8 +11,8 @@ type UrgentHelpSectionProps = {
 };
 
 export function UrgentHelpSection({ labels }: UrgentHelpSectionProps) {
-  const mobileHref = `tel:${clinicConfig.phone.replace(/\s+/g, "")}`;
-  const landlineHref = `tel:${clinicConfig.landline.replace(/-/g, "")}`;
+  const mobileHref = clinicConfig.phoneHref;
+  const landlineHref = clinicConfig.landlineHref;
 
   return (
     <section className="border-y border-red-100 bg-red-50/70 py-10">

@@ -96,7 +96,7 @@ export function HeaderTopBar({ labels }: HeaderTopBarProps) {
           </svg>
           <a
             className="transition-colors duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] hover:text-white"
-            href={`tel:${clinicConfig.phone.replace(/\s+/g, "")}`}
+            href={clinicConfig.phoneHref}
           >
             <bdi>{clinicConfig.phone}</bdi>
           </a>
@@ -105,7 +105,7 @@ export function HeaderTopBar({ labels }: HeaderTopBarProps) {
           </span>
           <a
             className="transition-colors duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] hover:text-white"
-            href={`tel:${clinicConfig.landline.replace(/-/g, "")}`}
+            href={clinicConfig.landlineHref}
           >
             <bdi>{clinicConfig.landline}</bdi>
           </a>
