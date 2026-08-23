@@ -1,8 +1,8 @@
 import { setRequestLocale } from "next-intl/server";
 import { BookingWizard } from "@/components/booking/booking-wizard";
 import type { Locale } from "@/i18n/config";
+import { listBookingDoctors } from "@/modules/booking/booking-doctors.server";
 import { resolveBookingPrefill } from "@/modules/booking/demo-booking";
-import { listDoctors } from "@/modules/doctors/doctor.repository";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ export default async function BookingPage({
 }: BookingPageProps) {
   const [{ locale }, query] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
-  const dentists = await listDoctors();
+  const dentists = await listBookingDoctors();
   const prefill = resolveBookingPrefill(
     query,
     dentists.map((dentist) => dentist.id),
