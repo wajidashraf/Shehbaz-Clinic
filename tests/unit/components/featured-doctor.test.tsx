@@ -23,6 +23,18 @@ describe("FeaturedDoctorSection", () => {
     ).toHaveAttribute("src", expect.stringContaining("featureDoctor.avif"));
   });
 
+  it("uses the Urdu image alt text for Urdu visitors", () => {
+    render(
+      <FeaturedDoctorSection doctor={featuredHomepageDentist} locale="ur" />,
+    );
+
+    expect(
+      screen.getByRole("img", {
+        name: "Ø´ÛØ¨Ø§Ø² ÚˆÛŒÙ†Ù¹Ù„ Ú©Ù„ÛŒÙ†Ú© Ú©Û’ Ù†Ù…Ø§ÛŒØ§Úº ÚˆÛŒÙ†Ù¹Ø³Ù¹",
+      }),
+    ).toHaveAttribute("src", expect.stringContaining("featureDoctor.avif"));
+  });
+
   it.each([
     ["en", "Book Consultation", "/en/book"],
     ["ur", "Ù…Ø´Ø§ÙˆØ±Øª Ø¨Ú© Ú©Ø±ÛŒÚº", "/ur/book"],
