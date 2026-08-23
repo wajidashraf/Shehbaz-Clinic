@@ -140,6 +140,7 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
         fixed right-3
         bottom-[calc(5.75rem+env(safe-area-inset-bottom))]
         z-[60]
+        pointer-events-none
 
         flex flex-col
         items-end
@@ -188,7 +189,7 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
 
           ${
             open
-              ? "visible translate-y-0 scale-100 opacity-100"
+              ? "pointer-events-auto visible translate-y-0 scale-100 opacity-100"
               : "pointer-events-none invisible translate-y-3 scale-[0.97] opacity-0"
           }
         `}
@@ -633,6 +634,7 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
         className="
           group
           relative
+          pointer-events-auto
 
           grid
           size-14

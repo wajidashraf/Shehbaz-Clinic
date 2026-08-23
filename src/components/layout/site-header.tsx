@@ -57,7 +57,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
           openDaily: labels.openDaily ?? "Open daily",
         }}
       />
-      <header className="sticky top-0 z-40">
+      <header className="sticky top-0 z-[70]">
         <HeaderScrollSurface>
           <div className="mx-auto flex min-h-16 min-w-0 max-w-7xl items-center justify-between gap-3 px-4 sm:min-h-[5rem] sm:px-6 lg:px-8">
             {/* Brand */}
@@ -142,7 +142,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
                 <LocaleSwitch label={labels.switchLanguage} locale={locale} />
               </div>
 
-              <div className="hidden sm:block">
+              <div className="hidden lg:block">
                 <ButtonLink href={`${localeRoot}/book`} size="large">
                   {labels.book}
                 </ButtonLink>

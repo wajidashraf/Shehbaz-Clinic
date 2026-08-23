@@ -435,7 +435,7 @@ export const demoDentists: readonly DemoDentist[] = [
 ] as const;
 
 export function getLocalizedText(text: LocalizedText, locale: Locale): string {
-  return text[locale];
+  return text[locale] || text.en;
 }
 
 export function findDemoService(id: string): DemoService | undefined {

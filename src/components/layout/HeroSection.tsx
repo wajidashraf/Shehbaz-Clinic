@@ -104,7 +104,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
                 w-full justify-center rounded-[1.15rem]
                 bg-[#1976d2] px-7 py-4 text-base font-bold text-white
                 shadow-[0_14px_30px_-14px_rgba(25,118,210,0.55)]
-                transition-all duration-300
+                transition-[background-color,border-color,color,box-shadow] duration-300
                 sm:w-auto
               "
               icon={
@@ -144,7 +144,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
                 border border-[#c8d2dc] bg-white px-7 py-4
                 text-base font-bold text-[#0b4b85]
                 shadow-[0_10px_24px_-18px_rgba(7,48,71,0.35)]
-                transition-all duration-300
+                transition-[background-color,border-color,color,box-shadow] duration-300
                 sm:w-auto
               "
               icon={
