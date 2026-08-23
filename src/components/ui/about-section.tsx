@@ -10,13 +10,55 @@ type AboutSectionProps = {
   locale: "en" | "ur";
 };
 
+const aboutCopy = {
+  en: {
+    ariaLabel: "About Shahbaz Dental Clinic",
+    badge: "Trusted",
+    since: "Since 1980",
+    heading: "About Shahbaz Dental Clinic",
+    interiorAlt: "Shahbaz Dental Clinic interior",
+    treatmentAlt: "Dental treatment area at Shahbaz Dental Clinic",
+    introductionBeforeYear:
+      "Shahbaz Dental Clinic is a trusted dental care facility on Circular Road in Samundri, Punjab. Since ",
+    introductionAfterYear:
+      ", we have served the local community with professional dental care in a clean, safe, and comfortable environment.",
+    mission:
+      "Our mission is to help patients understand their oral health needs and receive appropriate treatment while providing dependable care for routine and advanced dental procedures.",
+    locationLabel: "Location",
+    location: "Circular Road, Samundri",
+    contactLabel: "Contact",
+    directions: "Get Directions on Google Maps",
+  },
+  ur: {
+    ariaLabel: "شہباز ڈینٹل کلینک کے بارے میں",
+    badge: "قابلِ اعتماد",
+    since: "1980 سے",
+    heading: "شہباز ڈینٹل کلینک کے بارے میں",
+    interiorAlt: "شہباز ڈینٹل کلینک کا اندرونی منظر",
+    treatmentAlt: "شہباز ڈینٹل کلینک کا علاج کا کمرہ",
+    introductionBeforeYear:
+      "شہباز ڈینٹل کلینک، سمندری، پنجاب میں سرکلر روڈ پر دانتوں کی نگہداشت کا ایک قابلِ اعتماد مرکز ہے۔ سن ",
+    introductionAfterYear:
+      " سے ہم صاف، محفوظ اور آرام دہ ماحول میں مقامی کمیونٹی کو پیشہ ورانہ دانتوں کی نگہداشت فراہم کر رہے ہیں۔",
+    mission:
+      "ہمارا مقصد مریضوں کو ان کی منہ کی صحت کی ضروریات سمجھنے اور مناسب علاج حاصل کرنے میں مدد دینا ہے، جبکہ معمول اور جدید دانتوں کے طریقۂ علاج کے لیے قابلِ اعتماد نگہداشت فراہم کی جاتی ہے۔",
+    locationLabel: "مقام",
+    location: "سرکلر روڈ، سمندری",
+    contactLabel: "رابطہ",
+    directions: "گوگل میپس پر راستہ دیکھیں",
+  },
+} as const;
+
 export function AboutSection({ locale }: AboutSectionProps) {
   const isRtl = locale === "ur";
+  const content = aboutCopy[locale];
 
   return (
     <section
-      aria-label="About Shahbaz Dental Clinic"
+      id="about"
+      aria-label={content.ariaLabel}
       className="
+        scroll-mt-28
         bg-[#fff]
         pb-14 pt-12
         sm:pb-16 sm:pt-14
@@ -86,11 +128,11 @@ export function AboutSection({ locale }: AboutSectionProps) {
                     text-[var(--primary-ink)]
                 `}
               >
-                Trusted
+                {content.badge}
               </span>
 
               <span className="mt-1 text-sm font-bold text-[var(--teal)]">
-                Since 1980
+                {content.since}
               </span>
             </span>
           </div>
@@ -105,7 +147,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
               lg:text-[2.15rem]
             "
           >
-            About Shahbaz Dental Clinic
+            {content.heading}
           </h2>
         </div>
 
@@ -174,7 +216,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
               >
                 <Image
                   src="/images/demo/aboutImage1.avif"
-                  alt="Shahbaz Dental Clinic interior"
+                  alt={content.interiorAlt}
                   fill
                   className="object-cover"
                   sizes="60vw"
@@ -203,7 +245,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
               >
                 <Image
                   src="/images/demo/aboutImage2.avif"
-                  alt="Dental treatment area at Shahbaz Dental Clinic"
+                  alt={content.treatmentAlt}
                   fill
                   className="object-cover"
                   sizes="60vw"
@@ -248,7 +290,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
               >
                 <Image
                   src="/images/demo/aboutImage1.avif"
-                  alt="Shahbaz Dental Clinic interior"
+                  alt={content.interiorAlt}
                   fill
                   className="object-cover"
                   sizes="33vw"
@@ -284,7 +326,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
               >
                 <Image
                   src="/images/demo/aboutImage2.avif"
-                  alt="Dental treatment area at Shahbaz Dental Clinic"
+                  alt={content.treatmentAlt}
                   fill
                   className="object-cover"
                   sizes="33vw"
@@ -318,20 +360,14 @@ export function AboutSection({ locale }: AboutSectionProps) {
               "
             >
               <p>
-                Shahbaz Dental Clinic is a trusted dental care facility on
-                Circular Road in Samundri, Punjab. Since{" "}
+                {content.introductionBeforeYear}
                 <strong className="font-semibold text-[var(--primary-ink)]">
                   1980
                 </strong>
-                , we have served the local community with professional dental
-                care in a clean, safe, and comfortable environment.
+                {content.introductionAfterYear}
               </p>
 
-              <p>
-                Our mission is to help patients understand their oral health
-                needs and receive appropriate treatment while providing
-                dependable care for routine and advanced dental procedures.
-              </p>
+              <p>{content.mission}</p>
             </div>
 
             {/* =================================================
@@ -370,11 +406,11 @@ export function AboutSection({ locale }: AboutSectionProps) {
 
                   <div>
                     <h3 className="font-extrabold text-[var(--primary-ink)]">
-                      Location
+                      {content.locationLabel}
                     </h3>
 
                     <p className="mt-0.5 text-sm text-[var(--muted-text)]">
-                      Circular Road, Samundri
+                      {content.location}
                     </p>
                   </div>
                 </div>
@@ -406,11 +442,13 @@ export function AboutSection({ locale }: AboutSectionProps) {
 
                   <div>
                     <h3 className="font-extrabold text-[var(--primary-ink)]">
-                      Contact
+                      {content.contactLabel}
                     </h3>
 
                     <p className="mt-0.5 text-sm text-[var(--muted-text)]">
-                      +92 344 3420001
+                      <a dir="ltr" href="tel:+923443420001">
+                        <bdi>+92 344 3420001</bdi>
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -435,7 +473,7 @@ export function AboutSection({ locale }: AboutSectionProps) {
                   hover:text-[var(--teal-dark)]
                 "
               >
-                Get Directions on Google Maps
+                {content.directions}
                 <HiOutlineArrowRight
                   aria-hidden="true"
                   className={`

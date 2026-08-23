@@ -9,37 +9,62 @@ type ClinicHighlightsProps = {
   locale: "en" | "ur";
 };
 
-const highlights = [
-  {
-    icon: HiOutlineStar,
-    title: "4.3/5 Rating",
-    description: "Google Verified",
+const clinicHighlightsCopy = {
+  en: {
+    ariaLabel: "Clinic highlights",
+    items: [
+      {
+        icon: HiOutlineStar,
+        title: "4.3/5 Rating",
+        description: "Google Verified",
+      },
+      {
+        icon: HiOutlineUserGroup,
+        title: "10–11 Years",
+        description: "Clinical Experience",
+      },
+      { icon: HiOutlineClock, title: "9AM - 8PM", description: "Open Daily" },
+      {
+        icon: HiOutlineMapPin,
+        title: "Circular Road",
+        description: "Samundri, Punjab",
+      },
+    ],
   },
-  {
-    icon: HiOutlineUserGroup,
-    title: "10–11 Years",
-    description: "Clinical Experience",
+  ur: {
+    ariaLabel: "کلینک کی نمایاں خصوصیات",
+    items: [
+      {
+        icon: HiOutlineStar,
+        title: "4.3/5 ریٹنگ",
+        description: "گوگل سے تصدیق شدہ",
+      },
+      {
+        icon: HiOutlineUserGroup,
+        title: "10–11 سال",
+        description: "طبی تجربہ",
+      },
+      {
+        icon: HiOutlineClock,
+        title: "صبح 9 بجے - رات 8 بجے",
+        description: "روزانہ کھلا",
+      },
+      {
+        icon: HiOutlineMapPin,
+        title: "سرکلر روڈ",
+        description: "سمندری، پنجاب",
+      },
+    ],
   },
-  {
-    icon: HiOutlineClock,
-    title: "9AM - 8PM",
-    description: "Open Daily",
-  },
-  {
-    icon: HiOutlineMapPin,
-    title: "Circular Road",
-    description: "Samundri, Punjab",
-  },
-];
+} as const;
 
-export function ClinicHighlights({
-  locale,
-}: ClinicHighlightsProps) {
+export function ClinicHighlights({ locale }: ClinicHighlightsProps) {
   const isRtl = locale === "ur";
+  const content = clinicHighlightsCopy[locale];
 
   return (
     <section
-      aria-label="Clinic highlights"
+      aria-label={content.ariaLabel}
       className="
         border-y border-[var(--line)]
         bg-white
@@ -60,7 +85,7 @@ export function ClinicHighlights({
           md:px-8
         "
       >
-        {highlights.map(({ icon: Icon, title, description }) => (
+        {content.items.map(({ icon: Icon, title, description }) => (
           <article
             key={title}
             className={`
@@ -69,14 +94,9 @@ export function ClinicHighlights({
               bg-transparent
               shadow-none
               sm:gap-4
-              ${
-                isRtl
-                  ? "flex-row-reverse text-right"
-                  : "flex-row text-left"
-              }
+              ${isRtl ? "flex-row-reverse text-right" : "flex-row text-left"}
             `}
           >
-            {/* Icon */}
             <div
               className="
                 flex size-11 shrink-0
@@ -99,7 +119,6 @@ export function ClinicHighlights({
               />
             </div>
 
-            {/* Content */}
             <div className="min-w-0">
               <h3
                 className="
@@ -107,7 +126,6 @@ export function ClinicHighlights({
                   font-extrabold
                   leading-[1.2]
                   text-[var(--teal-dark)]
-
                   sm:text-sm
                   md:text-[13px]
                   lg:text-[15px]
@@ -123,7 +141,6 @@ export function ClinicHighlights({
                   font-medium
                   leading-[1.3]
                   text-[var(--muted-text)]
-
                   sm:text-xs
                   md:text-[11px]
                   lg:text-xs

@@ -25,7 +25,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <main id="main-content">
-      <HeroSection home={home} locale={locale} />
+      <HeroSection locale={locale} />
       <ClinicHighlights locale={locale} />
       <AboutSection locale={locale} />
 
@@ -59,8 +59,8 @@ export default async function HomePage({ params }: HomePageProps) {
 
       <TestimonialsSection />
 
-      <PatientTrustSection />
-      <FaqSection />
+      <PatientTrustSection locale={locale} />
+      <FaqSection locale={locale} />
 
       <ClinicContactSection
         labels={{

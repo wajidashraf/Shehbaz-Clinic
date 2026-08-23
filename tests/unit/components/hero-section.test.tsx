@@ -1,41 +1,42 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { HeroSection } from "@/components/layout/HeroSection";
 
-const copy: Record<string, string> = {
-  book: "Book Appointment",
-  demoTitle: "Plan your visit",
-  description: "Comfortable care with a clear booking process.",
-  explore: "Explore services",
-  eyebrow: "Dental care in Samundri",
-  imageAlt: "Bright dental treatment room",
-  registrationLabel: "PHC registration",
-  title: "Your trusted partner in dental health",
-};
-
 describe("HeroSection", () => {
-  it("keeps one primary heading and scrolls service exploration to the homepage section", () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => undefined);
-    render(<HeroSection home={(key) => copy[key] ?? key} locale="en" />);
+  it("renders complete local English hero copy with booking, call, and image actions", () => {
+    render(<HeroSection locale="en" />);
 
-    const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading).toHaveTextContent(copy.title);
-    expect(heading.parentElement).toHaveClass("lg:pe-8");
-    const exploreLink = screen.getByRole("link", { name: "Explore services" });
-    expect(exploreLink).toHaveAttribute("href", "/en#services");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Healthy Teeth. Confident Smiles.",
+    );
     expect(
-      screen.getByRole("link", { name: "Book Appointment" }).querySelector("svg"),
-    ).toHaveClass(
-      "hidden",
-      "lg:inline-block",
+      screen.getByRole("link", { name: "Book Appointment" }),
+    ).toHaveAttribute("href", "/en/book");
+    expect(screen.getByRole("link", { name: "Call now" })).toHaveAttribute(
+      "href",
+      "tel:+923443420001",
     );
-    expect(screen.getByAltText("Bright dental treatment room")).toBeVisible();
-    expect(screen.getByText("Dental care in Samundri")).toHaveClass("hidden");
-    expect(consoleError.mock.calls.flat().join(" ")).not.toContain(
-      "Invalid DOM property",
+    expect(
+      screen.getByAltText("A bright, modern dental treatment room"),
+    ).toHaveAttribute("src", expect.stringContaining("dentalRoom.avif"));
+  });
+
+  it("renders a natural local Urdu hero title", () => {
+    const { container } = render(<HeroSection locale="ur" />);
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "صحت مند دانت۔ پُراعتماد مسکراہٹیں۔",
     );
-    consoleError.mockRestore();
+    expect(
+      screen.getByRole("link", { name: "اپائنٹمنٹ بک کریں" }),
+    ).toHaveAttribute("href", "/ur/book");
+    expect(screen.getByRole("link", { name: "ابھی کال کریں" })).toHaveAttribute(
+      "href",
+      "tel:+923443420001",
+    );
+    expect(
+      screen.getByAltText("روشن اور جدید ڈینٹل ٹریٹمنٹ روم"),
+    ).toHaveAttribute("src", expect.stringContaining("dentalRoom.avif"));
+    expect(container.textContent).not.toMatch(/[\u00D8\u00D9\u00DB]/);
   });
 });
