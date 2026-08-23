@@ -4,7 +4,7 @@ import { FeaturedDoctorSection } from "@/components/content/featured-doctor-sect
 import { featuredHomepageDentist } from "@/content/homepage-content";
 
 describe("FeaturedDoctorSection", () => {
-  it("renders the local AVIF portrait at the dentist anchor", () => {
+  it("renders Dr. Sobia's local AVIF portrait at the dentist anchor", () => {
     render(
       <FeaturedDoctorSection doctor={featuredHomepageDentist} locale="en" />,
     );
@@ -18,9 +18,12 @@ describe("FeaturedDoctorSection", () => {
     );
     expect(
       screen.getByRole("img", {
-        name: "Featured dentist at Shahbaz Dental Clinic",
+        name: "Portrait of Dr. Sobia Zulfiqar",
       }),
     ).toHaveAttribute("src", expect.stringContaining("featureDoctor.avif"));
+    expect(
+      screen.getByRole("heading", { name: "Dr. Sobia Zulfiqar" }),
+    ).toBeVisible();
   });
 
   it("uses the Urdu image alt text for Urdu visitors", () => {
@@ -30,7 +33,7 @@ describe("FeaturedDoctorSection", () => {
 
     expect(
       screen.getByRole("img", {
-        name: "Ø´ÛØ¨Ø§Ø² ÚˆÛŒÙ†Ù¹Ù„ Ú©Ù„ÛŒÙ†Ú© Ú©Û’ Ù†Ù…Ø§ÛŒØ§Úº ÚˆÛŒÙ†Ù¹Ø³Ù¹",
+        name: "ÚˆØ§Ú©Ù¹Ø± ØµÙˆØ¨ÛŒÛ Ø°ÙˆØ§Ù„ÙÙ‚Ø§Ø± Ú©ÛŒ ØªØµÙˆÛŒØ±",
       }),
     ).toHaveAttribute("src", expect.stringContaining("featureDoctor.avif"));
   });

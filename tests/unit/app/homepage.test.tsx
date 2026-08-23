@@ -28,6 +28,9 @@ describe("HomePage", () => {
 
     expect(screen.getByTestId("featured-doctor-section")).toBeVisible();
     expect(
+      screen.getByRole("heading", { name: "Dr. Sobia Zulfiqar" }),
+    ).toBeVisible();
+    expect(
       screen.getByRole("link", { name: "Book Consultation" }),
     ).toHaveAttribute("href", "/en/book");
   });
