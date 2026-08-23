@@ -244,11 +244,10 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
                   rounded-xl
                   bg-white
                   shadow-[0_12px_30px_-18px_rgba(0,0,0,0.55)]
-                  transition-[transform,box-shadow]
+                  transition-shadow
                   duration-300
                   ease-[cubic-bezier(0.65,0,0.35,1)]
 
-                  group-hover:-translate-y-0.5
                   group-hover:shadow-[0_16px_34px_-18px_rgba(0,0,0,0.65)]
                 "
               >
@@ -373,13 +372,10 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
                       items-center
                       text-sm font-semibold
                       text-white/72
-                      transition-[color,transform]
+                      transition-colors
                       duration-200
 
-                      hover:translate-x-0.5
                       hover:text-white
-
-                      rtl:hover:-translate-x-0.5
                     "
                     href={item.href}
                   >
@@ -435,11 +431,10 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
 
                 shadow-[0_12px_28px_-18px_rgba(255,255,255,0.45)]
 
-                transition-[background-color,transform,box-shadow]
+                transition-[background-color,box-shadow]
                 duration-300
                 ease-[cubic-bezier(0.65,0,0.35,1)]
 
-                hover:-translate-y-0.5
                 hover:bg-cyan-50
                 hover:shadow-[0_16px_32px_-18px_rgba(255,255,255,0.55)]
 
@@ -516,11 +511,10 @@ export function SiteFooter({ labels, locale }: SiteFooterProps) {
 
                   backdrop-blur-md
 
-                  transition-[background-color,border-color,color,transform,box-shadow]
+                  transition-[background-color,border-color,color,box-shadow]
                   duration-300
                   ease-[cubic-bezier(0.65,0,0.35,1)]
 
-                  hover:-translate-y-0.5
                   hover:border-cyan-200/40
                   hover:bg-white/[0.14]
                   hover:text-white

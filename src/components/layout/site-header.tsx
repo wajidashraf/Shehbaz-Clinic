@@ -42,9 +42,9 @@ const desktopNavLinkClass =
   "group relative flex min-h-11 items-center px-3 text-sm font-semibold " +
   "text-slate-700 transition-colors duration-200 hover:text-[var(--teal-dark)] " +
   "after:absolute after:bottom-1 after:left-3 after:right-3 after:h-0.5 " +
-  "after:origin-center after:scale-x-0 after:rounded-full " +
-  "after:bg-[var(--teal-dark)] after:transition-transform after:duration-200 " +
-  "hover:after:scale-x-100";
+  "after:rounded-full after:opacity-0 " +
+  "after:bg-[var(--teal-dark)] after:transition-opacity after:duration-200 " +
+  "hover:after:opacity-100";
 
 export function SiteHeader({ labels, locale }: SiteHeaderProps) {
   const localeRoot = `/${locale}`;
@@ -59,14 +59,14 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
       />
       <header className="sticky top-0 z-40">
         <HeaderScrollSurface>
-          <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:min-h-[5rem] sm:px-6 lg:px-8">
+          <div className="mx-auto flex min-h-16 min-w-0 max-w-7xl items-center justify-between gap-3 px-4 sm:min-h-[5rem] sm:px-6 lg:px-8">
             {/* Brand */}
             <Link
               aria-label={`${labels.clinicName} — ${labels.home}`}
               className="group flex min-w-0 items-center gap-3.5"
               href={localeRoot}
             >
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-0.5 group-hover:shadow-md sm:size-14">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white transition-shadow duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:shadow-md sm:size-14">
                 <Image
                   alt=""
                   className="size-10 object-contain sm:size-13"
@@ -93,7 +93,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
             </Link>
 
             {/* Navigation */}
-            <div className="flex items-center gap-1.5 lg:gap-3">
+            <div className="flex shrink-0 items-center gap-1.5 lg:gap-3">
               <nav aria-label={labels.primaryNavigation}>
                 <div className="hidden items-center md:flex">
                   <Link

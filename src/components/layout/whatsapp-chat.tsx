@@ -432,7 +432,7 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
 
                       shadow-[0_6px_18px_-14px_rgba(7,48,71,0.45)]
 
-                      transition-[background-color,border-color,color,transform]
+                      transition-[background-color,border-color,color]
                       duration-200
 
                       focus-visible:outline-none
@@ -451,7 +451,6 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
                             bg-white
                             text-[var(--primary-ink)]
 
-                            hover:-translate-y-px
                             hover:border-[var(--aqua)]
                             hover:bg-[var(--aqua-soft)]
                           `
@@ -611,10 +610,9 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
 
               shadow-[0_14px_32px_-16px_rgba(37,211,102,0.75)]
 
-              transition-[background-color,transform,box-shadow]
+              transition-[background-color,box-shadow]
               duration-250
 
-              hover:-translate-y-0.5
               hover:bg-[#1fbe5b]
               hover:shadow-[0_18px_36px_-16px_rgba(37,211,102,0.85)]
 
@@ -664,11 +662,10 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
 
           shadow-[0_16px_38px_-16px_rgba(18,86,55,0.7)]
 
-          transition-[transform,background-color,box-shadow]
+          transition-[background-color,box-shadow]
           duration-300
           ease-[cubic-bezier(0.65,0,0.35,1)]
 
-          hover:-translate-y-1
           hover:bg-[#1fbe5b]
           hover:shadow-[0_20px_42px_-16px_rgba(18,86,55,0.8)]
 

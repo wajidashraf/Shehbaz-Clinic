@@ -77,9 +77,6 @@ export function ButtonLink({
     ------------------------------------------------------- */
 
     primary: `
-      relative
-      overflow-hidden
-
       border
       border-transparent
 
@@ -96,24 +93,6 @@ export function ButtonLink({
 
       focus-visible:ring-[var(--teal-dark)]
 
-      before:pointer-events-none
-      before:absolute
-      before:inset-0
-
-      before:-translate-x-[115%]
-
-      before:bg-gradient-to-r
-      before:from-transparent
-      before:via-white/12
-      before:to-transparent
-
-      before:transition-transform
-      before:duration-500
-      before:ease-[cubic-bezier(0.65,0,0.35,1)]
-
-      hover:before:translate-x-[115%]
-
-      motion-reduce:before:transition-none
     `,
 
     /* -------------------------------------------------------
@@ -121,9 +100,6 @@ export function ButtonLink({
     ------------------------------------------------------- */
 
     secondary: `
-      relative
-      overflow-hidden
-
       border
       border-[var(--line-strong)]
 
@@ -143,24 +119,6 @@ export function ButtonLink({
 
       focus-visible:ring-[var(--saffron)]
 
-      before:pointer-events-none
-      before:absolute
-      before:inset-0
-
-      before:-translate-x-[115%]
-
-      before:bg-gradient-to-r
-      before:from-transparent
-      before:via-[var(--teal)]/5
-      before:to-transparent
-
-      before:transition-transform
-      before:duration-500
-      before:ease-[cubic-bezier(0.65,0,0.35,1)]
-
-      hover:before:translate-x-[115%]
-
-      motion-reduce:before:transition-none
     `,
 
     /* -------------------------------------------------------
@@ -191,9 +149,6 @@ export function ButtonLink({
     ------------------------------------------------------- */
 
     danger: `
-      relative
-      overflow-hidden
-
       border
       border-transparent
 
@@ -210,24 +165,6 @@ export function ButtonLink({
 
       focus-visible:ring-[#8a1a1a]
 
-      before:pointer-events-none
-      before:absolute
-      before:inset-0
-
-      before:-translate-x-[115%]
-
-      before:bg-gradient-to-r
-      before:from-transparent
-      before:via-white/12
-      before:to-transparent
-
-      before:transition-transform
-      before:duration-500
-      before:ease-[cubic-bezier(0.65,0,0.35,1)]
-
-      hover:before:translate-x-[115%]
-
-      motion-reduce:before:transition-none
     `,
   };
 
@@ -236,42 +173,10 @@ export function ButtonLink({
   ========================================================= */
 
   const motionBase = `
-    group
-
-    inline-flex
-    items-center
-    justify-center
-
-    rounded-lg
-
-    text-center
-    font-semibold
-    tracking-[-0.01em]
-    whitespace-nowrap
-
-    select-none
-
-    transform-gpu
-    will-change-transform
-
-    transition-[background-color,border-color,color,box-shadow,transform]
-    duration-300
-    ease-[cubic-bezier(0.65,0,0.35,1)]
-
-    hover:-translate-y-[2px]
-
-    active:translate-y-0
-    active:scale-[0.985]
-    active:duration-150
-
-    focus-visible:outline-none
-    focus-visible:ring-2
-    focus-visible:ring-offset-2
-    focus-visible:ring-offset-[var(--mineral)]
-
-    motion-reduce:transform-none
-    motion-reduce:transition-none
-  `;
+  group inline-flex items-center justify-center rounded-lg text-center font-semibold tracking-[-0.01em] whitespace-nowrap select-none
+  transition-[background-color,border-color,color,box-shadow] duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--mineral)] motion-reduce:transition-none
+`;
 
   /* =========================================================
      ICON MOTION
@@ -284,20 +189,7 @@ export function ButtonLink({
     inline-flex
     shrink-0
 
-    transform-gpu
-
-    transition-transform
-    duration-300
-    ease-[cubic-bezier(0.65,0,0.35,1)]
-
-    motion-reduce:transform-none
-    motion-reduce:transition-none
   `;
-
-  const iconHoverOffset =
-    iconPosition === "left"
-      ? "group-hover:-translate-x-[2px]"
-      : "group-hover:translate-x-[2px]";
 
   /* =========================================================
      EXTERNAL LINK
@@ -334,7 +226,6 @@ export function ButtonLink({
               pointer-events-none
               opacity-40
               grayscale
-              transform-none
             `
             : ""
         }
@@ -358,7 +249,6 @@ export function ButtonLink({
           aria-hidden="true"
           className={`
             ${iconMotion}
-            ${iconHoverOffset}
           `}
         >
           {icon}
@@ -390,7 +280,6 @@ export function ButtonLink({
           aria-hidden="true"
           className={`
             ${iconMotion}
-            ${iconHoverOffset}
           `}
         >
           {icon}

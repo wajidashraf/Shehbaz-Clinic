@@ -279,12 +279,11 @@ export function AboutSection({ locale }: AboutSectionProps) {
 
                   shadow-[0_30px_65px_-28px_rgba(7,48,71,0.48)]
 
-                  transition-[transform,box-shadow]
+                  transition-shadow
                   duration-300
                   ease-out
 
                   hover:z-30
-                  hover:scale-[1.015]
                   hover:shadow-[0_38px_75px_-28px_rgba(7,48,71,0.58)]
                 "
               >
@@ -315,12 +314,11 @@ export function AboutSection({ locale }: AboutSectionProps) {
 
                   shadow-[0_30px_65px_-28px_rgba(7,48,71,0.48)]
 
-                  transition-[transform,box-shadow]
+                  transition-shadow
                   duration-300
                   ease-out
 
                   hover:z-30
-                  hover:scale-[1.015]
                   hover:shadow-[0_38px_75px_-28px_rgba(7,48,71,0.58)]
                 "
               >

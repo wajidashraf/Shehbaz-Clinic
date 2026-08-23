@@ -43,14 +43,12 @@ export function LocaleSwitch({ label, locale }: LocaleSwitchProps) {
         bg-white px-3.5
         text-sm font-bold text-slate-700
         shadow-sm
-        transition-[color,background-color,border-color,box-shadow,transform]
+        transition-[color,background-color,border-color,box-shadow]
         duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]
-        hover:-translate-y-0.5
         hover:border-sky-200
         hover:bg-[var(--aqua-soft)]
         hover:text-[var(--teal-dark)]
         hover:shadow-md
-        active:translate-y-0
         focus-visible:outline-none
         focus-visible:ring-2
         focus-visible:ring-[var(--teal-dark)]
