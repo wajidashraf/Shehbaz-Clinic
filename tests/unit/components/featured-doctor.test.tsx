@@ -33,14 +33,33 @@ describe("FeaturedDoctorSection", () => {
 
     expect(
       screen.getByRole("img", {
-        name: "ÚˆØ§Ú©Ù¹Ø± ØµÙˆØ¨ÛŒÛ Ø°ÙˆØ§Ù„ÙÙ‚Ø§Ø± Ú©ÛŒ ØªØµÙˆÛŒØ±",
+        name: "ڈاکٹر صوبیہ ذوالفقار کی تصویر",
       }),
     ).toHaveAttribute("src", expect.stringContaining("featureDoctor.avif"));
   });
 
+  it("renders genuine Urdu dentist details without mojibake", () => {
+    render(
+      <FeaturedDoctorSection doctor={featuredHomepageDentist} locale="ur" />,
+    );
+
+    const section = screen.getByTestId("featured-doctor-section");
+    expect(
+      screen.getByRole("heading", { name: "ڈاکٹر صوبیہ ذوالفقار" }),
+    ).toBeVisible();
+    expect(screen.getByText("رجسٹریشن")).toBeVisible();
+    expect(screen.getByText("تجربہ")).toBeVisible();
+    expect(section).toHaveTextContent("سال");
+    expect(section).toHaveTextContent("پریکٹس کا آغاز");
+    expect(
+      screen.getByRole("link", { name: "مشاورت بک کریں" }),
+    ).toHaveAttribute("href", "/ur/book");
+    expect(section).not.toHaveTextContent(/[ØÙÛ]/);
+  });
+
   it.each([
     ["en", "Book Consultation", "/en/book"],
-    ["ur", "Ù…Ø´Ø§ÙˆØ±Øª Ø¨Ú© Ú©Ø±ÛŒÚº", "/ur/book"],
+    ["ur", "مشاورت بک کریں", "/ur/book"],
   ] as const)(
     "links %s visitors to booking without a profile link",
     (locale, label, href) => {

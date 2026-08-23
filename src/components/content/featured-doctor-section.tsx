@@ -23,11 +23,11 @@ export function FeaturedDoctorSection({
   const labels =
     locale === "ur"
       ? {
-          registration: "Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù†",
-          experience: "ØªØ¬Ø±Ø¨Û",
-          years: "Ø³Ø§Ù„",
-          practicingSince: "Ù¾Ø±ÛŒÚ©Ù¹Ø³ Ú©Ø§ Ø¢ØºØ§Ø²",
-          book: "Ù…Ø´Ø§ÙˆØ±Øª Ø¨Ú© Ú©Ø±ÛŒÚº",
+          registration: "رجسٹریشن",
+          experience: "تجربہ",
+          years: "سال",
+          practicingSince: "پریکٹس کا آغاز",
+          book: "مشاورت بک کریں",
         }
       : {
           registration: "Registration",
