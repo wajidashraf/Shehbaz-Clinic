@@ -105,17 +105,32 @@ Review the full English and Urdu homepage from a mobile-first baseline.
 
 ## SEO and Production Configuration
 
-The authoritative production origin is `https://shahbazdental.com`.
+The authoritative production origin is `https://shahbazdental.com` (the user-facing root may be written as `https://shahbazdental.com/`; metadata uses normalized absolute URLs).
 
 - Configure `metadataBase` with the production origin.
 - Generate locale-specific canonical URLs for `/en` and `/ur` and reciprocal `hreflang` alternates, including an `x-default` entry.
 - Improve localized titles and descriptions naturally with the clinic's real location: Circular Road near Ahle Hadees Masjid, Samundri, District Faisalabad, Punjab 37300, Pakistan.
 - Use natural phrases such as dental clinic, dentist, dental doctor, dental treatment, and dental problems without keyword stuffing.
 - Add appropriate Open Graph and Twitter metadata using a local demo image.
-- Add static `robots.ts` and `sitemap.ts` outputs that reference `https://shahbazdental.com`, list both localized homepage URLs, and point crawlers to the production sitemap.
+- Add static `robots.ts` and `sitemap.ts` outputs that reference `https://shahbazdental.com`, list both localized homepage URLs, and point crawlers to `https://shahbazdental.com/sitemap.xml`.
+- The sitemap response must be valid XML at `/sitemap.xml`, expose absolute canonical URLs for `/en` and `/ur`, include language alternates where supported by Next.js metadata routes, and omit admin, API, booking-confirmation, dentist-profile, and service-detail URLs.
+- The robots response must allow public crawling, disallow `/admin` and `/api`, and advertise the absolute sitemap URL so it can be submitted to Google Search Console.
 - Keep admin pages excluded from indexing. Non-promoted internal pages may remain routable; only accurate, production-ready URLs should be included in the sitemap.
 - Set the production `APP_URL` example/default and deployment configuration to the live domain without exposing secrets.
 - Add structured data for the clinic only if all values come from verified local clinic configuration.
+
+## Production Booking Readiness
+
+The homepage is static-content-driven, but the application must not be configured as a static export because booking requires server-rendered pages and API routes.
+
+- Preserve the dynamic localized booking page and the `/api/v1/availability` and `/api/v1/appointments` handlers.
+- Keep the existing same-origin booking requests. Configure `APP_URL=https://shahbazdental.com` in production so origin validation accepts requests submitted from the live domain.
+- Keep the Netlify Next.js runtime deployment path; do not add `output: "export"` or another setting that removes server functions.
+- Document and validate the required production variables: `APP_URL`, `MONGODB_URI`, `MONGODB_DATABASE`, and a `SESSION_SECRET` of at least 32 characters. Provider credentials remain optional unless their provider is enabled.
+- Ensure the production MongoDB deployment permits connections from the hosting runtime and contains the dentist and schedule records required by the existing booking page. Static homepage doctor content does not replace booking database records.
+- Keep booking URLs localized and same-origin, including direct homepage CTAs and service-prefill query strings.
+- Production verification must load `/en/book` and `/ur/book`, confirm the availability endpoint reaches the configured database, and verify appointment submission behavior against a controlled production-like test slot without leaving unwanted live appointments.
+- If production credentials or seeded schedules are unavailable during implementation, report that external prerequisite explicitly; code, build, origin validation, and automated integration behavior must still be verified locally.
 
 ## Validation Strategy
 
@@ -129,6 +144,7 @@ Automated component and integration tests will cover:
 - Homepage booking links still target the existing localized booking route.
 - Phone and WhatsApp URLs are normalized correctly.
 - Metadata, canonical alternates, robots, and sitemap use `https://shahbazdental.com`.
+- Production configuration retains the server runtime, uses the live `APP_URL`, and leaves booking page/API routes operational.
 - Homepage controls do not include hover translation or scale utilities.
 
 Fresh lint, type-check, unit-test, production-build, and relevant Playwright checks will run before completion. Browser validation will cover at least narrow mobile, standard mobile, tablet, and desktop viewports in both English and Urdu, checking overflow, sticky navigation offsets, menu behavior, action-link destinations, and content visibility.
@@ -142,4 +158,5 @@ Fresh lint, type-check, unit-test, production-build, and relevant Playwright che
 - Phone and WhatsApp actions open the correct native/external targets.
 - No homepage element creates unintended horizontal overflow or unstable hover movement.
 - Production metadata and crawler files consistently use `https://shahbazdental.com` and the verified Samundri address.
+- The deployed application retains the server-side booking architecture and documents every environment/database prerequisite needed for live booking.
 - All required verification commands finish successfully, or any pre-existing unrelated failures are reported precisely.
