@@ -124,15 +124,19 @@ for (const [path] of [...englishPages, ...urduPages]) {
 }
 
 test("the English guest booking confirms an appointment", async ({ page }) => {
-  await page.route("**/api/v1/availability?**", (route) =>
-    route.fulfill({ json: { slots: [{ time: "10:00" }] } }),
-  );
-  await page.route("**/api/v1/appointments", (route) =>
-    route.fulfill({
+  const availabilityRequests: URL[] = [];
+  const appointmentRequests: URL[] = [];
+  await page.route("**/api/v1/availability?**", (route) => {
+    availabilityRequests.push(new URL(route.request().url()));
+    return route.fulfill({ json: { slots: [{ time: "10:00" }] } });
+  });
+  await page.route("**/api/v1/appointments", (route) => {
+    appointmentRequests.push(new URL(route.request().url()));
+    return route.fulfill({
       status: 201,
       json: { publicReference: "SDC-2026-EN1234", status: "confirmed" },
-    }),
-  );
+    });
+  });
   await page.goto("/en/book?service=consultation&dentist=no-preference");
 
   await page.getByLabel("Full name").fill("Ali Khan");
@@ -148,20 +152,36 @@ test("the English guest booking confirms an appointment", async ({ page }) => {
     page.getByRole("heading", { name: "Your appointment is confirmed" }),
   ).toBeVisible();
   await expect(page.getByText("SDC-2026-EN1234")).toBeVisible();
+  expect(availabilityRequests).toHaveLength(1);
+  expect(availabilityRequests[0]).toMatchObject({
+    origin: new URL(page.url()).origin,
+    pathname: "/api/v1/availability",
+    search: "?dentistId=no-preference&dateKey=2026-09-01",
+  });
+  expect(appointmentRequests).toHaveLength(1);
+  expect(appointmentRequests[0]).toMatchObject({
+    origin: new URL(page.url()).origin,
+    pathname: "/api/v1/appointments",
+    search: "",
+  });
 });
 
 test("the Urdu guest booking confirms an appointment in RTL", async ({
   page,
 }) => {
-  await page.route("**/api/v1/availability?**", (route) =>
-    route.fulfill({ json: { slots: [{ time: "10:00" }] } }),
-  );
-  await page.route("**/api/v1/appointments", (route) =>
-    route.fulfill({
+  const availabilityRequests: URL[] = [];
+  const appointmentRequests: URL[] = [];
+  await page.route("**/api/v1/availability?**", (route) => {
+    availabilityRequests.push(new URL(route.request().url()));
+    return route.fulfill({ json: { slots: [{ time: "10:00" }] } });
+  });
+  await page.route("**/api/v1/appointments", (route) => {
+    appointmentRequests.push(new URL(route.request().url()));
+    return route.fulfill({
       status: 201,
       json: { publicReference: "SDC-2026-UR1234", status: "confirmed" },
-    }),
-  );
+    });
+  });
   await page.goto("/ur/book?service=consultation&dentist=no-preference");
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
 
@@ -174,4 +194,16 @@ test("the Urdu guest booking confirms an appointment in RTL", async ({
 
   await expect(page.locator("#booking-confirmation-title")).toBeVisible();
   await expect(page.getByText("SDC-2026-UR1234")).toBeVisible();
+  expect(availabilityRequests).toHaveLength(1);
+  expect(availabilityRequests[0]).toMatchObject({
+    origin: new URL(page.url()).origin,
+    pathname: "/api/v1/availability",
+    search: "?dentistId=no-preference&dateKey=2026-09-01",
+  });
+  expect(appointmentRequests).toHaveLength(1);
+  expect(appointmentRequests[0]).toMatchObject({
+    origin: new URL(page.url()).origin,
+    pathname: "/api/v1/appointments",
+    search: "",
+  });
 });

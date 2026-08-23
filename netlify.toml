@@ -1,3 +1,8 @@
 [build]
   command = "npm run build:netlify"
+  publish = ".next"
 
+# Keep APP_URL, MongoDB, session, and provider values out of this file. Netlify
+# does not expose netlify.toml environment variables to Functions at runtime.
+# Set runtime values in the Netlify UI, CLI, or API with Builds and Functions
+# scopes instead.

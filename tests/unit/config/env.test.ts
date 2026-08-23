@@ -21,6 +21,16 @@ describe("server environment", () => {
     );
   });
 
+  it("accepts the production application origin with required runtime values", () => {
+    const environment = getServerEnv({
+      ...baseEnvironment,
+      NODE_ENV: "production",
+      APP_URL: "https://shahbazdental.com",
+    });
+
+    expect(environment.APP_URL).toBe("https://shahbazdental.com");
+  });
+
   it("rejects a partial Cloudinary credential set", () => {
     expect(() =>
       getServerEnv({

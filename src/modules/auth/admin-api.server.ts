@@ -12,8 +12,18 @@ export function requestHasValidOrigin(request: Request) {
   } catch {
     return false;
   }
+  if (browserOrigin !== originHeader) return false;
 
   const allowedOrigins = new Set([new URL(request.url).origin]);
+  let configuredOrigin: string | undefined;
+  if (process.env.APP_URL) {
+    try {
+      configuredOrigin = new URL(process.env.APP_URL).origin;
+      allowedOrigins.add(configuredOrigin);
+    } catch {
+      return false;
+    }
+  }
   const forwardedHost = request.headers
     .get("x-forwarded-host")
     ?.split(",")[0]
@@ -27,9 +37,11 @@ export function requestHasValidOrigin(request: Request) {
     (forwardedProtocol === "https" || forwardedProtocol === "http")
   ) {
     try {
-      allowedOrigins.add(
-        new URL(`${forwardedProtocol}://${forwardedHost}`).origin,
-      );
+      const forwardedOrigin = new URL(`${forwardedProtocol}://${forwardedHost}`)
+        .origin;
+      if (configuredOrigin === forwardedOrigin) {
+        allowedOrigins.add(forwardedOrigin);
+      }
     } catch {
       return false;
     }
