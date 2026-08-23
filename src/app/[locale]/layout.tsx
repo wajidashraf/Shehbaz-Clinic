@@ -15,6 +15,11 @@ import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { WhatsAppChat } from "@/components/layout/whatsapp-chat";
+import {
+  buildClinicMetadata,
+  clinicJsonLd,
+  serializeJsonLd,
+} from "@/config/seo";
 import { getDocumentLanguageAttributes, locales } from "@/i18n/config";
 import { routing } from "@/i18n/routing";
 
@@ -41,13 +46,13 @@ export async function generateMetadata({
     namespace: "Metadata",
   });
 
-  return {
+  return buildClinicMetadata(locale, {
     title: translations("title"),
     description: translations("description"),
-    other: {
-      google: "notranslate",
-    },
-  };
+    keywords: translations("keywords")
+      .split(",")
+      .map((keyword) => keyword.trim()),
+  });
 }
 
 export default async function LocaleLayout({
@@ -62,6 +67,8 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
+  const structuredData = serializeJsonLd(clinicJsonLd(locale));
+
   const [messages, navigation, footer, whatsapp] = await Promise.all([
     getMessages(),
     getTranslations("Navigation"),
@@ -72,6 +79,10 @@ export default async function LocaleLayout({
   return (
     <html {...getDocumentLanguageAttributes(locale)}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredData }}
+        />
         <NextIntlClientProvider locale={locale} messages={messages}>
           {/* Skip to main content */}
           <a
