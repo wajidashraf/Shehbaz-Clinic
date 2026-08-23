@@ -1,119 +1,95 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { render, screen, within } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { SiteHeader } from "@/components/layout/site-header";
 
 const englishLabels = {
-  clinicName: "Shahbaz Dental Clinic",
-  primaryNavigation: "Primary navigation",
-  home: "Home",
-  services: "Services",
-  dentists: "Dentists",
-  contact: "Contact",
+  about: "About",
   book: "Book appointment",
-  mobileNavigation: "Mobile navigation",
-  switchLanguage: "اردو",
-  openMenu: "Open menu",
+  bookShort: "Book",
+  call: "Call",
+  clinicName: "Shahbaz Dental Clinic",
   closeMenu: "Close menu",
-};
-
-const urduLabels = {
-  clinicName: "شہباز ڈینٹل کلینک",
-  primaryNavigation: "مرکزی نیویگیشن",
-  home: "صفحہ اول",
-  services: "خدمات",
-  dentists: "ڈینٹسٹس",
-  contact: "رابطہ",
-  book: "اپائنٹمنٹ بک کریں",
-  mobileNavigation: "موبائل نیویگیشن",
-  switchLanguage: "English",
-  openMenu: "مینو کھولیں",
-  closeMenu: "مینو بند کریں",
+  contact: "Contact",
+  directions: "Directions",
+  home: "Home",
+  mobileNavigation: "Mobile navigation",
+  openMenu: "Open menu",
+  primaryNavigation: "Primary navigation",
+  quickActions: "Quick actions",
+  reviews: "Reviews",
+  services: "Services",
+  switchLanguage: "اردو",
+  theDentist: "The Dentist",
+  whatsapp: "WhatsApp",
 };
 
 describe("SiteHeader", () => {
-  afterEach(() => {
-    Object.defineProperty(window, "scrollY", { configurable: true, value: 0 });
-  });
-
-  it("contains only the approved English destinations", () => {
+  it("renders the exact ordered desktop anchors and booking destination", () => {
     render(<SiteHeader labels={englishLabels} locale="en" />);
 
-    const clinicName = screen.getByText("Shahbaz Dental Clinic");
-    expect(clinicName.parentElement).not.toHaveClass("hidden");
-    expect(clinicName).toHaveClass("text-[var(--teal-dark)]");
-    expect(clinicName).not.toHaveClass("truncate");
-    expect(
-      screen.getByRole("navigation", { name: "Primary navigation" }),
-    ).toBeInTheDocument();
-    expect(screen.getByText("PHC REG # 24988")).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "+92 344 3420001" }),
-    ).toHaveAttribute("href", "tel:+923443420001");
-    expect(screen.getByRole("link", { name: "041-3420001" })).toHaveAttribute(
-      "href",
-      "tel:0413420001",
-    );
     const navigation = screen.getByRole("navigation", {
       name: "Primary navigation",
     });
+    const links = within(navigation).getAllByRole("link");
+
+    expect(links.map((link) => link.textContent)).toEqual([
+      "About",
+      "Services",
+      "The Dentist",
+      "Reviews",
+      "Contact",
+      "اردو",
+      "Book appointment",
+    ]);
+    expect(links.slice(0, 5).map((link) => link.getAttribute("href"))).toEqual([
+      "/en#about",
+      "/en#services",
+      "/en#dentist",
+      "/en#reviews",
+      "/en#contact",
+    ]);
     expect(
-      within(navigation).getByRole("link", { name: "Dentists" }),
-    ).toHaveAttribute("href", "/en#dentists");
-    expect(
-      within(navigation).getByRole("link", { name: "Services" }),
-    ).toHaveAttribute("href", "/en#services");
-    expect(screen.getByRole("link", { name: "اردو" })).toHaveAttribute(
-      "href",
-      "/ur",
-    );
-    expect(
-      screen.getByRole("link", { name: "Book appointment" }),
-    ).toHaveAttribute("href", "/en/book");
-    expect(
-      screen.queryByRole("link", { name: /login|about/i }),
+      within(navigation).queryByRole("link", { name: "Home" }),
     ).not.toBeInTheDocument();
+    expect(
+      within(navigation).queryByRole("link", { name: "Dentists" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Shahbaz Dental Clinic — Home" }),
+    ).toHaveAttribute("href", "/en");
+    expect(
+      within(navigation).getByRole("link", { name: "Book appointment" }),
+    ).toHaveAttribute("href", "/en/book");
   });
 
-  it("provides five touch-friendly mobile destinations without a dropdown menu", () => {
+  it("renders localized quick actions with their expected destinations", () => {
     render(<SiteHeader labels={englishLabels} locale="en" />);
 
-    const navigation = screen.getByRole("navigation", {
-      name: "Mobile navigation",
+    const quickActions = screen.getByRole("navigation", {
+      name: "Quick actions",
     });
-    expect(navigation.getElementsByTagName("a")).toHaveLength(5);
-    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
-      "href",
-      "/en#contact",
-    );
+
     expect(
-      screen.queryByRole("button", { name: "Open menu" }),
-    ).not.toBeInTheDocument();
-  });
-
-  it("preserves Urdu destinations", () => {
-    render(<SiteHeader labels={urduLabels} locale="ur" />);
-
-    expect(screen.getByText("شہباز ڈینٹل کلینک")).toBeVisible();
-    expect(screen.queryByText("Shahbaz Dental Clinic")).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
-      "href",
-      "/en",
-    );
+      within(quickActions).getByRole("link", { name: "Call" }),
+    ).toHaveAttribute("href", "tel:+923443420001");
     expect(
-      screen.getByRole("link", { name: "اپائنٹمنٹ بک کریں" }),
-    ).toHaveAttribute("href", "/ur/book");
-  });
-
-  it("keeps the top bar height stable when crossing the scroll threshold", () => {
-    render(<SiteHeader labels={urduLabels} locale="ur" />);
-    const topBar =
-      screen.getByText(/Open daily/i).parentElement?.parentElement
-        ?.parentElement;
-
-    expect(topBar).toBeTruthy();
-    Object.defineProperty(window, "scrollY", { configurable: true, value: 61 });
-    fireEvent.scroll(window);
-
-    expect(topBar).not.toHaveClass("max-h-0");
+      within(quickActions).getByRole("link", { name: "WhatsApp" }),
+    ).toHaveAttribute("href", "https://wa.me/923443420001");
+    expect(
+      within(quickActions).getByRole("link", { name: "WhatsApp" }),
+    ).toHaveAttribute("rel", "noopener noreferrer");
+    expect(
+      within(quickActions).getByRole("link", { name: "Book" }),
+    ).toHaveAttribute("href", "/en/book");
+    expect(
+      within(quickActions).getByRole("link", { name: "Directions" }),
+    ).toHaveAttribute("href", "https://maps.app.goo.gl/L3pRisdzNg4QYJ8e9");
+    expect(
+      within(quickActions).getByRole("link", { name: "Directions" }),
+    ).toHaveAttribute("target", "_blank");
+    expect(
+      within(quickActions).getByRole("link", { name: "Directions" }),
+    ).toHaveAttribute("rel", "noopener noreferrer");
   });
 });

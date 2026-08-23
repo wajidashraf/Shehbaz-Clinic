@@ -87,22 +87,26 @@ export default async function LocaleLayout({
             "
             href="#main-content"
           >
-            {locale === "ur"
-              ? "مرکزی مواد پر جائیں"
-              : "Skip to main content"}
+            {locale === "ur" ? "مرکزی مواد پر جائیں" : "Skip to main content"}
           </a>
 
           {/* Header */}
           <SiteHeader
             labels={{
+              about: navigation("about"),
               clinicName: navigation("clinicName"),
               primaryNavigation: navigation("primaryNavigation"),
               home: navigation("home"),
               services: navigation("services"),
-              dentists: navigation("dentists"),
+              theDentist: navigation("theDentist"),
+              reviews: navigation("reviews"),
               contact: navigation("contact"),
               book: navigation("book"),
+              call: navigation("call"),
+              directions: navigation("directions"),
               mobileNavigation: navigation("mobileNavigation"),
+              quickActions: navigation("quickActions"),
+              whatsapp: navigation("whatsapp"),
               openDaily: navigation("openDaily"),
               address: navigation("address"),
               bookShort: navigation("bookShort"),
