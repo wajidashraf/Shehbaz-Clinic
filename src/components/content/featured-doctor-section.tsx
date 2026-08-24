@@ -86,7 +86,7 @@ export function FeaturedDoctorSection({
           {/* Content */}
           <div className="flex min-w-0 flex-col justify-center px-2 py-7 text-white sm:px-4 sm:py-8 md:px-5 md:py-9 lg:px-4 lg:py-8 xl:px-6 xl:py-10">
             <div
-              className={`${locale === "ur" ? "sm:text-right" : "sm:text-left"}`}
+              className={`text-center ${locale === "ur" ? "sm:text-right" : "sm:text-left"}`}
             >
               {/* Doctor Role */}
               {title ? (

@@ -30,9 +30,21 @@ describe("BookingRequestModal", () => {
     ).toBeVisible();
     expect(screen.getByLabelText("Full name")).toBeVisible();
     expect(screen.getByLabelText("Mobile number")).toBeVisible();
+    expect(screen.getByLabelText("Mobile number")).toHaveAttribute(
+      "placeholder",
+      "03xx xxxxxxx",
+    );
+    expect(screen.getByLabelText("Mobile number")).toHaveAttribute(
+      "dir",
+      "ltr",
+    );
     expect(screen.getByLabelText("Select service")).toHaveValue("cleaning");
     expect(screen.getByLabelText("Preferred date")).toBeVisible();
     expect(screen.getByLabelText("Email (optional)")).toBeVisible();
+    expect(
+      screen.getByRole("textbox", { name: "Additional details (optional)" }),
+    ).toBeVisible();
+    expect(screen.getByText("0 / 100 words")).toBeVisible();
     expect(screen.queryByText(/choose a dentist/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/available time/i)).not.toBeInTheDocument();
   });
@@ -62,6 +74,10 @@ describe("BookingRequestModal", () => {
     fireEvent.change(screen.getByLabelText("Email (optional)"), {
       target: { value: "ahmad@example.com" },
     });
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Additional details (optional)" }),
+      { target: { value: "Pain in the upper-left tooth for two days." } },
+    );
     fireEvent.click(
       screen.getByRole("button", { name: "Send Appointment Request" }),
     );
@@ -79,6 +95,36 @@ describe("BookingRequestModal", () => {
     expect(whatsappUrl.searchParams.get("text")).toContain(
       "ahmad@example.com",
     );
+    expect(whatsappUrl.searchParams.get("text")).toContain(
+      "Pain in the upper-left tooth for two days.",
+    );
+  });
+
+  it("blocks appointment details longer than 100 words", () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+    render(<BookingRequestModal locale="en" />);
+    activateBookingLink();
+
+    fireEvent.change(screen.getByRole("textbox", { name: "Full name" }), {
+      target: { value: "Ahmad Ali" },
+    });
+    fireEvent.change(screen.getByRole("textbox", { name: "Mobile number" }), {
+      target: { value: "0344 3420001" },
+    });
+    fireEvent.change(screen.getByLabelText("Preferred date"), {
+      target: { value: "2030-01-15" },
+    });
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Additional details (optional)" }),
+      { target: { value: Array.from({ length: 101 }, () => "pain").join(" ") } },
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Send Appointment Request" }),
+    );
+
+    expect(screen.getByText("Please limit details to 100 words.")).toBeVisible();
+    expect(screen.getByText("101 / 100 words")).toBeVisible();
+    expect(openSpy).not.toHaveBeenCalled();
   });
 
   it("renders Urdu copy and closes with Escape", () => {
@@ -89,6 +135,19 @@ describe("BookingRequestModal", () => {
       screen.getByRole("dialog", { name: "اپائنٹمنٹ کی درخواست" }),
     ).toHaveAttribute("dir", "rtl");
     expect(screen.getByLabelText("مریض کا نام")).toBeVisible();
+    const dialog = screen.getByRole("dialog");
+    expect(dialog.querySelector('input[autocomplete="name"]')).toHaveAttribute(
+      "placeholder",
+      "مریض کا نام",
+    );
+    expect(dialog.querySelector('input[autocomplete="tel"]')).toHaveAttribute(
+      "placeholder",
+      "03xx xxxxxxx",
+    );
+    expect(dialog.querySelector('input[autocomplete="tel"]')).toHaveAttribute(
+      "dir",
+      "ltr",
+    );
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

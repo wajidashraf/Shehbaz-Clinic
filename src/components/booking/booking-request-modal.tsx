@@ -16,6 +16,7 @@ type BookingRequestModalProps = {
 };
 
 type BookingRequestDraft = {
+  details: string;
   email: string;
   mobile: string;
   patientName: string;
@@ -38,11 +39,14 @@ const copy = {
     patientName: "Full name",
     patientPlaceholder: "Ahmad Ali",
     mobile: "Mobile number",
-    mobilePlaceholder: "0344 3420001",
+    mobilePlaceholder: "03xx xxxxxxx",
     service: "Select service",
     date: "Preferred date",
     email: "Email (optional)",
     emailPlaceholder: "you@example.com",
+    details: "Additional details (optional)",
+    detailsPlaceholder: "Describe your dental problem, symptoms, or concerns",
+    words: "words",
     notice:
       "By submitting, you understand that this request does not automatically confirm an appointment. The clinic will contact you for confirmation.",
     submit: "Send Appointment Request",
@@ -52,12 +56,14 @@ const copy = {
     requiredService: "Select a dental service.",
     requiredDate: "Select a preferred date that is not in the past.",
     invalidEmail: "Enter a valid email address or leave it blank.",
+    detailsTooLong: "Please limit details to 100 words.",
     messageTitle: "Appointment request",
     messageName: "Patient name",
     messageMobile: "Mobile number",
     messageService: "Service",
     messageDate: "Preferred date",
     messageEmail: "Email",
+    messageDetails: "Additional details",
     messageClosing: "Please contact me to confirm availability.",
   },
   ur: {
@@ -65,13 +71,16 @@ const copy = {
     description:
       "اپنی تفصیلات درج کریں، دستیابی کی تصدیق کے لیے کلینک آپ سے رابطہ کرے گا۔",
     patientName: "مریض کا نام",
-    patientPlaceholder: "احمد علی",
+    patientPlaceholder: "مریض کا نام",
     mobile: "موبائل نمبر",
-    mobilePlaceholder: "0344 3420001",
+    mobilePlaceholder: "03xx xxxxxxx",
     service: "خدمت منتخب کریں",
     date: "پسندیدہ تاریخ",
     email: "ای میل (اختیاری)",
     emailPlaceholder: "you@example.com",
+    details: "مزید تفصیلات (اختیاری)",
+    detailsPlaceholder: "اگر ضروری ہو تو دانتوں کے مسئلے کی تفصیل لکھیں",
+    words: "الفاظ",
     notice:
       "فارم بھیجنے سے اپائنٹمنٹ خودکار طور پر کنفرم نہیں ہوگی۔ تصدیق کے لیے کلینک آپ سے رابطہ کرے گا۔",
     submit: "اپائنٹمنٹ کی درخواست واٹس ایپ کریں",
@@ -81,12 +90,14 @@ const copy = {
     requiredService: "ڈینٹل خدمت منتخب کریں۔",
     requiredDate: "آج یا اس کے بعد کی پسندیدہ تاریخ منتخب کریں۔",
     invalidEmail: "درست ای میل درج کریں یا اسے خالی چھوڑ دیں۔",
+    detailsTooLong: "براہ کرم تفصیلات 100 الفاظ تک محدود رکھیں۔",
     messageTitle: "اپائنٹمنٹ کی درخواست",
     messageName: "مریض کا نام",
     messageMobile: "موبائل نمبر",
     messageService: "خدمت",
     messageDate: "پسندیدہ تاریخ",
     messageEmail: "ای میل",
+    messageDetails: "مزید تفصیلات",
     messageClosing: "دستیابی کی تصدیق کے لیے مجھ سے رابطہ کریں۔",
   },
 } as const;
@@ -102,8 +113,14 @@ function clinicDateKey(date = new Date()): string {
   return `${value.year}-${value.month}-${value.day}`;
 }
 
+function countWords(value: string): number {
+  const trimmed = value.trim();
+  return trimmed ? trimmed.split(/\s+/u).length : 0;
+}
+
 function emptyDraft(serviceId = defaultServiceId): BookingRequestDraft {
   return {
+    details: "",
     email: "",
     mobile: "",
     patientName: "",
@@ -120,6 +137,7 @@ export function BookingRequestModal({ locale }: BookingRequestModalProps) {
   const [errors, setErrors] = useState<BookingRequestErrors>({});
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
+  const detailsWordCount = countWords(draft.details);
 
   function openModal(serviceId?: string) {
     previousActiveElement.current = document.activeElement as HTMLElement | null;
@@ -205,7 +223,7 @@ export function BookingRequestModal({ locale }: BookingRequestModalProps) {
 
       const focusable = Array.from(
         dialogRef.current.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), input:not([disabled]), select:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
         ),
       );
       if (focusable.length === 0) return;
@@ -249,6 +267,9 @@ export function BookingRequestModal({ locale }: BookingRequestModalProps) {
     if (draft.email.trim() && !emailPattern.test(draft.email.trim())) {
       nextErrors.email = labels.invalidEmail;
     }
+    if (detailsWordCount > 100) {
+      nextErrors.details = labels.detailsTooLong;
+    }
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
@@ -264,6 +285,9 @@ export function BookingRequestModal({ locale }: BookingRequestModalProps) {
     ];
     if (draft.email.trim()) {
       messageLines.push(`${labels.messageEmail}: ${draft.email.trim()}`);
+    }
+    if (draft.details.trim()) {
+      messageLines.push(`${labels.messageDetails}: ${draft.details.trim()}`);
     }
     messageLines.push("", labels.messageClosing);
     window.open(
@@ -337,6 +361,7 @@ export function BookingRequestModal({ locale }: BookingRequestModalProps) {
                 aria-invalid={Boolean(errors.mobile)}
                 autoComplete="tel"
                 className={fieldClassName}
+                dir="ltr"
                 inputMode="tel"
                 onChange={(event) => setField("mobile", event.target.value)}
                 placeholder={labels.mobilePlaceholder}
@@ -394,6 +419,39 @@ export function BookingRequestModal({ locale }: BookingRequestModalProps) {
               />
               {errors.email ? <span className="mt-2 block text-xs normal-case tracking-normal text-red-700" id="request-email-error">{errors.email}</span> : null}
             </label>
+          </div>
+
+          <div className="mt-5">
+            <label className={labelClassName} htmlFor="request-details">
+              {labels.details}
+            </label>
+            <textarea
+              aria-describedby="request-details-feedback"
+              aria-invalid={Boolean(errors.details)}
+              className={`${fieldClassName} min-h-24 resize-y py-3`}
+              id="request-details"
+              onChange={(event) => setField("details", event.target.value)}
+              placeholder={labels.detailsPlaceholder}
+              rows={3}
+              value={draft.details}
+            />
+            <div
+              className="mt-2 flex items-start justify-between gap-4 text-xs normal-case tracking-normal"
+              id="request-details-feedback"
+            >
+              <span className="text-red-700">
+                {errors.details ?? ""}
+              </span>
+              <span
+                className={
+                  detailsWordCount > 100
+                    ? "shrink-0 font-semibold text-red-700"
+                    : "shrink-0 text-slate-500"
+                }
+              >
+                {detailsWordCount} / 100 {labels.words}
+              </span>
+            </div>
           </div>
 
           <p className="mt-5 text-xs italic leading-5 text-slate-500">
