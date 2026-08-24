@@ -16,7 +16,11 @@ const nextConfig: NextConfig = {
       hostname: "images.pexels.com",
       pathname: "/photos/**",
     },
-  ],
+    {
+      protocol: "https",
+      hostname: "images.pexels.com",
+    },
+  ]
 },
   async headers() {
     return [

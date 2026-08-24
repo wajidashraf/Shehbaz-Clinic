@@ -3,11 +3,13 @@
 :root {
   color-scheme: light;
   --ink: #123035;
+  --ink-text: #1d2628;
   --primary-ink: #073047;
-  --teal: #2093e0;
+  --tw-bg-opacity: 1;
+  --teal: rgb(20 121 201 / var(--tw-bg-opacity, 1));
   --teal-dark: #00678f;
   --aqua: #d9f3fd;
-  --aqua-light: #effaff;
+  --aqua-light: #effaffdb;
   --aqua-md: #c1eafccd;
   --aqua-soft: #eefaff;
   --mineral: #f7fcff;
@@ -27,7 +29,7 @@ body {
   max-width: 100%;
   overflow-x: clip;
   background: var(--mineral);
-  color: var(--ink);
+  color: var(--ink-text);
   font-family: "Manrope Variable", "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

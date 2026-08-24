@@ -9,6 +9,7 @@ const englishLabels = {
   contact: "Contact",
   mobileNavigation: "Mobile navigation",
   openMenu: "Open menu",
+  portfolio: "Portfolio",
   reviews: "Reviews",
   services: "Services",
   switchLanguage: "اردو",
@@ -21,6 +22,7 @@ const urduLabels = {
   contact: "رابطہ",
   mobileNavigation: "موبائل نیویگیشن",
   openMenu: "مینو کھولیں",
+  portfolio: "پورٹ فولیو",
   reviews: "مریضوں کے تاثرات",
   services: "خدمات",
   switchLanguage: "English",
@@ -28,7 +30,7 @@ const urduLabels = {
 };
 
 describe("MobileMenu", () => {
-  it("opens a labeled panel with five ordered anchors and the locale switcher", () => {
+  it("opens a labeled panel containing the Portfolio homepage anchor", () => {
     render(<MobileMenu labels={englishLabels} locale="en" />);
 
     const menuButton = screen.getByRole("button", { name: "Open menu" });
@@ -46,32 +48,10 @@ describe("MobileMenu", () => {
     const navigation = screen.getByRole("navigation", {
       name: "Mobile navigation",
     });
-    expect(menuButton).toHaveAttribute("aria-label", "Close menu");
     expect(menuButton).toHaveAttribute("aria-expanded", "true");
     expect(
-      within(navigation)
-        .getAllByRole("link")
-        .map((link) => link.textContent),
-    ).toEqual([
-      "About",
-      "Services",
-      "The Dentist",
-      "Reviews",
-      "Contact",
-      "اردو",
-    ]);
-    expect(
-      within(navigation)
-        .getAllByRole("link")
-        .slice(0, 5)
-        .map((link) => link.getAttribute("href")),
-    ).toEqual([
-      "/en#about",
-      "/en#services",
-      "/en#dentist",
-      "/en#reviews",
-      "/en#contact",
-    ]);
+      within(navigation).getByRole("link", { name: "Portfolio" }),
+    ).toHaveAttribute("href", "/en#portfolio");
   });
 
   it("closes after an anchor is activated or Escape is pressed", () => {

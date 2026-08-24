@@ -31,6 +31,7 @@ export type SiteHeaderLabels = {
   switchLanguage: string;
   openMenu: string;
   closeMenu: string;
+  portfolio: string;
 };
 
 type SiteHeaderProps = {
@@ -123,6 +124,12 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
                   >
                     {labels.reviews}
                   </Link>
+                  <Link
+                    className={desktopNavLinkClass}
+                    href={`${localeRoot}#portfolio`}
+                  >
+                    {labels.portfolio}
+                  </Link>
 
                   <Link
                     className={desktopNavLinkClass}
@@ -151,6 +158,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
               <MobileMenu
                 labels={{
                   about: labels.about,
+                  portfolio: labels.portfolio,
                   closeMenu: labels.closeMenu,
                   contact: labels.contact,
                   mobileNavigation: labels.mobileNavigation,

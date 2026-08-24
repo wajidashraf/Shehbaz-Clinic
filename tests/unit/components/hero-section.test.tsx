@@ -3,6 +3,21 @@ import { describe, expect, it } from "vitest";
 import { HeroSection } from "@/components/layout/HeroSection";
 
 describe("HeroSection", () => {
+  it("hides the eyebrow and centers the title and description only on mobile", () => {
+    render(<HeroSection locale="en" />);
+
+    expect(
+      screen.getByText("Thoughtful dental care in Samundri"),
+    ).toHaveClass("hidden", "sm:inline-flex");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveClass(
+      "text-center",
+      "sm:text-left",
+    );
+    expect(
+      screen.getByText(/We deliver personalized dental treatments/),
+    ).toHaveClass("text-center", "sm:text-left");
+  });
+
   it("renders complete local English hero copy with booking, call, and image actions", () => {
     render(<HeroSection locale="en" />);
 

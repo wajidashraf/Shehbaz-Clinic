@@ -68,24 +68,28 @@ export function FeaturedDoctorSection({
 
           {/* Content */}
           <div className="flex min-w-0 flex-col justify-center px-2 py-7 text-white sm:px-4 sm:py-8 md:px-5 md:py-9 lg:px-4 lg:py-8 xl:px-6 xl:py-10">
-            {/* Doctor Role */}
-            {title ? (
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[var(--aqua)] sm:text-[11px] md:text-xs">
-                {title}
-              </p>
-            ) : null}
+            <div
+              className={`text-center ${locale === "ur" ? "sm:text-right" : "sm:text-left"}`}
+            >
+              {/* Doctor Role */}
+              {title ? (
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[var(--aqua)] sm:text-[11px] md:text-xs">
+                  {title}
+                </p>
+              ) : null}
 
-            {/* Name */}
-            <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-[-0.025em] text-white sm:text-3xl lg:text-[2.15rem] xl:text-[2.35rem]">
-              {name}
-            </h2>
+              {/* Name */}
+              <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-[-0.025em] text-white sm:text-3xl lg:text-[2.15rem] xl:text-[2.35rem]">
+                {name}
+              </h2>
 
-            {/* Qualification */}
-            {qualification ? (
-              <p className="mt-2 text-sm font-bold leading-5 text-white/80 sm:text-base sm:leading-6 lg:text-[17px]">
-                {qualification}
-              </p>
-            ) : null}
+              {/* Qualification */}
+              {qualification ? (
+                <p className="mt-2 text-sm font-bold leading-5 text-white/80 sm:text-base sm:leading-6 lg:text-[17px]">
+                  {qualification}
+                </p>
+              ) : null}
+            </div>
 
             {/* Registration + Experience */}
             <div className="mt-5 divide-y divide-white/12 border-y border-white/12 sm:mt-6">

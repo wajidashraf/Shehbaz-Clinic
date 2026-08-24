@@ -17,7 +17,7 @@ export function UrgentHelpSection({ labels }: UrgentHelpSectionProps) {
   return (
     <section className="border-y border-red-100 bg-red-50/70 py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl text-center sm:text-start">
           <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[var(--danger)]">
             {labels.eyebrow}
           </p>

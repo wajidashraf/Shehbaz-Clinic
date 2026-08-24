@@ -166,7 +166,7 @@ export function TestimonialsSection({ locale }: { locale: Locale }) {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="grid gap-9 lg:grid-cols-[420px_minmax(0,1fr)] lg:items-center lg:gap-12">
           {/* LEFT REVIEW SUMMARY */}
-          <div className="max-w-[420px]">
+          <div className="mx-auto max-w-[420px] text-center sm:mx-0 sm:text-start">
             <h2
               className="text-2xl font-extrabold leading-tight text-[var(--primary-ink)] sm:text-3xl lg:text-[2.15rem]"
               id="reviews-heading"
@@ -174,7 +174,7 @@ export function TestimonialsSection({ locale }: { locale: Locale }) {
               {content.heading}
             </h2>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
               <StarRating rating={5} label={content.overallRatingLabel} />
 
               <p className="text-2xl font-extrabold text-[var(--primary-ink)]">
@@ -182,7 +182,7 @@ export function TestimonialsSection({ locale }: { locale: Locale }) {
               </p>
             </div>
 
-            <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--muted-text)] sm:text-base">
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[var(--muted-text)] sm:mx-0 sm:text-base">
               {content.summary}
             </p>
 

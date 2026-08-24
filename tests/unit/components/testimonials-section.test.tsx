@@ -4,6 +4,14 @@ import { TestimonialsSection } from "@/components/layout/testimonials-section";
 import { clinicConfig } from "@/config/public-config";
 
 describe("TestimonialsSection", () => {
+  it("centers its summary heading block only on mobile", () => {
+    render(<TestimonialsSection locale="en" />);
+
+    expect(
+      screen.getByRole("heading", { name: "Patient Reviews" }).parentElement,
+    ).toHaveClass("text-center", "sm:text-start");
+  });
+
   it("renders English reviews at the approved homepage anchor", () => {
     render(<TestimonialsSection locale="en" />);
 

@@ -80,7 +80,9 @@ export function AboutSection({ locale }: AboutSectionProps) {
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className={isRtl ? "text-right" : "text-left"}>
+        <div
+          className={`text-center ${isRtl ? "sm:text-right" : "sm:text-left"}`}
+        >
           {/* Since 1988 */}
           <div
             className={`

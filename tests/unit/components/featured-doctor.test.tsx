@@ -4,6 +4,17 @@ import { FeaturedDoctorSection } from "@/components/content/featured-doctor-sect
 import { featuredHomepageDentist } from "@/content/homepage-content";
 
 describe("FeaturedDoctorSection", () => {
+  it("centers the dentist heading block only on mobile", () => {
+    render(
+      <FeaturedDoctorSection doctor={featuredHomepageDentist} locale="en" />,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Dr. Sobia Zulfiqar" })
+        .parentElement,
+    ).toHaveClass("text-center", "sm:text-left");
+  });
+
   it("renders Dr. Sobia's local AVIF portrait at the dentist anchor", () => {
     render(
       <FeaturedDoctorSection doctor={featuredHomepageDentist} locale="en" />,

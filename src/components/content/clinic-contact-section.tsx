@@ -1,4 +1,3 @@
-import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { clinicConfig } from "@/config/public-config";
 import type { Locale } from "@/i18n/config";
@@ -50,37 +49,40 @@ const details = [
   },
 ] as const;
 
-export function ClinicContactSection({
-  labels,
-  locale,
-}: ClinicContactSectionProps) {
+export function ClinicContactSection({ labels }: ClinicContactSectionProps) {
   const phoneHref = clinicConfig.phoneHref;
   const landlineHref = clinicConfig.landlineHref;
 
   return (
     <section
-      className="relative scroll-mt-28 overflow-hidden bg-[var(--primary-ink)] py-20 text-white sm:py-24 lg:py-28"
       id="contact"
+      className="relative scroll-mt-28 overflow-hidden bg-[var(--primary-ink)] py-14 text-white sm:py-16 lg:py-20"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -start-56 top-0 size-[34rem] rounded-full bg-[var(--teal)]/25 blur-3xl"
       />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -end-40 bottom-0 size-[30rem] rounded-full bg-cyan-300/10 blur-3xl"
       />
+
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="max-w-4xl [&_h2]:text-white [&_p]:text-white/75">
+        {/* Section Heading */}
+        <div className="max-w-3xl [&_h2]:text-white [&_p]:text-white/75">
           <SectionHeading
             description={labels.description}
-            eyebrow={labels.eyebrow}
+            eyebrow=""
             title={labels.title}
           />
         </div>
-        <div className="mt-10 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
-          <div>
-            <dl className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+
+        {/* Content + Map */}
+        <div className="mt-8 grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-14">
+          {/* LEFT CONTACT CONTENT */}
+          <div className="min-w-0">
+            <dl className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-1 lg:gap-5">
               {details.map((item) => {
                 const label =
                   item.key === "phone"
@@ -88,18 +90,21 @@ export function ClinicContactSection({
                     : item.key === "address"
                       ? labels.addressLabel
                       : labels.hoursLabel;
+
                 const value =
                   item.key === "phone"
                     ? clinicConfig.phone
                     : item.key === "address"
                       ? labels.address
                       : `${clinicConfig.openingHours.display} · ${labels.daily}`;
+
                 return (
                   <div
-                    className={`flex min-w-0 items-start gap-4 rounded-lg border border-white/15 bg-white/[0.07] p-4 backdrop-blur-sm ${item.key === "address" ? "sm:col-span-2 lg:col-span-1" : ""}`}
                     key={item.key}
+                    className="flex min-w-0 items-start gap-3 py-1"
                   >
-                    <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-white/10 text-cyan-200">
+                    {/* Icon */}
+                    <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-white/10 text-[var(--aqua)] sm:size-11">
                       <svg
                         aria-hidden="true"
                         className="size-5"
@@ -113,22 +118,28 @@ export function ClinicContactSection({
                         {item.icon}
                       </svg>
                     </span>
-                    <div className="min-w-0">
-                      <dt className="text-xs font-bold uppercase tracking-[0.1em] text-cyan-200">
+
+                    {/* Text */}
+                    <div className="min-w-0 pt-0.5">
+                      <dt className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[var(--aqua)] sm:text-[11px]">
                         {label}
                       </dt>
-                      <dd className="mt-1 text-sm font-semibold leading-6 text-white sm:text-base">
+
+                      <dd className="mt-1 text-sm font-semibold leading-5 text-white sm:text-[15px] sm:leading-6">
                         {item.key === "phone" ? (
-                          <span className="flex flex-col gap-1">
+                          <span className="flex flex-col gap-0.5">
                             <a
-                              className="transition-colors duration-300 hover:text-cyan-200"
+                              dir="ltr"
                               href={phoneHref}
+                              className="transition-colors duration-300 hover:text-[var(--aqua)]"
                             >
                               <bdi>{value}</bdi>
                             </a>
+
                             <a
-                              className="transition-colors duration-300 hover:text-cyan-200"
+                              dir="ltr"
                               href={landlineHref}
+                              className="text-xs font-medium text-white/65 transition-colors duration-300 hover:text-[var(--aqua)] sm:text-sm"
                             >
                               <bdi>{clinicConfig.landline}</bdi>
                             </a>
@@ -142,27 +153,13 @@ export function ClinicContactSection({
                 );
               })}
             </dl>
-            <div className="mt-7 flex flex-col gap-3 min-[390px]:flex-row min-[390px]:flex-wrap">
-              <ButtonLink
-                className="w-full min-[390px]:w-auto"
-                href={`/${locale}/book`}
-              >
-                {labels.book}
-              </ButtonLink>
-              <ButtonLink
-                className="w-full border border-white/25 text-white hover:border-white/50 hover:bg-white/10 hover:text-white min-[390px]:w-auto"
-                external
-                href={clinicConfig.mapsUrl}
-                variant="ghost"
-              >
-                {labels.directions}
-              </ButtonLink>
-            </div>
           </div>
-          <div className="overflow-hidden rounded-lg border border-white/15 bg-white/10 p-2 shadow-[0_30px_80px_-34px_rgba(0,0,0,0.65)] backdrop-blur-sm">
+
+          {/* RIGHT GOOGLE MAP */}
+          <div className="overflow-hidden rounded-xl border border-white/15 bg-white/10 p-2 shadow-[0_30px_80px_-34px_rgba(0,0,0,0.65)] backdrop-blur-sm">
             <iframe
               allowFullScreen
-              className="h-[23rem] w-full rounded-lg border-0 bg-[var(--aqua-soft)] sm:h-[30rem]"
+              className="h-[20rem] w-full rounded-lg border-0 bg-[var(--aqua-soft)] sm:h-[24rem] md:h-[26rem] lg:h-[25rem]"
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
               src={mapEmbedUrl}

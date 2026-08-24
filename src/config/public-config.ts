@@ -38,8 +38,7 @@ export const clinicConfig = {
 
   email: null,
 
-  mapsUrl:
-    "https://www.google.com/maps/place/Shahbaz+Dental+Clinic/@31.0613673,72.9608833,17z",
+  mapsUrl: "https://maps.app.goo.gl/L3pRisdzNg4QYJ8e9",
 
   openingHours: {
     display: "9:00 AM – 8:00 PM",

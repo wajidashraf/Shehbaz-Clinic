@@ -111,6 +111,7 @@ export default async function LocaleLayout({
               services: navigation("services"),
               theDentist: navigation("theDentist"),
               reviews: navigation("reviews"),
+              portfolio: navigation("portfolio"),
               contact: navigation("contact"),
               book: navigation("book"),
               call: navigation("call"),

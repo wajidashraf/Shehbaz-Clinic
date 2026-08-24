@@ -141,8 +141,8 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
         bottom-[calc(5.75rem+env(safe-area-inset-bottom))]
         z-[60]
         pointer-events-none
-
-        flex flex-col
+hidden
+    md:flex flex-col
         items-end
         gap-3
 

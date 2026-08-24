@@ -57,7 +57,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
         <div className={isRtl ? "text-right" : "text-left"}>
           <p
             className={`
-              inline-flex w-fit items-center gap-2 rounded-full
+              hidden w-fit items-center gap-2 rounded-full sm:inline-flex
               bg-[#dfeaf7] px-5 py-3 text-[13px] font-extrabold
               text-[#1976d2] shadow-sm
               ${isRtl ? "leading-6" : "uppercase tracking-[0.01em]"}
@@ -66,14 +66,15 @@ export function HeroSection({ locale }: HeroSectionProps) {
             {content.eyebrow}
           </p>
 
-          <div className="mt-8">
+          <div className="mt-0 sm:mt-8">
             <h1
               className={`
                 text-[clamp(2.2rem,6vw,3.75rem)]
                 font-extrabold leading-[1.06]
                 tracking-[-0.04em]
+                text-center
                 text-[#0b4b85]
-                ${isRtl ? "tracking-normal" : ""}
+                ${isRtl ? "tracking-normal sm:text-right" : "sm:text-left"}
               `}
             >
               <span className="block">{content.titlePrimary}</span>{" "}
@@ -84,13 +85,14 @@ export function HeroSection({ locale }: HeroSectionProps) {
           </div>
 
           <p
-            className="
-              mt-7 max-w-[580px]
+            className={`
+              mx-auto mt-7 max-w-[580px]
+              text-center sm:mx-0 ${isRtl ? "sm:text-right" : "sm:text-left"}
               text-lg leading-[1.75]
               text-[#4f647b]
               sm:text-[1.28rem]
               lg:text-lg lg:leading-8
-            "
+            `}
           >
             {content.description}
           </p>

@@ -14,6 +14,7 @@ import { ClinicHighlights } from "@/components/ui/ClinicHighlights";
 import { AboutSection } from "@/components/ui/about-section";
 import { PatientTrustSection } from "@/components/ui/patient-trust-section";
 import { FaqSection } from "@/components/ui/faq-section";
+import { PortfolioSection } from "@/components/ui/PortfolioSection";
 export const dynamic = "force-static";
 
 type HomePageProps = { params: Promise<{ locale: Locale }> };
@@ -29,7 +30,6 @@ export default async function HomePage({ params }: HomePageProps) {
       <ClinicHighlights locale={locale} />
       <AboutSection locale={locale} />
 
-      <FeaturedDoctorSection doctor={featuredHomepageDentist} locale={locale} />
 
       {/* Services carusel */}
       <section
@@ -56,9 +56,11 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
         </div>
       </section>
+      <FeaturedDoctorSection doctor={featuredHomepageDentist} locale={locale} />
+
 
       <TestimonialsSection locale={locale} />
-
+    <PortfolioSection locale={locale} />
       <PatientTrustSection locale={locale} />
       <FaqSection locale={locale} />
 

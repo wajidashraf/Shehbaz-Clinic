@@ -20,6 +20,7 @@ const headerLabels = {
   mobileNavigation: "Mobile navigation",
   openMenu: "Open menu",
   primaryNavigation: "Primary navigation",
+  portfolio: "Portfolio",
   quickActions: "Quick actions",
   reviews: "Reviews",
   services: "Services",

@@ -16,6 +16,7 @@ const englishLabels = {
   mobileNavigation: "Mobile navigation",
   openMenu: "Open menu",
   primaryNavigation: "Primary navigation",
+  portfolio: "Portfolio",
   quickActions: "Quick actions",
   reviews: "Reviews",
   services: "Services",
@@ -38,14 +39,16 @@ describe("SiteHeader", () => {
       "Services",
       "The Dentist",
       "Reviews",
+      "Portfolio",
       "Contact",
     ]);
-    expect(links).toHaveLength(5);
-    expect(links.slice(0, 5).map((link) => link.getAttribute("href"))).toEqual([
+    expect(links).toHaveLength(6);
+    expect(links.slice(0, 6).map((link) => link.getAttribute("href"))).toEqual([
       "/en#about",
       "/en#services",
       "/en#dentist",
       "/en#reviews",
+      "/en#portfolio",
       "/en#contact",
     ]);
     expect(
