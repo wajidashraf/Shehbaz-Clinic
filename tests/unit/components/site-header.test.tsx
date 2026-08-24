@@ -26,6 +26,18 @@ const englishLabels = {
 };
 
 describe("SiteHeader", () => {
+  it("shows full navigation only at the large breakpoint", () => {
+    render(<SiteHeader labels={englishLabels} locale="en" />);
+
+    const navigation = screen.getByRole("navigation", {
+      name: "Primary navigation",
+    });
+    expect(navigation.firstElementChild).toHaveClass(
+      "hidden",
+      "lg:flex",
+    );
+  });
+
   it("renders the exact ordered desktop anchors and booking destination", () => {
     render(<SiteHeader labels={englishLabels} locale="en" />);
 

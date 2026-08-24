@@ -105,13 +105,13 @@ export default async function LocaleLayout({
           <SiteHeader
             labels={{
               about: navigation("about"),
+              portfolio: navigation("portfolio"),
               clinicName: navigation("clinicName"),
               primaryNavigation: navigation("primaryNavigation"),
               home: navigation("home"),
               services: navigation("services"),
               theDentist: navigation("theDentist"),
               reviews: navigation("reviews"),
-              portfolio: navigation("portfolio"),
               contact: navigation("contact"),
               book: navigation("book"),
               call: navigation("call"),

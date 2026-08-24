@@ -86,9 +86,9 @@ export function AboutSection({ locale }: AboutSectionProps) {
           {/* Since 1988 */}
           <div
             className={`
-            mb-5 inline-flex items-center gap-3
-            rounded-full
-            border-4 border-[var(--teal)]
+            mb-5 hidden lg:inline-flex items-center gap-3
+            rounded-xl
+            border-3 border-[var(--teal)]
             bg-white
             px-4 py-1.5
             shadow-[0_12px_28px_-18px_rgba(7,48,71,0.35)]

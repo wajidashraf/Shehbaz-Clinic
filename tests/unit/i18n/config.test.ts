@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getDirection, getDocumentLanguageAttributes, isLocale } from "@/i18n/config";
+import urduMessages from "@/messages/ur.json";
 
 describe("locale configuration", () => {
   it("recognizes only the supported languages", () => {
@@ -20,5 +21,9 @@ describe("locale configuration", () => {
       lang: "ur",
       translate: "no",
     });
+  });
+
+  it("uses the approved Urdu clinic-hours label", () => {
+    expect(urduMessages.Navigation.openDaily).toBe("اوقاتِ کار");
   });
 });

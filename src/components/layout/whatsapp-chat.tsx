@@ -24,7 +24,11 @@ type WhatsAppChatProps = {
   };
 };
 
-function WhatsAppIcon({ className = "size-6" }: { className?: string }) {
+function WhatsAppIcon({
+  className = "size-6",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       aria-hidden="true"
@@ -40,7 +44,12 @@ function WhatsAppIcon({ className = "size-6" }: { className?: string }) {
 
 function CloseIcon() {
   return (
-    <svg aria-hidden="true" className="size-5" fill="none" viewBox="0 0 24 24">
+    <svg
+      aria-hidden="true"
+      className="size-5"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
       <path
         d="m6 6 12 12M18 6 6 18"
         stroke="currentColor"
@@ -76,7 +85,10 @@ function SendIcon({ rtl }: { rtl: boolean }) {
   );
 }
 
-export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
+export function WhatsAppChat({
+  locale,
+  labels,
+}: WhatsAppChatProps) {
   const isRtl = locale === "ur";
   const headingId = useId();
 
@@ -94,7 +106,7 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
   const whatsappNumber = clinicConfig.whatsapp.number;
 
   /*
-   * Close the chat with Escape for keyboard users.
+   * Close chat when Escape is pressed.
    */
   useEffect(() => {
     if (!open) {
@@ -135,29 +147,40 @@ export function WhatsAppChat({ locale, labels }: WhatsAppChatProps) {
   }
 
   return (
+    /*
+     * IMPORTANT:
+     * This wrapper is always LTR so the physical bottom-right
+     * positioning cannot be affected by the page RTL direction.
+     *
+     * hidden       = hidden on mobile
+     * md:flex      = visible from md screens and above
+     */
     <div
+      dir="ltr"
       className={`
-        fixed right-3
-        bottom-[calc(5.75rem+env(safe-area-inset-bottom))]
+        fixed
+        bottom-6
+        right-6
+        left-auto
         z-[60]
+
+        hidden
+        md:flex
+
         pointer-events-none
-hidden
-    md:flex flex-col
+        flex-col
         items-end
         gap-3
 
-        md:right-6
-        md:bottom-6
-
         ${isRtl ? "font-[inherit]" : ""}
       `}
-      dir={isRtl ? "rtl" : "ltr"}
     >
       {/* =====================================================
           CHAT WINDOW
       ===================================================== */}
 
       <div
+        dir={isRtl ? "rtl" : "ltr"}
         aria-hidden={!open}
         aria-labelledby={headingId}
         role="dialog"
@@ -189,8 +212,20 @@ hidden
 
           ${
             open
-              ? "pointer-events-auto visible translate-y-0 scale-100 opacity-100"
-              : "pointer-events-none invisible translate-y-3 scale-[0.97] opacity-0"
+              ? `
+                  pointer-events-auto
+                  visible
+                  translate-y-0
+                  scale-100
+                  opacity-100
+                `
+              : `
+                  pointer-events-none
+                  invisible
+                  translate-y-3
+                  scale-[0.97]
+                  opacity-0
+                `
           }
         `}
       >
@@ -206,15 +241,18 @@ hidden
 
             bg-[linear-gradient(135deg,var(--primary-ink),var(--teal-dark))]
 
-            px-5 py-4
+            px-5
+            py-4
             text-white
           "
         >
+          {/* Decorative glow */}
           <div
             aria-hidden="true"
             className="
               absolute
-              -end-10 -top-12
+              -end-10
+              -top-12
 
               size-28
               rounded-full
@@ -235,7 +273,8 @@ hidden
           >
             <div
               className="
-                flex min-w-0
+                flex
+                min-w-0
                 items-center
                 gap-3
               "
@@ -243,7 +282,8 @@ hidden
               {/* WhatsApp logo */}
               <span
                 className="
-                  grid size-11
+                  grid
+                  size-11
                   shrink-0
                   place-items-center
 
@@ -258,9 +298,10 @@ hidden
                 <WhatsAppIcon className="size-[26px]" />
               </span>
 
-              {/* Clinic info */}
+              {/* Clinic information */}
               <div className="min-w-0">
                 <h2
+                  id={headingId}
                   className="
                     truncate
                     text-sm
@@ -268,7 +309,6 @@ hidden
                     tracking-[-0.015em]
                     text-white
                   "
-                  id={headingId}
                 >
                   {clinicConfig.name}
                 </h2>
@@ -276,7 +316,8 @@ hidden
                 <p
                   className="
                     mt-1
-                    flex items-center
+                    flex
+                    items-center
                     gap-1.5
                     text-xs
                     text-white/70
@@ -297,11 +338,14 @@ hidden
               </div>
             </div>
 
-            {/* Close */}
+            {/* Close button */}
             <button
+              type="button"
               aria-label={labels.close}
+              onClick={() => setOpen(false)}
               className="
-                grid size-9
+                grid
+                size-9
                 shrink-0
                 place-items-center
 
@@ -322,8 +366,6 @@ hidden
                 focus-visible:ring-2
                 focus-visible:ring-white
               "
-              onClick={() => setOpen(false)}
-              type="button"
             >
               <CloseIcon />
             </button>
@@ -341,15 +383,16 @@ hidden
             overflow-y-auto
             overscroll-contain
 
-            px-4 py-4
+            px-4
+            py-4
 
             sm:px-5
 
-            [scrollbar-width:thin]
             [scrollbar-color:rgba(7,48,71,0.25)_transparent]
+            [scrollbar-width:thin]
           "
         >
-          {/* Welcome */}
+          {/* Welcome message */}
           <div
             className="
               rounded-2xl
@@ -359,7 +402,8 @@ hidden
 
               bg-[var(--aqua-soft)]
 
-              px-4 py-3
+              px-4
+              py-3
             "
           >
             <p
@@ -393,7 +437,8 @@ hidden
             <div
               className="
                 mt-2.5
-                flex flex-wrap
+                flex
+                flex-wrap
                 gap-2
               "
             >
@@ -402,6 +447,11 @@ hidden
 
                 return (
                   <button
+                    key={question}
+                    type="button"
+                    onClick={() =>
+                      selectQuickQuestion(question)
+                    }
                     className={`
                       inline-flex
                       min-h-10
@@ -410,7 +460,9 @@ hidden
                       rounded-xl
 
                       border
-                      px-3 py-2
+
+                      px-3
+                      py-2
 
                       text-start
                       text-xs
@@ -429,23 +481,20 @@ hidden
                       ${
                         selected
                           ? `
-                            border-[var(--aqua)]
-                            bg-[var(--aqua-soft)]
-                            text-[var(--teal-dark)]
-                          `
+                              border-[var(--aqua)]
+                              bg-[var(--aqua-soft)]
+                              text-[var(--teal-dark)]
+                            `
                           : `
-                            border-[var(--line)]
-                            bg-white
-                            text-[var(--primary-ink)]
+                              border-[var(--line)]
+                              bg-white
+                              text-[var(--primary-ink)]
 
-                            hover:border-[var(--aqua)]
-                            hover:bg-[var(--aqua-soft)]
-                          `
+                              hover:border-[var(--aqua)]
+                              hover:bg-[var(--aqua-soft)]
+                            `
                       }
                     `}
-                    key={question}
-                    onClick={() => selectQuickQuestion(question)}
-                    type="button"
                   >
                     {question}
                   </button>
@@ -455,23 +504,37 @@ hidden
           </div>
 
           {/* =================================================
-              MESSAGE
+              MESSAGE INPUT
           ================================================= */}
 
           <div className="mt-4">
             <label
+              htmlFor="whatsapp-message"
               className="
                 block
                 text-xs
                 font-extrabold
                 text-[var(--primary-ink)]
               "
-              htmlFor="whatsapp-message"
             >
               {labels.messageLabel}
             </label>
 
             <textarea
+              id="whatsapp-message"
+              maxLength={500}
+              value={message}
+              placeholder={labels.messagePlaceholder}
+              onChange={(event) => {
+                setMessage(event.target.value);
+
+                if (
+                  showError &&
+                  event.target.value.trim()
+                ) {
+                  setShowError(false);
+                }
+              }}
               className="
                 mt-2
                 min-h-20
@@ -486,7 +549,8 @@ hidden
 
                 bg-white
 
-                px-3.5 py-3
+                px-3.5
+                py-3
 
                 text-sm
                 leading-6
@@ -502,17 +566,6 @@ hidden
                 focus:border-[var(--aqua)]
                 focus:shadow-[0_0_0_3px_rgba(32,147,224,0.12)]
               "
-              id="whatsapp-message"
-              maxLength={500}
-              onChange={(event) => {
-                setMessage(event.target.value);
-
-                if (showError && event.target.value.trim()) {
-                  setShowError(false);
-                }
-              }}
-              placeholder={labels.messagePlaceholder}
-              value={message}
             />
 
             <div
@@ -530,10 +583,16 @@ hidden
                   min-h-4
                   text-xs
 
-                  ${showError ? "text-red-600" : "text-transparent"}
+                  ${
+                    showError
+                      ? "text-red-600"
+                      : "text-transparent"
+                  }
                 `}
               >
-                {showError ? labels.emptyMessage : "\u00A0"}
+                {showError
+                  ? labels.emptyMessage
+                  : "\u00A0"}
               </p>
 
               <span
@@ -550,7 +609,7 @@ hidden
         </div>
 
         {/* ===================================================
-            FIXED SEND AREA
+            SEND AREA
         =================================================== */}
 
         <div
@@ -575,6 +634,9 @@ hidden
           "
         >
           <button
+            type="button"
+            disabled={!whatsappNumber}
+            onClick={sendMessage}
             className="
               inline-flex
               min-h-12
@@ -611,9 +673,6 @@ hidden
               disabled:cursor-not-allowed
               disabled:opacity-50
             "
-            disabled={!whatsappNumber}
-            onClick={sendMessage}
-            type="button"
           >
             <WhatsAppIcon className="size-5" />
 
@@ -629,8 +688,12 @@ hidden
       ===================================================== */}
 
       <button
+        type="button"
         aria-expanded={open}
         aria-label={open ? labels.close : labels.open}
+        onClick={() =>
+          setOpen((current) => !current)
+        }
         className="
           group
           relative
@@ -665,13 +728,12 @@ hidden
 
           md:size-15
         "
-        onClick={() => setOpen((current) => !current)}
-        type="button"
       >
         <span
           aria-hidden="true"
           className="
-            absolute inset-0
+            absolute
+            inset-0
 
             rounded-2xl
 
@@ -681,7 +743,11 @@ hidden
           "
         />
 
-        {open ? <CloseIcon /> : <WhatsAppIcon className="size-7" />}
+        {open ? (
+          <CloseIcon />
+        ) : (
+          <WhatsAppIcon className="size-7" />
+        )}
       </button>
     </div>
   );

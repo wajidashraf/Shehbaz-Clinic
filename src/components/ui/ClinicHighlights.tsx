@@ -47,7 +47,7 @@ const clinicHighlightsCopy = {
       {
         icon: HiOutlineClock,
         title: "صبح 9 بجے - رات 8 بجے",
-        description: "روزانہ کھلا",
+        description: "اوقاتِ کار",
       },
       {
         icon: HiOutlineMapPin,

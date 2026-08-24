@@ -96,7 +96,7 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
             {/* Navigation */}
             <div className="flex shrink-0 items-center gap-1.5 lg:gap-3">
               <nav aria-label={labels.primaryNavigation}>
-                <div className="hidden items-center md:flex">
+                <div className="hidden items-center lg:flex">
                   <Link
                     className={desktopNavLinkClass}
                     href={`${localeRoot}#about`}

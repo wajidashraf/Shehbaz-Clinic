@@ -30,6 +30,14 @@ const urduLabels = {
 };
 
 describe("MobileMenu", () => {
+  it("keeps the menu trigger visible until the large breakpoint", () => {
+    render(<MobileMenu labels={englishLabels} locale="en" />);
+
+    expect(
+      screen.getByRole("button", { name: "Open menu" }).parentElement,
+    ).toHaveClass("lg:hidden");
+  });
+
   it("opens a labeled panel containing the Portfolio homepage anchor", () => {
     render(<MobileMenu labels={englishLabels} locale="en" />);
 

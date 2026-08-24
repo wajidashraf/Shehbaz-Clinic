@@ -131,7 +131,7 @@ describe("homepage motion contracts", () => {
     );
   });
 
-  it("keeps chat actions fixed while the mobile launcher remains above quick actions", () => {
+  it("keeps chat actions fixed while showing the launcher from tablet widths", () => {
     render(<WhatsAppChat labels={chatLabels} locale="en" />);
 
     const launcher = screen.getByRole("button", { name: "Open chat" });
@@ -144,8 +144,10 @@ describe("homepage motion contracts", () => {
     );
     expect(launcherRegion).toHaveClass(
       "fixed",
-      "bottom-[calc(5.75rem+env(safe-area-inset-bottom))]",
-      "md:bottom-6",
+      "bottom-6",
+      "right-6",
+      "hidden",
+      "md:flex",
     );
 
     fireEvent.click(launcher);
