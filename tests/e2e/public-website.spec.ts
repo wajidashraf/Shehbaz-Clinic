@@ -127,7 +127,12 @@ for (const site of locales) {
     const navigation = page.getByRole("navigation", {
       name: site.primaryNavigation,
     });
-    await expect(navigation.getByRole("link")).toHaveText(site.navigation);
+    const expectedNavigation = [
+      ...site.navigation.slice(0, 4),
+      site.locale === "en" ? "Portfolio" : "پورٹ فولیو",
+      ...site.navigation.slice(4),
+    ];
+    await expect(navigation.getByRole("link")).toHaveText(expectedNavigation);
     await expect(
       navigation.getByRole("link", { name: /Home|Dentists/i }),
     ).toHaveCount(0);
@@ -199,8 +204,12 @@ test("mobile controls are topmost and accept real clicks at 320px and 375px", as
     await dialog.getByRole("button", { name: "Close WhatsApp chat" }).click();
 
     await quickBook.click();
-    await expect(page).toHaveURL(/\/en\/book$/);
-    await visitHomepage(page, "en");
+    await expect(
+      page.getByRole("dialog", { name: "Book Appointment" }),
+    ).toBeVisible();
+    await page
+      .getByRole("button", { name: "Close appointment form" })
+      .click();
     await footerAbout.click();
     await expect(page).toHaveURL(/\/en#about$/);
   }
@@ -326,83 +335,45 @@ test("public contact, booking, external-link, robots and sitemap contracts are c
   expect(await sitemap.text()).toContain("/ur");
 });
 
-test("the English guest booking confirms an appointment", async ({ page }) => {
-  const availabilityRequests: URL[] = [];
-  const appointmentRequests: URL[] = [];
-  await page.route("**/api/v1/availability?**", (route) => {
-    availabilityRequests.push(new URL(route.request().url()));
-    return route.fulfill({ json: { slots: [{ time: "10:00" }] } });
-  });
-  await page.route("**/api/v1/appointments", (route) => {
-    appointmentRequests.push(new URL(route.request().url()));
-    return route.fulfill({
-      status: 201,
-      json: { publicReference: "SDC-2026-EN1234", status: "confirmed" },
-    });
-  });
+test("the English booking request opens WhatsApp with entered details", async ({ page }) => {
   await page.goto("/en/book?service=consultation&dentist=no-preference");
+  await expect(page).toHaveURL(/\/en\?booking=1&service=consultation$/);
+  const dialog = page.getByRole("dialog", { name: "Book Appointment" });
+  await expect(dialog).toBeVisible();
+  await page.evaluate(() => {
+    window.open = (url) => {
+      document.body.dataset.openedWhatsApp = String(url);
+      return null;
+    };
+  });
   await page.getByLabel("Full name").fill("Ali Khan");
   await page.getByLabel("Mobile number").fill("+92 300 0000000");
-  await page.getByLabel("Appointment date").fill("2026-09-01");
-  await page.getByLabel("Available time").selectOption("10:00");
-  await page
-    .getByRole("checkbox", { name: /I consent to Shahbaz Dental Clinic/ })
-    .check();
-  await page.getByRole("button", { name: "Confirm appointment" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Your appointment is confirmed" }),
-  ).toBeVisible();
-  await expect(page.getByText("SDC-2026-EN1234")).toBeVisible();
-  expect(availabilityRequests).toHaveLength(1);
-  expect(availabilityRequests[0]).toMatchObject({
-    origin: new URL(page.url()).origin,
-    pathname: "/api/v1/availability",
-    search: "?dentistId=no-preference&dateKey=2026-09-01",
-  });
-  expect(appointmentRequests).toHaveLength(1);
-  expect(appointmentRequests[0]).toMatchObject({
-    origin: new URL(page.url()).origin,
-    pathname: "/api/v1/appointments",
-    search: "",
-  });
+  await page.getByLabel("Preferred date").fill("2026-09-01");
+  await page.getByLabel("Email (optional)").fill("ali@example.com");
+  await page.getByRole("button", { name: "Send Appointment Request" }).click();
+  const openedUrl = await page.locator("body").getAttribute("data-opened-whats-app");
+  expect(openedUrl).toContain("https://wa.me/923443420001");
+  expect(decodeURIComponent(openedUrl ?? "")).toContain("Ali Khan");
 });
 
-test("the Urdu guest booking confirms an appointment in RTL", async ({
+test("the Urdu booking request opens WhatsApp in RTL", async ({
   page,
 }) => {
-  const availabilityRequests: URL[] = [];
-  const appointmentRequests: URL[] = [];
-  await page.route("**/api/v1/availability?**", (route) => {
-    availabilityRequests.push(new URL(route.request().url()));
-    return route.fulfill({ json: { slots: [{ time: "10:00" }] } });
-  });
-  await page.route("**/api/v1/appointments", (route) => {
-    appointmentRequests.push(new URL(route.request().url()));
-    return route.fulfill({
-      status: 201,
-      json: { publicReference: "SDC-2026-UR1234", status: "confirmed" },
-    });
-  });
   await page.goto("/ur/book?service=consultation&dentist=no-preference");
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-  await page.locator("#booking-name").fill("Ali Khan");
-  await page.locator("#booking-mobile").fill("0300 0000000");
-  await page.locator("#booking-date").fill("2026-09-01");
-  await page.locator("#booking-time").selectOption("10:00");
-  await page.locator('input[type="checkbox"]').check();
-  await page.locator('button[type="submit"]').click();
-  await expect(page.locator("#booking-confirmation-title")).toBeVisible();
-  await expect(page.getByText("SDC-2026-UR1234")).toBeVisible();
-  expect(availabilityRequests).toHaveLength(1);
-  expect(availabilityRequests[0]).toMatchObject({
-    origin: new URL(page.url()).origin,
-    pathname: "/api/v1/availability",
-    search: "?dentistId=no-preference&dateKey=2026-09-01",
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toHaveAttribute("dir", "rtl");
+  await page.evaluate(() => {
+    window.open = (url) => {
+      document.body.dataset.openedWhatsApp = String(url);
+      return null;
+    };
   });
-  expect(appointmentRequests).toHaveLength(1);
-  expect(appointmentRequests[0]).toMatchObject({
-    origin: new URL(page.url()).origin,
-    pathname: "/api/v1/appointments",
-    search: "",
-  });
+  await dialog.locator('input[autocomplete="name"]').fill("Ali Khan");
+  await dialog.locator('input[autocomplete="tel"]').fill("0300 0000000");
+  await dialog.locator('input[type="date"]').fill("2026-09-01");
+  await dialog.locator('button[type="submit"]').click();
+  const openedUrl = await page.locator("body").getAttribute("data-opened-whats-app");
+  expect(openedUrl).toContain("https://wa.me/923443420001");
+  expect(decodeURIComponent(openedUrl ?? "")).toContain("Ali Khan");
 });

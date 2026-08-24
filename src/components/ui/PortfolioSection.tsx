@@ -92,7 +92,7 @@ export function PortfolioSection({ locale }: PortfolioSectionProps) {
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-12">
+        <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
           <p
             className="
               mb-3

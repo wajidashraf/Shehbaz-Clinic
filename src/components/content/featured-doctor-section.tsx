@@ -24,6 +24,7 @@ export function FeaturedDoctorSection({
     locale === "ur"
       ? {
           registration: "رجسٹریشن",
+          meetDentist: "اپنے ڈینٹسٹ سے ملیں",
           experience: "تجربہ",
           years: "سال",
           practicingSince: "پریکٹس کا آغاز",
@@ -31,6 +32,7 @@ export function FeaturedDoctorSection({
         }
       : {
           registration: "Registration",
+          meetDentist: "Meet Your Dentist",
           experience: "Experience",
           years: "Years",
           practicingSince: "Practicing since",
@@ -48,6 +50,21 @@ export function FeaturedDoctorSection({
       data-testid="featured-doctor-section"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p
+          className={`
+              mb-3
+              text-sm
+              text-center
+              font-semibold
+              uppercase
+              py-3
+              tracking-[0.18em]
+              text-[var(--teal)]
+              ${locale === "ur" ? "sm:text-right" : "sm:text-left"}
+            `}
+        >
+          {labels.meetDentist}
+        </p>
         <article className="grid overflow-hidden rounded-[1.5rem] border border-[var(--teal)]/35 bg-[var(--primary-ink)] p-3 shadow-[0_32px_80px_-44px_var(--primary-ink)] sm:rounded-[1.75rem] sm:p-4 md:p-5 lg:grid-cols-[minmax(320px,400px)_minmax(0,1fr)] lg:gap-7 lg:rounded-[2rem] lg:p-6 xl:grid-cols-[minmax(360px,440px)_minmax(0,1fr)] xl:gap-8">
           {/* Doctor Image */}
           <div className="relative min-h-[300px] overflow-hidden rounded-[1.25rem] border-2 border-[var(--teal-dark)] bg-[var(--aqua-light)] sm:min-h-[360px] sm:rounded-[1.5rem] md:min-h-[420px] lg:min-h-[500px] xl:min-h-[520px]">
@@ -69,7 +86,7 @@ export function FeaturedDoctorSection({
           {/* Content */}
           <div className="flex min-w-0 flex-col justify-center px-2 py-7 text-white sm:px-4 sm:py-8 md:px-5 md:py-9 lg:px-4 lg:py-8 xl:px-6 xl:py-10">
             <div
-              className={`text-center ${locale === "ur" ? "sm:text-right" : "sm:text-left"}`}
+              className={`${locale === "ur" ? "sm:text-right" : "sm:text-left"}`}
             >
               {/* Doctor Role */}
               {title ? (

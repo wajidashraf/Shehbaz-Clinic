@@ -12,6 +12,7 @@ import {
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { BookingRequestModal } from "@/components/booking/booking-request-modal";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { WhatsAppChat } from "@/components/layout/whatsapp-chat";
@@ -84,6 +85,8 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: structuredData }}
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <BookingRequestModal locale={locale} />
+
           {/* Skip to main content */}
           <a
             className="
