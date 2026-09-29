@@ -80,10 +80,6 @@ export function MobileMenu({ labels, locale }: MobileMenuProps) {
       label: labels.reviews,
     },
     {
-      href: `${localeRoot}#portfolio`,
-      label: labels.portfolio,
-    },
-    {
       href: `${localeRoot}#contact`,
       label: labels.contact,
     },

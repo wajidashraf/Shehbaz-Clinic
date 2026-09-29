@@ -38,7 +38,7 @@ describe("MobileMenu", () => {
     ).toHaveClass("lg:hidden");
   });
 
-  it("opens a labeled panel containing the Portfolio homepage anchor", () => {
+  it("opens a labeled panel without the temporarily hidden Portfolio anchor", () => {
     render(<MobileMenu labels={englishLabels} locale="en" />);
 
     const menuButton = screen.getByRole("button", { name: "Open menu" });
@@ -58,8 +58,8 @@ describe("MobileMenu", () => {
     });
     expect(menuButton).toHaveAttribute("aria-expanded", "true");
     expect(
-      within(navigation).getByRole("link", { name: "Portfolio" }),
-    ).toHaveAttribute("href", "/en#portfolio");
+      within(navigation).queryByRole("link", { name: "Portfolio" }),
+    ).not.toBeInTheDocument();
   });
 
   it("closes after an anchor is activated or Escape is pressed", () => {

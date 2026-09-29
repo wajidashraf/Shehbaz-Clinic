@@ -33,5 +33,6 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("link", { name: "Book Consultation" }),
     ).toHaveAttribute("href", "/en/book");
+    expect(document.querySelector("#portfolio")).not.toBeInTheDocument();
   });
 });
