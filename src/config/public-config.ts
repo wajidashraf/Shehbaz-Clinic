@@ -40,6 +40,11 @@ export const clinicConfig = {
 
   mapsUrl: "https://maps.app.goo.gl/L3pRisdzNg4QYJ8e9",
 
+  googleReviews: {
+    rating: 4.7,
+    total: 150,
+  },
+
   openingHours: {
     display: "9:00 AM – 8:00 PM",
     daily: true,

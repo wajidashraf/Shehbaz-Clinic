@@ -126,6 +126,12 @@ export function SiteHeader({ labels, locale }: SiteHeaderProps) {
                   </Link>
                   <Link
                     className={desktopNavLinkClass}
+                    href={`${localeRoot}#portfolio`}
+                  >
+                    {labels.portfolio}
+                  </Link>
+                  <Link
+                    className={desktopNavLinkClass}
                     href={`${localeRoot}#contact`}
                   >
                     {labels.contact}

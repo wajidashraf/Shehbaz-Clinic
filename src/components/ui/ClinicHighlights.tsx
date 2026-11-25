@@ -4,6 +4,7 @@ import {
   HiOutlineStar,
   HiOutlineUserGroup,
 } from "react-icons/hi2";
+import { clinicConfig } from "@/config/public-config";
 
 type ClinicHighlightsProps = {
   locale: "en" | "ur";
@@ -15,7 +16,7 @@ const clinicHighlightsCopy = {
     items: [
       {
         icon: HiOutlineStar,
-        title: "4.3/5 Rating",
+        title: `${clinicConfig.googleReviews.rating}/5 Rating`,
         description: "Google Verified",
       },
       {
@@ -36,7 +37,7 @@ const clinicHighlightsCopy = {
     items: [
       {
         icon: HiOutlineStar,
-        title: "4.3/5 ریٹنگ",
+        title: `${clinicConfig.googleReviews.rating}/5 ریٹنگ`,
         description: "گوگل سے تصدیق شدہ",
       },
       {

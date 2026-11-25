@@ -17,7 +17,7 @@ const heroCopy = {
     callNow: "Call now",
     imageAlt: "A bright, modern dental treatment room",
     registrationLabel: "PHC registration",
-    reviews: "44+ Google Reviews",
+    reviews: `${clinicConfig.googleReviews.total} Google Reviews`,
   },
   ur: {
     eyebrow: "سمندری میں توجہ کے ساتھ دانتوں کی نگہداشت",
@@ -29,7 +29,7 @@ const heroCopy = {
     callNow: "ابھی کال کریں",
     imageAlt: "روشن اور جدید ڈینٹل ٹریٹمنٹ روم",
     registrationLabel: "پی ایچ سی رجسٹریشن",
-    reviews: "44+ گوگل جائزے",
+    reviews: `${clinicConfig.googleReviews.total} گوگل جائزے`,
   },
 } as const;
 
@@ -230,7 +230,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
             </div>
             <div>
               <strong className="block text-lg font-extrabold leading-none text-[var(--primary-ink)]">
-                4.3 / 5
+                {clinicConfig.googleReviews.rating} / 5
               </strong>
               <span className="mt-1 block text-xs font-semibold text-[var(--muted-text)]">
                 {content.reviews}

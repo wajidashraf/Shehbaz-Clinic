@@ -2,6 +2,7 @@ import { HiStar, HiOutlineUser } from "react-icons/hi2";
 import { ButtonLink } from "@/components/ui/button-link";
 import { clinicConfig } from "@/config/public-config";
 import type { Locale } from "@/i18n/config";
+import { ReviewCarousel } from "@/components/ui/review-carousel";
 
 type HomepageReview = {
   name: string;
@@ -22,44 +23,105 @@ type ReviewSectionContent = {
 const reviewContent = {
   en: {
     heading: "Patient Reviews",
-    summary: "Based on approximately 44 reviews on Google Maps.",
+    summary: `Based on ${clinicConfig.googleReviews.total} reviews on Google Maps.`,
     action: "View All Reviews",
     googleReview: "Google Review",
-    overallRatingLabel: "4.3 out of 5 stars",
+    overallRatingLabel: `${clinicConfig.googleReviews.rating} out of 5 stars`,
     ratingLabels: { 4: "4 out of 5 stars", 5: "5 out of 5 stars" },
     reviews: [
       {
-        name: "Rana Ali",
-        rating: 4,
-        review:
-          "Doctor are very nice and well experienced in their field. Clinic is very neat and clean. Staff behaviour very satisfied.",
-      },
-      {
-        name: "Masood Ali",
+        name: "larainb Bushra",
         rating: 5,
         review:
-          "I live in New York City, but I am coming to Shahbaz Dental Clinic Samundri. My first visit was for scaling. I am very happy because my treatment is very good, the instruments are disposable, and the clinic is very neat and clean.",
+          "I am from Faisalabad and travelled to Shahbaz Dental Clinic for my orthodontic treatment. I am extremely satisfied with my overall experience. The clinic is very hygienic, well-maintained, and provides a comfortable environment for patients. Initially, I had a Class II malocclusion along with dental spacing and smile-related issues. After my braces treatment, I experienced significant improvement in my bite, moving from a Class II towards a Class I respectively. My dental spaces and smile have also improved remarkably. A special thanks to Dr. Sobia (BDS) for her excellent work, professional attitude, care, and guidance throughout my treatment. She is a very cooperative, dedicated, and skilled doctor. The treatment duration to 1.5 years.",
+      },
+      {
+        name: "Mian Usman",
+        rating: 5,
+        review:
+          "I belong to samundri I had a great experience at Shahbaz dental clinic formy rct the doctor was professional and gentle though the procedure. The was clean and hygienic and disposable kit and instrument made me feel safe and comfortable I am satisfied with treatment and I fee safe for aids and hepatitis",
+      },
+      {
+        name: "Mrs Rana",
+        rating: 5,
+        review:
+          "I was severe tooth pain, so i visited shahbaz dental clinic dr.sobia performed my rct and sacling and bridge. I am very satisfied with treatment and her professional care highly recommended",
+      },
+      {
+        name: "Rana Mudassar",
+        rating: 5,
+        review:
+          "I belong to new York city I had a great experience at shahbaz dental clinic I am sixty years old Iam satisfied my treatment just fifteen Day and completely bridge with zirconia crown and I highly recommend for dental implants",
+      },
+      {
+        name: "Ayyan Kamboh",
+        rating: 5,
+        review:
+          "My two molar remove and my teeth aigment completely I have completed my braces 1andhalf year very good experience came from438and got my fixed braces with Hollywood smile 😊 Iam satisfied with treatment and I feel safe …",
+      },
+      {
+        name: "Sairah Sairah",
+        rating: 5,
+        review:
+          "Very good experience came from the uk, and got the whitening completed with minimal pain and great results!",
+      },
+      {
+        name: "Malik Shahid",
+        rating: 5,
+        review:
+          "I had a great experience at Shahbaz dental clinic for my wisdom tooth removal the procedure was handled very well and I feel comfortable though the process Iam satisfied with the treatment and highly recommend thanks you for excellent and caring",
       },
     ],
   },
   ur: {
     heading: "مریضوں کے تاثرات",
-    summary: "گوگل میپس پر تقریباً 44 جائزوں کی بنیاد پر۔",
+    summary: `گوگل میپس پر ${clinicConfig.googleReviews.total} جائزوں کی بنیاد پر۔`,
     action: "گوگل پر تمام جائزے دیکھیں",
     googleReview: "گوگل جائزہ",
-    overallRatingLabel: "۵ میں سے ۴٫۳ ستارے",
+    overallRatingLabel: "۵ میں سے ۴٫۷ ستارے",
     ratingLabels: { 4: "۵ میں سے ۴ ستارے", 5: "۵ میں سے ۵ ستارے" },
     reviews: [
       {
-        name: "رانا علی",
-        rating: 4,
-        review: "ڈاکٹر تجربہ کار ہیں، کلینک صاف ستھرا ہے اور عملہ مددگار تھا۔",
-      },
-      {
-        name: "مسعود علی",
+        name: "لرینب بشریٰ",
         rating: 5,
         review:
-          "میں اسکیلنگ کے لیے نیویارک سے آیا اور علاج، ڈسپوزایبل آلات اور کلینک کی صفائی سے مطمئن رہا۔",
+          "میں اپنے مجموعی تجربے سے بہت مطمئن ہوں۔ کلینک صاف ستھرا اور اچھی حالت میں ہے، اور مریضوں کے لیے آرام دہ ماحول فراہم کرتا ہے۔",
+      },
+      {
+        name: "میاں عثمان",
+        rating: 5,
+        review:
+          "ڈاکٹر نے روٹ کینال کا علاج نرمی اور پیشہ ورانہ انداز سے کیا۔ کلینک صاف ستھرا تھا، اور ڈسپوزایبل آلات کی وجہ سے مجھے اطمینان محسوس ہوا۔",
+      },
+      {
+        name: "مسز رانا",
+        rating: 5,
+        review:
+          "دانت میں شدید درد کی وجہ سے شہباز ڈینٹل کلینک گئی۔ ڈاکٹر صوبیہ نے روٹ کینال، اسکیلنگ اور برج کا علاج کیا۔ میں علاج اور ان کی پیشہ ورانہ نگہداشت سے بہت مطمئن ہوں۔",
+      },
+      {
+        name: "رانا مدثر",
+        rating: 5,
+        review:
+          "میں نیویارک سے ہوں اور میری عمر ساٹھ سال ہے۔ شہباز ڈینٹل کلینک میں بہت اچھا تجربہ رہا۔ پندرہ دن میں زرکونیا کراؤن کے ساتھ برج کا علاج مکمل ہوا اور میں علاج سے مطمئن ہوں۔ ڈینٹل امپلانٹس کے لیے بھی کلینک کی سفارش کرتا ہوں۔",
+      },
+      {
+        name: "ایان کمبوہ",
+        rating: 5,
+        review:
+          "میرے دو داڑھ نکالے گئے اور تقریباً ڈیڑھ سال میں بریسز کا علاج مکمل ہوا۔ دانتوں کی ترتیب اور مسکراہٹ بہتر ہوئی۔ علاج کا بہت اچھا تجربہ رہا اور میں مطمئن ہوں۔",
+      },
+      {
+        name: "سائرہ سائرہ",
+        rating: 5,
+        review:
+          "برطانیہ سے آئی اور بہت اچھا تجربہ رہا۔ دانتوں کی سفیدی کا علاج معمولی درد کے ساتھ مکمل ہوا اور نتائج بہت اچھے رہے۔",
+      },
+      {
+        name: "ملک شاہد",
+        rating: 5,
+        review:
+          "شہباز ڈینٹل کلینک میں عقل داڑھ نکلوانے کا بہت اچھا تجربہ رہا۔ علاج اچھی طرح کیا گیا اور مجھے پورے عمل کے دوران اطمینان رہا۔ میں علاج سے مطمئن ہوں۔ بہترین نگہداشت کا شکریہ۔",
       },
     ],
   },
@@ -69,11 +131,17 @@ function StarRating({ rating, label }: { rating: number; label: string }) {
   return (
     <div aria-label={label} className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, index) => (
-        <HiStar
-          key={index}
-          aria-hidden="true"
-          className={`size-5 ${index < rating ? "text-[#facc15]" : "text-[#aaa]"}`}
-        />
+        <span aria-hidden="true" className="relative block size-5" key={index}>
+          <HiStar className="size-5 text-[#aaa]" />
+          <span
+            className="absolute inset-y-0 start-0 overflow-hidden"
+            style={{
+              width: `${Math.max(0, Math.min(1, rating - index)) * 100}%`,
+            }}
+          >
+            <HiStar className="size-5 max-w-none text-[#facc15]" />
+          </span>
+        </span>
       ))}
     </div>
   );
@@ -175,10 +243,13 @@ export function TestimonialsSection({ locale }: { locale: Locale }) {
             </h2>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-              <StarRating rating={5} label={content.overallRatingLabel} />
+              <StarRating
+                rating={clinicConfig.googleReviews.rating}
+                label={content.overallRatingLabel}
+              />
 
               <p className="text-2xl font-extrabold text-[var(--primary-ink)]">
-                4.3 / 5
+                {clinicConfig.googleReviews.rating} / 5
               </p>
             </div>
 
@@ -194,7 +265,7 @@ export function TestimonialsSection({ locale }: { locale: Locale }) {
           </div>
 
           {/* RIGHT REVIEWS */}
-          <div className="grid items-stretch gap-5 md:grid-cols-2 lg:gap-6">
+          <ReviewCarousel label={content.heading} locale={locale}>
             {content.reviews.map((review) => (
               <ReviewCard
                 googleReview={content.googleReview}
@@ -203,7 +274,7 @@ export function TestimonialsSection({ locale }: { locale: Locale }) {
                 review={review}
               />
             ))}
-          </div>
+          </ReviewCarousel>
         </div>
       </div>
     </section>

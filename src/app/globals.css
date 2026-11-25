@@ -122,3 +122,47 @@ img {
     filter: blur(0);
   }
 }
+
+.review-carousel {
+  height: 620px;
+}
+
+.review-carousel-track {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-carousel-card {
+  flex: 0 0 300px;
+  height: 300px;
+  min-width: 0;
+}
+
+.review-carousel-moving {
+  transform: translateY(-320px);
+  transition: transform 500ms ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .review-carousel {
+    height: 300px;
+  }
+
+  .review-carousel-track {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .review-carousel-card {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+
+  .review-carousel-moving {
+    transform: translateX(calc(-50% - 12px));
+  }
+
+  [dir="rtl"] > .review-carousel-moving {
+    transform: translateX(calc(50% + 12px));
+  }
+}

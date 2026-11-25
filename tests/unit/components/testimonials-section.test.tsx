@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { TestimonialsSection } from "@/components/layout/testimonials-section";
 import { clinicConfig } from "@/config/public-config";
@@ -24,22 +24,24 @@ describe("TestimonialsSection", () => {
     expect(
       screen.getByRole("heading", { name: "Patient Reviews" }),
     ).toBeVisible();
-    expect(screen.getByText("Rana Ali")).toBeVisible();
-    expect(screen.getByText("Masood Ali")).toBeVisible();
+    expect(screen.getByText("larainb Bushra")).toBeVisible();
+    expect(screen.getByText("Mian Usman")).toBeVisible();
     expect(
       screen.getByText(
-        /Doctor are very nice and well experienced in their field\. Clinic is very neat and clean\. Staff behaviour very satisfied\./,
+        /I am extremely satisfied with my overall experience\. The clinic is very hygienic, well-maintained, and provides a comfortable environment for patients\./,
       ),
     ).toBeVisible();
     expect(
       screen.getByText(
-        /I live in New York City, but I am coming to Shahbaz Dental Clinic Samundri\./,
+        /the doctor was professional and gentle though the procedure\. The was clean and hygienic and disposable kit and instrument made me feel safe and comfortable/,
       ),
     ).toBeVisible();
-    expect(screen.getAllByText("Google Review")).toHaveLength(2);
-    expect(screen.getByLabelText("4 out of 5 stars")).toBeVisible();
-    expect(screen.getByLabelText("5 out of 5 stars")).toBeVisible();
-    expect(screen.getAllByRole("article")).toHaveLength(2);
+    const cards = screen.getAllByRole("article");
+    expect(cards).toHaveLength(2);
+    for (const card of cards) {
+      expect(within(card).getByText("Google Review")).toBeVisible();
+      expect(within(card).getByLabelText("5 out of 5 stars")).toBeVisible();
+    }
   });
 
   it("renders natural Urdu review content without mojibake", () => {
@@ -48,16 +50,20 @@ describe("TestimonialsSection", () => {
     expect(
       screen.getByRole("heading", { name: "مریضوں کے تاثرات" }),
     ).toBeVisible();
-    expect(screen.getByText("رانا علی")).toBeVisible();
-    expect(screen.getByText("مسعود علی")).toBeVisible();
+    expect(screen.getByText("لرینب بشریٰ")).toBeVisible();
+    expect(screen.getByText("میاں عثمان")).toBeVisible();
     expect(
-      screen.getByText("گوگل میپس پر تقریباً 44 جائزوں کی بنیاد پر۔"),
+      screen.getByText("گوگل میپس پر 150 جائزوں کی بنیاد پر۔"),
     ).toBeVisible();
     expect(
       screen.getByRole("link", { name: "گوگل پر تمام جائزے دیکھیں" }),
     ).toBeVisible();
-    expect(screen.getByLabelText("۵ میں سے ۴ ستارے")).toBeVisible();
-    expect(screen.getAllByText("گوگل جائزہ")).toHaveLength(2);
+    const cards = screen.getAllByRole("article");
+    expect(cards).toHaveLength(2);
+    for (const card of cards) {
+      expect(within(card).getByLabelText("۵ میں سے ۵ ستارے")).toBeVisible();
+      expect(within(card).getByText("گوگل جائزہ")).toBeVisible();
+    }
 
     for (const marker of ["Ã˜", "Ã™", "Ã›"]) {
       expect(container.textContent).not.toContain(marker);

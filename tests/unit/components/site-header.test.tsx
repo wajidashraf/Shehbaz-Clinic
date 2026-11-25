@@ -51,19 +51,18 @@ describe("SiteHeader", () => {
       "Services",
       "The Dentist",
       "Reviews",
+      "Portfolio",
       "Contact",
     ]);
-    expect(links).toHaveLength(5);
+    expect(links).toHaveLength(6);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/en#about",
       "/en#services",
       "/en#dentist",
       "/en#reviews",
+      "/en#portfolio",
       "/en#contact",
     ]);
-    expect(
-      within(navigation).queryByRole("link", { name: "Portfolio" }),
-    ).not.toBeInTheDocument();
     expect(
       within(navigation).queryByRole("link", { name: "Home" }),
     ).not.toBeInTheDocument();
