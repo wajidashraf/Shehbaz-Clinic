@@ -24,7 +24,7 @@ export function ReviewCarousel({
       if (!paused && !preference.matches && children.length > 2) {
         timer = setInterval(() => {
           if (!document.hidden) setMoving(true);
-        }, 4_000);
+        }, 6_000);
       }
     }
 

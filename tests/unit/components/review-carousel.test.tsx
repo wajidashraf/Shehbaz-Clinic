@@ -14,7 +14,7 @@ function visibleNames() {
 }
 
 describe("review rotation", () => {
-  it("advances one card every four seconds and loops through all seven reviews", () => {
+  it("advances one card every six seconds and loops through all seven reviews", () => {
     vi.useFakeTimers();
     const { container } = render(<TestimonialsSection locale="en" />);
     const track = container.querySelector(".review-carousel-track")!;
@@ -33,7 +33,7 @@ describe("review rotation", () => {
       ["larainb Bushra", "Mian Usman"],
     ];
     for (const pair of pairs) {
-      act(() => vi.advanceTimersByTime(3_999));
+      act(() => vi.advanceTimersByTime(5_999));
       expect(track).not.toHaveClass("review-carousel-moving");
       act(() => vi.advanceTimersByTime(1));
       expect(track).toHaveClass("review-carousel-moving");
@@ -51,7 +51,7 @@ describe("review rotation", () => {
     act(() => vi.advanceTimersByTime(8_000));
     expect(track).not.toHaveClass("review-carousel-moving");
     fireEvent.blur(carousel);
-    act(() => vi.advanceTimersByTime(4_000));
+    act(() => vi.advanceTimersByTime(6_000));
     expect(track).toHaveClass("review-carousel-moving");
   });
 

@@ -14,7 +14,7 @@ describe("PortfolioSection", () => {
     expect(
       images.map((image) => {
         const source = decodeURIComponent(image.getAttribute("src") ?? "");
-        const match = source.match(/locationImage \((\d+)\)\.jpeg/);
+        const match = source.match(/locationImage \((\d+)\)\.(?:jpeg|png)/);
         return match ? Number(match[1]) : null;
       }),
     ).toEqual(imageOrder);

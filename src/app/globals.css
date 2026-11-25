@@ -127,6 +127,32 @@ img {
   height: 620px;
 }
 
+.portfolio-lightbox[open],
+.portfolio-lightbox-image {
+  animation: portfolio-lightbox-in 180ms ease-out;
+}
+
+.portfolio-lightbox::backdrop {
+  background: rgb(2 6 23 / 88%);
+  backdrop-filter: blur(5px);
+  animation: portfolio-lightbox-in 180ms ease-out;
+}
+
+.portfolio-lightbox[data-closing],
+.portfolio-lightbox[data-closing]::backdrop {
+  animation: portfolio-lightbox-out 180ms ease-in forwards;
+}
+
+@keyframes portfolio-lightbox-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes portfolio-lightbox-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 .review-carousel-track {
   display: flex;
   flex-direction: column;

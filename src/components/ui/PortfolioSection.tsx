@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { PortfolioGallery } from "@/components/ui/portfolio-gallery";
 
 type PortfolioSectionProps = {
   locale: "en" | "ur";
@@ -6,7 +6,7 @@ type PortfolioSectionProps = {
 
 const portfolioImages = [
   {
-    src: "/images/location images/locationImage (1).jpeg",
+    src: "/images/location images/locationImage (1).png",
     alt: {
       en: "Exterior of Shahbaz Dental Clinic",
       ur: "شہباز ڈینٹل کلینک کا بیرونی منظر",
@@ -193,79 +193,7 @@ export function PortfolioSection({ locale }: PortfolioSectionProps) {
         </div>
 
         {/* Portfolio Grid */}
-        <div
-          className="
-            grid
-            grid-cols-1
-            gap-3
-            sm:grid-cols-2
-            md:grid-cols-3
-            lg:grid-cols-3
-            xl:grid-cols-4
-            sm:gap-4
-          "
-        >
-          {portfolioImages.map((image) => (
-            <figure
-              key={image.src}
-              className="
-      group
-      relative
-      aspect-[4/3]
-      overflow-hidden
-      rounded-2xl
-      bg-[var(--aqua-soft)]
-      shadow-[0_8px_30px_-18px_rgba(18,48,53,0.32)]
-      transition-shadow
-      duration-300
-      hover:shadow-[0_18px_45px_-20px_rgba(18,48,53,0.5)]
-    "
-            >
-              <Image
-                src={image.src}
-                alt={image.alt[locale]}
-                fill
-                sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
-                className="
-        object-cover
-        transition-transform
-        duration-500
-        ease-out
-        group-hover:scale-[1.04]
-      "
-              />
-
-              <div
-                aria-hidden="true"
-                className="
-        absolute
-        inset-0
-        bg-gradient-to-t
-        from-[var(--teal)]/20
-        via-transparent
-        to-transparent
-        opacity-0
-        transition-opacity
-        duration-300
-        group-hover:opacity-100
-      "
-              />
-
-              <div
-                aria-hidden="true"
-                className="
-        pointer-events-none
-        absolute
-        inset-0
-        rounded-2xl
-        ring-1
-        ring-inset
-        ring-black/5
-      "
-              />
-            </figure>
-          ))}
-        </div>
+        <PortfolioGallery images={portfolioImages} locale={locale} />
       </div>
     </section>
   );
